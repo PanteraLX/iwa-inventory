@@ -90,7 +90,7 @@ class Order(models.Model):
         help_text='Beginn der Ausleihe'
     )
     ended_at = models.DateTimeField(
-        null=True
+        null=True,
         verbose_name='Ende',
         help_text='Ende der Ausleihe'
     )

@@ -1,4 +1,4 @@
-"""iwa_inventory_web URL Configuration
+"""iwa_inventory URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/

@@ -6,15 +6,15 @@ FROM python:3.9
 
 # Create a new user 'app-developer' and set the working directory to /home/app-developer
 
-RUN mkdir /home/iwa-inventory
+RUN useradd -ms /bin/bash iwa-developer
 
-RUN useradd -ms /bin/bash app-developer
+USER iwa-developer
 
-USER app-developer
+RUN mkdir /home/iwa-developer/iwa-inventory
 
 # Create directory iwa-inventory and make working directory
 
-WORKDIR /home/iwa-inventory
+WORKDIR /home/iwa-developer/iwa-inventory
 
 # Copy the requirements.txt file to the container at /app
 

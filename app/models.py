@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User as DjangoUser
 
 # Create your models here.
 
@@ -32,39 +33,10 @@ class InventoryItem(models.Model):
         return self.name
 
 
-class User(models.Model):
-    name = models.CharField(
-        max_length=200,
-        verbose_name='Name',
-        help_text='Name des Benutzers'
-    )
-    sur_name = models.CharField(
-        max_length=200,
-        verbose_name='Nachname',
-        help_text='Nachname des Benutzers'
-    )
-    email = models.EmailField(
-        verbose_name='Email',
-        help_text='Email-Adresse des Benutzers'
-    )
-    phone_number = models.CharField(
-        max_length=200,
-        verbose_name='Telefonnummer',
-        help_text='Telefonnummer'
-    )
-    password = models.CharField(
-        max_length=200,
-        verbose_name='Passwort',
-        help_text='Passwort'
-    )
-
-    def __str__(self):
-        return self.name
-
 
 class Order(models.Model):
     user = models.ForeignKey(
-        User,
+        DjangoUser,
         on_delete=models.CASCADE,
         verbose_name='Benutzer',
         help_text='Benutzer'
@@ -96,4 +68,4 @@ class Order(models.Model):
     )
 
     def __str__(self):
-        return self.item.name + " ordered by " + self.user.name
+        return self.item.name + " ordered by " + self.user.username

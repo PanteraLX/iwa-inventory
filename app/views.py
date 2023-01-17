@@ -15,7 +15,6 @@ def about(request):
 def contact(request):
     return render(request, 'inventory/contact.html')
 
-def home2(request):
-    return render(request, 'inventory/home2.html')
+
 
 

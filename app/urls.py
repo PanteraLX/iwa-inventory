@@ -22,5 +22,8 @@ urlpatterns = [
     path('complete/', complete_inventory_items_list, name='complete_inventory_items_list'),
     path('inventory_item/<int:pk>/', views.InventoryItemDetailView.as_view(), name='inventory_item_detail'),
     path('inventory_item/<int:pk>/update', views.UpdateView, name='inventory_item_update'),
+    path('contact/', views.contact, name='contact'),
+    path('about/', views.about, name='about'),
+    path('index/', views.index, name='index'),
+    path('home/', views.home, name='home'),
 ]
-

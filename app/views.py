@@ -64,3 +64,20 @@ def create_inventory_item(request):
         return render(request,
                         'app/create_inventory_item.html',
                         {'form': form})
+
+
+def home(request):
+    return render(request, 'inventory/home.html')
+
+def index(request):
+    return render(request, 'inventory/index.html')
+
+def about(request):
+    return render(request, 'inventory/about.html')
+
+def contact(request):
+    return render(request, 'inventory/contact.html')
+
+
+
+

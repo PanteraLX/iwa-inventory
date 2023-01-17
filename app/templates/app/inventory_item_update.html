@@ -1,0 +1,17 @@
+<!-- A form to update a specific instance of InventoryItem -->
+<!-- Path: app/templates/app/inventory_item_update.html -->
+
+{% extends "app/layout.html" %}
+
+{% block title %}
+    Inventory Item Update
+{% endblock %}
+
+{% block content %}
+    <h1>Inventory Item Update</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+    </form>
+{% endblock %}

@@ -33,7 +33,6 @@ class InventoryItem(models.Model):
         return self.name
 
 
-
 class Order(models.Model):
     user = models.ForeignKey(
         DjangoUser,
@@ -47,8 +46,17 @@ class Order(models.Model):
         verbose_name='Item',
         help_text='Item'
     )
+
+    STATE_CHOICES = (
+        ('ACTIVE', 'active'),
+        ('ARCHIVED', 'archived'),
+        ('RESERVED', 'reserved'),
+    )
+
     state = models.CharField(
         max_length=200,
+        choices=STATE_CHOICES,
+        default='ACTIVE',
         verbose_name='Status',
         help_text='status'
     )

@@ -1,0 +1,18 @@
+<!-- An update view of a single InventoryItem to view and change its attributes -->
+{% extends "app/_base.html" %}
+{% block title %}
+Inventory Item Update
+{% endblock %}
+
+{% block content %}
+<h1>Inventory Item Detail</h1>
+<p>Inventory Item ID: {{ inventory_item.id }}</p>
+<p>Inventory Item Name: {{ inventory_item.name }}</p>
+<p>Inventory Item Description: {{ inventory_item.description }}</p>
+<p>Inventory Item Quantity: {{ inventory_item.quantity }}</p>
+<p>Inventory Item Price: {{ inventory_item.price }}</p>
+<p>Inventory Item Category: {{ inventory_item.category }}</p>
+<p>Inventory Item Image: {{ inventory_item.image }}</p>
+<p>Inventory Item Created: {{ inventory_item.created_at }}</p>
+<p>Inventory Item Updated: {{ inventory_item.updated_at }}</p>
+{% endblock %}

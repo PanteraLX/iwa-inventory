@@ -12,6 +12,14 @@ def inventory_item_archive(request, id):
     inventory_item.save()
     return redirect('home')
 
+# Switching the 'active' variable of an InventoryItem instance to True
+
+def inventory_item_unarchive(request, id):
+    inventory_item = InventoryItem.objects.get(id=id)
+    inventory_item.active = True
+    inventory_item.save()
+    return redirect('complete_inventory_items_list')
+
 # A list view of all the InventoryItems
 
 class InventoryItemListView(ListView):

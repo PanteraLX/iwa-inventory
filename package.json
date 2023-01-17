@@ -1,0 +1,22 @@
+{
+  "name": "iwa-inventory",
+  "version": "1.0.0",
+  "description": "Inventory application",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PanteraLX/iwa-inventory.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PanteraLX/iwa-inventory/issues"
+  },
+  "homepage": "https://github.com/PanteraLX/iwa-inventory#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.2.4"
+  }
+}

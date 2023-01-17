@@ -8,7 +8,14 @@ Login
   <h1 class="mb-4 text-xl font-medium ">Login</h1>
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+
+    {% for field in form %}
+    <div>
+        <span class="mb-4">{{ field.name }}</span>
+        <input class="w-full rounded-md mb-3" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}" type="text" /> 
+        {{ field.errors }}
+    </div>
+    {% endfor %}
     <button type="submit"
       class="btn w-full">
       Log In

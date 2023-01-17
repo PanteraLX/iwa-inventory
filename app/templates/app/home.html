@@ -33,6 +33,8 @@ Home
     {% if inventory_item.active %}
     <td><a href="{% url 'archive_inventory_item' inventory_item.id %}">Archive</a></td>
     {% endif %}
+    <!-- Button that links to an object's detail view -->
+    <td><a href="{% url 'inventory_item_detail' inventory_item.pk %}">Detail</a></td>
 </tr>
 {% endfor %}
 </tbody>

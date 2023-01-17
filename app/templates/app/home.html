@@ -1,0 +1,36 @@
+{% extends "app/layout.html" %}
+{% block title %}
+Home
+{% endblock %}
+{% block content %}
+<h2>List of inventory items</h2>
+{% if inventory_items_list %}
+<table class="inventory_items_list">
+<thead>
+<tr>
+…
+</tr>
+</thead>
+<tbody>
+{% for inventory_item in inventory_items_list %}
+<tr>
+    <td>{{ inventory_item.name }}</td>
+    <td>{{ inventory_item.description }}</td>
+    <td>{{ inventory_item.quantity }}</td>
+    <td>{{ inventory_item.position }}</td>
+    <td>{{ inventory_item.producer }}</td>
+    {% if inventory_item.image %}
+        <td><img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" width="100" height="100"></td>
+    {% else %}
+        <td>No image</td>
+    {% endif %}
+    <!-- Button to change the 'quantity' variable of the given inventory item to 0-->
+    <td><a href="{% url 'archive_inventory_item' inventory_item.id %}">Delete</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% else %}
+    <p>No data found.</p>
+{% endif %}
+{% endblock %}

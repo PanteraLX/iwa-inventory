@@ -1,3 +1,7 @@
 from django.contrib import admin
+from app.models import InventoryItem, Order
 
-# Register your models here.
+admin.site.register(InventoryItem)
+admin.site.register(Order)
+
+

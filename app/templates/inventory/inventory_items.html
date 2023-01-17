@@ -1,30 +1,35 @@
 {% extends "app/_base.html" %}
-{% block title %}
-Home
-{% endblock %}
+{% load static %}
+
+
+{% block title %}Products{% endblock %}
+
+
 {% block content %}
-<h2>List of inventory items</h2>
+<div class="bg-white">
+    <div class="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+      <h2>Products</h2>
+
 {% if inventory_items_list %}
 <table class="inventory_items_list">
-    <thead>
-        <tr>
-            …
-        </tr>
-    </thead>
+
     <tbody>
+        
         {% for inventory_item in inventory_items_list %}
-        <tr>
-            <td>{{ inventory_item.name }}</td>
-            <td>{{ inventory_item.description }}</td>
-            <td>{{ inventory_item.quantity }}</td>
-            <td>{{ inventory_item.position }}</td>
-            <td>{{ inventory_item.producer }}</td>
-            <td>{{ inventory_item.active }}</td>
-            {% if inventory_item.image %}
-            <td><img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" width="100" height="100"></td>
-            {% else %}
-            <td>No image</td>
-            {% endif %}
+        <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                <a href="#" class="group">
+                    <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
+                        {% if inventory_item.image %}
+                        <img src="{{ inventory_item.image.url }}" alt="{{ inventory_item.name }}" class="h-full w-full object-cover object-center group-hover:opacity-75">
+                        {% else %}
+                        <img src="/static/images/noimageaviable/image.png" alt="{{ inventory_item.description }}" class="h-full w-full object-cover object-center group-hover:opacity-75">
+                        {% endif %}
+                    </div>
+                    <h3 class="mt-4 text-sm text-gray-700">{{ inventory_item.name }}</h3>
+                </a>
+        </div>
+
+        
             <!-- Button to unarchive an item, i.e. to change its 'active' attribute to True. Button only shows, when 'active' attribute is set to False. -->
             {% if not inventory_item.active %}
             <td><a href="{% url 'unarchive_inventory_item' inventory_item.id %}">Unarchive</a></td>
@@ -35,8 +40,12 @@ Home
             {% endif %}
             <!-- Button that links to an object's detail view -->
             <td><a href="{% url 'inventory_item_detail' inventory_item.pk %}">Detail</a></td>
-        </tr>
+        
         {% endfor %}
+
+         </div>
+    </div>
+</div>
     </tbody>
 </table>
 {% else %}

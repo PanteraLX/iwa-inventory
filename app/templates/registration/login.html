@@ -1,0 +1,18 @@
+{% extends "app/_base.html" %}
+{% block title %}
+Login
+{% endblock %}
+{% block content %}
+
+<div class="bg-[#050C34] w-full mx-auto max-w-sm p-4 border border-gray-200 rounded-lg shadow-md sm:p-6 md:p-8 dark:border-gray-700 text-gray-300">
+  <h1 class="mb-4 text-xl font-medium ">Login</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit"
+      class="text-gray-300 bg-[#696C7F] hover:bg-[#7D8394] px-3 py-2 rounded-md text-sm font-medium mt-4 w-full">
+      Log In
+    </button>
+  </form>
+</div>
+{% endblock %}

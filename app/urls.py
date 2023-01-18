@@ -1,6 +1,6 @@
 from django.urls import path
 from app import views
-from app.models import InventoryItem
+from app.view.account import AccountDetailView, AccountListView, AccountFormView
 
 urlpatterns = [
     path('', views.active_inventory_items_list, name='inventory_items'),
@@ -14,4 +14,5 @@ urlpatterns = [
     path('account/<int:pk>/update', AccountFormView.as_view(), name='user_update'),
     path('account/<int:pk>', AccountDetailView.as_view(), name='user_detail'),
     path('account/create', AccountFormView.as_view(), name='user_create'),
+    path('accounts', AccountListView.as_view(), name='user_list'),
 ]

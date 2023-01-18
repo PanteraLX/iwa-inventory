@@ -1,12 +1,7 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from app.models import InventoryItem, InventoryItemImage
-from django.views.generic import ListView, UpdateView, DetailView
-from app.forms import InventoryItemForm, InventoryItemImageForm, UserForm
-from django.contrib.auth.models import User as DjangoUser
-from django.contrib.auth.models import Group
-from django.contrib import messages
-
+from app.forms import InventoryItemForm, InventoryItemImageForm
+from django.views.generic import ListView, DetailView
 
 # Switching the 'active' variable of an InventoryItem instance to False
 
@@ -100,46 +95,3 @@ def create_inventory_item(request):
     return render(request, 'inventory/create_update_inventory_item.html', context)
 
 # A function-based view to create a new User
-
-
-def create_user(request, pk=None):
-    user = None
-
-    if pk:
-        user = DjangoUser.objects.get(id=pk)
-
-    form = UserForm(request.POST or None, instance=user)
-
-    if request.method == 'POST' and form.is_valid():
-        user = form.save(commit=False)
-        user.save()
-        return redirect('user_detail', pk=user.id)
-    else:
-        return render(
-            request,
-            'account/create_update_user.html',
-            {'form': form, 'method': 'Create' if not pk else 'Update'}
-        )
-
-
-class UserItemDetailView(DetailView):
-    model = DjangoUser
-    template_name = 'account/user_detail.html'
-    context_object_name = 'user'
-
-
-def home(request):
-    return render(request, 'app/home.html')
-
-
-def index(request):
-    return render(request, 'app/index.html')
-
-
-def about(request):
-    return render(request, 'app/about.html')
-
-
-def contact(request):
-    return render(request, 'app/contact.html')
-

@@ -28,7 +28,7 @@ class InventoryItemImageForm(forms.ModelForm):
 
 user_css_class = 'iwa-input'
 
-class UserForm(forms.ModelForm):
+class AccountForm(forms.ModelForm):
     class Meta:
         model = DjangoUser
         fields = ['username', 'first_name', 'last_name', 'email']

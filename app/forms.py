@@ -16,5 +16,17 @@ class InventoryItemForm(forms.ModelForm):
         }
 
 
+user_css_class = 'iwa-input'
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = DjangoUser
+        fields = ['username', 'first_name', 'last_name', 'email']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': user_css_class}),
+            'first_name': forms.TextInput(attrs={'class': user_css_class}),
+            'last_name': forms.TextInput(attrs={'class': user_css_class}),
+            'email': forms.TextInput(attrs={'class': user_css_class}),
+        }
 
 

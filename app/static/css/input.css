@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.show {
+    transform: opacity-100 scale-100;
+    transition: ease-out duration-100;
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .hide {
+    transform: opacity-0 scale-95;
+    transition: ease-in duration-75;
+    visibility: hidden;
+    opacity: 0;
+  }
+  
+
+  .btn {
+    @apply text-gray-300 bg-[#696C7F] hover:bg-[#7D8394] px-3 py-2 rounded-md text-sm font-medium mt-4 w-full #{important};
+  }
+

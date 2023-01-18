@@ -10,7 +10,8 @@ urlpatterns = [
     path('inventory_item/archive/<int:id>/', views.inventory_item_archive, name='archive_inventory_item'),
     path('inventory_item/unarchive/<int:id>/', views.inventory_item_unarchive, name='unarchive_inventory_item'),
     path('inventory_item/complete', views.complete_inventory_items_list, name='complete_inventory_items_list'),
-    path('account/<int:pk>/update', views.create_user, name='user_update'),
-    path('account/<int:pk>', views.UserItemDetailView.as_view(), name='user_detail'),
-    path('account/create', views.create_user, name='user_create'),
+
+    path('account/<int:pk>/update', AccountFormView.as_view(), name='user_update'),
+    path('account/<int:pk>', AccountDetailView.as_view(), name='user_detail'),
+    path('account/create', AccountFormView.as_view(), name='user_create'),
 ]

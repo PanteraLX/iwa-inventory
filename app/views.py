@@ -65,7 +65,7 @@ def UpdateView(request, pk):
             return redirect('inventory_item_detail', pk=inventory_item.pk)
     else:
         return render(request,
-                      'inventory/inventory_item_update.html',
+                      'inventory/create_update_inventory_item.html',
                       {'form': form})
 
 # A function-based view to create a new InventoryItem
@@ -81,7 +81,7 @@ def create_inventory_item(request):
             return redirect('create_inventory_item')
     else:
         return render(request,
-                      'inventory/create_inventory_item.html',
+                      'inventory/create_update_inventory_item.html',
                       {'form': form})
 
 def home(request):

@@ -84,7 +84,6 @@ def create_inventory_item(request):
                       'inventory/create_inventory_item.html',
                       {'form': form})
 
-
 def home(request):
     return render(request, 'app/home.html')
 
@@ -99,3 +98,6 @@ def about(request):
 
 def contact(request):
     return render(request, 'app/contact.html')
+
+def test(request):
+    return render(request, 'app/listview.html')

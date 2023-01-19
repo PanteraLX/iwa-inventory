@@ -1,7 +1,7 @@
 {% extends "app/_base.html" %}
 
 {% block title %}
-Inventory Item Update
+Inventory Item {{ method }}
 {% endblock %}
 
 {% block content %}
@@ -12,6 +12,12 @@ Inventory Item Update
     <div class="mb-6">
         <label class="block mb-2 text-sm font-medium text-gray-900" for="{{ field.auto_id }}">{{ field.label }}</label>
         {{ field }}
+    </div>
+    {% endfor %}
+    {% for form in image_form %}
+    <div class="form__field mb-6">
+        <label class="block mb-2 text-sm font-medium text-gray-900" for="formInput#text">{{ form.label }}</label>
+        {{ form }}
     </div>
     {% endfor %}
     <button class="iwa-btn" type="submit">Submit</button>

@@ -22,9 +22,9 @@ class CustomFormView(View):
         pk = self.extract_pk(kwargs)
         form = self.form_class(request.POST, instance=self.extract_object(pk))
         if form.is_valid():
-            user = form.save(commit=False)
-            user.save()
-            return redirect(self.success_url, pk=user.id)
+            object = form.save(commit=False)
+            object.save()
+            return redirect(self.success_url, pk=object.id)
         return render(request, self.template_name, {'form': form, **self.get_context_data(request, *args, **kwargs)})
 
     def extract_pk(self, kwargs):

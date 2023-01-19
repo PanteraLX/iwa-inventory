@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from app.models import InventoryItem
 from django.views.generic import ListView, UpdateView, DetailView
 from app.forms import InventoryItemForm
+from django.contrib.auth.models import User, Group
 
 
 # Switching the 'active' variable of an InventoryItem instance to False
@@ -29,6 +30,19 @@ class InventoryItemListView(ListView):
     model = InventoryItem
     template_name = 'app/inventory_item_list.html'
     context_object_name = 'inventory_items'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["show_all"] = True
+        return context
+
+class CompleteInventoryItemListView(ListView):
+    model = InventoryItem
+    template_name = 'app/inventory_item_list.html'
+    context_object_name = 'inventory_items'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["show_all"] = True
+        return context
 
 
 active_inventory_items_list = InventoryItemListView.as_view(
@@ -40,8 +54,11 @@ active_inventory_items_list = InventoryItemListView.as_view(
 complete_inventory_items_list = InventoryItemListView.as_view(
     queryset=InventoryItem.objects.all(),
     context_object_name='inventory_items_list',
-    template_name='inventory/inventory_items.html',
+    template_name='inventory/inventory_items.html',    
 )
+
+
+
 
 # A detail view of a single InventoryItem instance
 
@@ -67,6 +84,7 @@ def UpdateView(request, pk):
         return render(request,
                       'inventory/create_update_inventory_item.html',
                       {'form': form})
+
 
 # A function-based view to create a new InventoryItem
 
@@ -99,5 +117,3 @@ def about(request):
 def contact(request):
     return render(request, 'app/contact.html')
 
-def test(request):
-    return render(request, 'app/listview.html')

@@ -1,5 +1,5 @@
 from django import forms
-from app.models import InventoryItem, InventoryItemImage
+from app.models import InventoryItem, InventoryItemImage, Order
 from django.forms import ClearableFileInput
 from django.contrib.auth.models import User as DjangoUser
 
@@ -28,7 +28,7 @@ class InventoryItemImageForm(forms.ModelForm):
 
 user_css_class = 'iwa-input'
 
-class UserForm(forms.ModelForm):
+class AccountForm(forms.ModelForm):
     class Meta:
         model = DjangoUser
         fields = ['username', 'first_name', 'last_name', 'email']
@@ -40,3 +40,15 @@ class UserForm(forms.ModelForm):
         }
 
 
+order_css_class = 'iwa-input'
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['user', 'item', 'state', 'quantity']
+        widgets = {
+            'user': forms.Select(attrs={'class': order_css_class}),
+            'item': forms.Select(attrs={'class': order_css_class}),
+            'state': forms.Select(attrs={'class': order_css_class}),
+            'quantity': forms.NumberInput(attrs={'class': order_css_class}),
+        }

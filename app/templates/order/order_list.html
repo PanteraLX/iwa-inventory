@@ -1,0 +1,46 @@
+{% extends "app/_base.html" %}
+
+{% block title %} 
+Orders list
+{% endblock %} 
+
+{% block content %} 
+
+<h1>
+    Orders list
+</h1>
+
+<table class="table-auto w-full">
+    <thead>
+        <tr>
+            <th class="px-4 py-2">User</th>
+            <th class="px-4 py-2">Item</th>
+            <th class="px-4 py-2">Quantity</th>
+            <th class="px-4 py-2">State</th>
+            <th class="px-4 py-2">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td class="border px-4 py-2">{{ order.user }}</td>
+            <td class="border px-4 py-2">{{ order.item }}</td>
+            <td class="border px-4 py-2">{{ order.quantity }}</td>
+            <td class="border px-4 py-2">{{ order.state }}</td>
+            <td class="border px-4 py-2">
+                <a href="{% url 'order_detail' order.id %}" class="iwa-btn">
+                    View
+                </a>
+                <a href="{% url 'order_update' order.id %}" class="iwa-btn">
+                    Edit
+                </a>
+                <a href="{% url 'order_update' order.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

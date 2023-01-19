@@ -7,8 +7,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/flowbite.min.css" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   {% load static %}
-  <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-  {% load static %}
   <link rel="stylesheet" href="{% static 'css/app.css' %}">
 </head>
 
@@ -32,10 +30,10 @@
 
                 <a href="{% url 'inventory_items'%}"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Inventar</a>
-                <a href="{% url 'inventory_items'%}"
+                <a href="{% url 'order_list'%}"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Ausleihe</a>
-                {% if user.is_authenticated %}
-                <a href="{% url 'user_create'%}"
+                {% if user.is_superuser %}
+                <a href="{% url 'user_list'%}"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">User</a>
                 {% endif %}
               </div>
@@ -73,7 +71,7 @@
                   id="user-menu">
                   <!-- Active: "bg-gray-100", Not Active: "" -->
                   {% if user.is_authenticated %}
-                  <a href="{% url 'user_update' user.id %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                  <a href="{% url 'user_detail' user.id %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                     id="user-menu-item-0">Your Profile</a>
                   <a href="/accounts/logout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                     id="user-menu-item-2">Logout</a>
@@ -178,6 +176,7 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/flowbite.min.js"></script>
   {% load static %}
   <script src="{% static 'js/navbar.js' %}"></script>
 </body>

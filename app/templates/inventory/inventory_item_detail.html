@@ -7,12 +7,12 @@ Inventory Item Update
 {% block content %}
 
 <section>
-    <div class="py-8 px-4 mx-auto lg:py-16 shadow-md rounded">
-        <h2 class="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl">{{ inventory_item.name }}</h2>
+    <div class="py-8 px-4 mx-auto mb-8 lg:py-16 shadow-md rounded">
+        <h2 class="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl al">{{ inventory_item.name }}</h2>
         <dl>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.description }}</dd>
         </dl>
-        <dl class="flex items-center space-x-6">
+        <dl class="flex space-x-6">
             <div>
                 <dt class="mb-2 font-semibold leading-none text-gray-900">ID</dt>
                 <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.id }}</dd>
@@ -38,11 +38,11 @@ Inventory Item Update
         <!-- Add a carousel to contain all the images of an item -->
         <div id="default-carousel" class="relative" data-carousel="static">
             <!-- Carousel wrapper -->
-            <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+            <div class="relative h-56 max-w-xl overflow-hidden rounded-lg md:h-96">
                 <!-- Iterate over the images of inventory_item and create a corresponding image -->                
                 {% for image in images %}
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="{{ image.image.url }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    <img src="{{ image.image.url }}" class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                 </div>
                 {% endfor %}
             <!-- Slider indicators -->

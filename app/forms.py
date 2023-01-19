@@ -1,7 +1,7 @@
 from django import forms
-from app.models import InventoryItem
+from app.models import InventoryItem, InventoryItemImage
+from django.forms import ClearableFileInput
 from django.contrib.auth.models import User as DjangoUser
-
 
 inventory_item_css_class = 'iwa-input'
 
@@ -17,6 +17,14 @@ class InventoryItemForm(forms.ModelForm):
             'producer': forms.TextInput(attrs={'class': inventory_item_css_class}),
         }
 
+class InventoryItemImageForm(forms.ModelForm):
+    class Meta:
+        model = InventoryItemImage
+        fields = ['image']
+        widgets = {
+            'image': ClearableFileInput(attrs={'multiple': True}),
+        }
+        
 
 user_css_class = 'iwa-input'
 

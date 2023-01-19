@@ -6,12 +6,18 @@ Inventory Item Update
 
 {% block content %}
 <h1 class="mb-6 text-xl font-bold">Create Inventory Item</h1>
-<form method="POST" enctype="multipart/form-data">
+<form class="form" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% for field in form %}
-    <div class="mb-6">
-        <label class="block mb-2 text-sm font-medium text-gray-900" for="{{ field.auto_id }}">{{ field.label }}</label>
+    <div class="form__field mb-6">
+        <label class="block mb-2 text-sm font-medium text-gray-900" for="formInput#text">{{ field.label }}</label>
         {{ field }}
+    </div>
+    {% endfor %}
+    {% for form in image_form %}
+    <div class="form__field mb-6">
+        <label class="block mb-2 text-sm font-medium text-gray-900" for="formInput#text">{{ form.label }}</label>
+        {{ form }}
     </div>
     {% endfor %}
     <button class="iwa-btn" type="submit">Submit</button>

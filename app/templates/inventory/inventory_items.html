@@ -6,51 +6,68 @@
 
 
 {% block content %}
+
+
 <div class="bg-white">
-    <div class="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-      <h2>Products</h2>
+    <div class="mx-auto max-w-1xl py-16 px-2 sm:py-12 sm:px-6 lg:max-w-7xl lg:px-8">
+    <h3 class="mt-0 mb-8 text-4xl text-gray-700 ">Products</h3>
 
-{% if inventory_items_list %}
-<table class="inventory_items_list">
-
-    <tbody>
-        
-        {% for inventory_item in inventory_items_list %}
         <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                <a href="#" class="group">
-                    <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
-                        {% if inventory_item.image %}
-                        <img src="{{ inventory_item.image.url }}" alt="{{ inventory_item.name }}" class="h-full w-full object-cover object-center group-hover:opacity-75">
-                        {% else %}
-                        <img src="/static/images/noimageaviable/image.png" alt="{{ inventory_item.description }}" class="h-full w-full object-cover object-center group-hover:opacity-75">
-                        {% endif %}
-                    </div>
-                    <h3 class="mt-4 text-sm text-gray-700">{{ inventory_item.name }}</h3>
-                </a>
+            {% if inventory_items_list %}
+
+            {% for inventory_item in inventory_items_list %}
+
+            <b href="#" class="group">
+                <div
+                    class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
+                    {% if inventory_item.image %}
+                    <a href="{% url 'inventory_item_detail' inventory_item.pk %}"><img src="{{ inventory_item.image.url }}" alt="{{ inventory_item.name }}"
+                        class="h-full w-full object-cover object-center group-hover:opacity-75"></a>
+                    {% else %}
+                    <a href="{% url 'inventory_item_detail' inventory_item.pk %}"><img src="/static/images/noimageaviable/image.png" alt="{{ inventory_item.description }}"
+                        class="h-full w-full object-cover object-center group-hover:opacity-75"></a>
+                    {% endif %}
+                </div>
+
+                <h3 class="mt-4 mb-4 text-sm text-gray-700 text-ellipsis overflow-hidden">{{ inventory_item.name }}</h3>
+
+                <!-- Button to unarchive an item, i.e. to change its 'active' attribute to True. Button only shows, when 'active' attribute is set to False. -->
+                {% if user.is_superuser %}
+                {% if not inventory_item.active %}
+                <a href="{% url 'unarchive_inventory_item' inventory_item.id %}" class="btn">Unarchive</a>
+                {% endif %}
+                {% endif %}
+                <!-- Button to change the 'quantity' variable of the given inventory item to 0-->
+                {% if user.is_superuser %}
+                {% if inventory_item.active %}
+                <a href="{% url 'archive_inventory_item' inventory_item.id %}" class="btn">Archive</a>
+                {% endif %}
+                {% endif %}
+                <!-- Button that links to an object's detail view -->
+                <a href="{% url 'inventory_item_detail' inventory_item.pk %}" class="btn">Detail</a>
+
+
+            </b>
+
+            {% endfor %}
         </div>
-
-        
-            <!-- Button to unarchive an item, i.e. to change its 'active' attribute to True. Button only shows, when 'active' attribute is set to False. -->
-            {% if not inventory_item.active %}
-            <td><a href="{% url 'unarchive_inventory_item' inventory_item.id %}">Unarchive</a></td>
-            {% endif %}
-            <!-- Button to change the 'quantity' variable of the given inventory item to 0-->
-            {% if inventory_item.active %}
-            <td><a href="{% url 'archive_inventory_item' inventory_item.id %}">Archive</a></td>
-            {% endif %}
-            <!-- Button that links to an object's detail view -->
-            <td><a href="{% url 'inventory_item_detail' inventory_item.pk %}">Detail</a></td>
-        
-        {% endfor %}
-
-         </div>
     </div>
 </div>
-    </tbody>
-</table>
+
+
 {% else %}
 <p>No data found.</p>
 {% endif %}
+{% if user.is_superuser %}
 <!-- Button to show the complete list of inventory items, including the items whose 'active' variable is set to False -->
-<a href="{% url 'complete_inventory_items_list' %}">Show all inventory items</a>
+{% if request.path == "/" %}
+<div class="mt-5 mb-10 btn w-60">
+    <a href="{% url 'complete_inventory_items_list' %}">Show all inventory items</a>
+</div>
+    {% else %}
+<div class="mt-5 mb-10 btn w-60">
+    <a href="{% url 'inventory_items' %}">Show only active inventory items</a>
+</div>
+{% endif %}
+{% endif %}
 {% endblock %}

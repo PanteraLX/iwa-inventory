@@ -9,7 +9,7 @@
     opacity: 1;
   }
   
-  .hide {
+.hide {
     transform: opacity-0 scale-95;
     transition: ease-in duration-75;
     visibility: hidden;

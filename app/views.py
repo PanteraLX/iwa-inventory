@@ -30,19 +30,6 @@ class InventoryItemListView(ListView):
     model = InventoryItem
     template_name = 'app/inventory_item_list.html'
     context_object_name = 'inventory_items'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["show_all"] = True
-        return context
-
-class CompleteInventoryItemListView(ListView):
-    model = InventoryItem
-    template_name = 'app/inventory_item_list.html'
-    context_object_name = 'inventory_items'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["show_all"] = True
-        return context
 
 
 active_inventory_items_list = InventoryItemListView.as_view(

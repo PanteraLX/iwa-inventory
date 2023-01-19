@@ -61,12 +61,12 @@
 {% if user.is_superuser %}
 <!-- Button to show the complete list of inventory items, including the items whose 'active' variable is set to False -->
 {% if request.path == "/" %}
-<div class="mt-5 mb-10 btn w-60">
-    <a href="{% url 'complete_inventory_items_list' %}">Show all inventory items</a>
+<div class="mt-5 mb-10 w-60">
+    <a class="btn" href="{% url 'complete_inventory_items_list' %}">Show all inventory items</a>
 </div>
     {% else %}
-<div class="mt-5 mb-10 btn w-60">
-    <a href="{% url 'inventory_items' %}">Show only active inventory items</a>
+<div class="mt-5 mb-10 w-60">
+    <a class="btn" href="{% url 'inventory_items' %}">Show only active inventory items</a>
 </div>
 {% endif %}
 {% endif %}

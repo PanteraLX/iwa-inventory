@@ -41,7 +41,7 @@ Inventory Item Update
             <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
                 <!-- Iterate over the images of inventory_item and create a corresponding image -->
                 {% for image in images %}
-                <image src="{{ image.image }}"></image>
+                <image src="{{ image.image.url }}"></image>
                 {% endfor %}
             <!-- Slider indicators -->
             <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">

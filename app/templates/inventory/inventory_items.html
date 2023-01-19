@@ -1,31 +1,34 @@
 {% extends "app/_base.html" %}
 {% load static %}
 
-
-{% block title %}Products{% endblock %}
-
+{% block title %}
+Products
+{% endblock %}
 
 {% block content %}
-
-
 <div class="bg-white">
     <div class="mx-auto max-w-1xl py-16 px-2 sm:py-12 sm:px-6 lg:max-w-7xl lg:px-8">
-    <h3 class="mt-0 mb-8 text-4xl text-gray-700 ">Products</h3>
+        <h3 class="mt-0 mb-8 text-4xl text-gray-700 ">Inventory</h3>
 
         <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {% if inventory_items_list %}
 
             {% for inventory_item in inventory_items_list %}
 
-            <b href="#" class="group">
+            <div class="group">
                 <div
-                    class="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
-                    {% if inventory_item.image %}
-                    <a href="{% url 'inventory_item_detail' inventory_item.pk %}"><img src="{{ inventory_item.image.url }}" alt="{{ inventory_item.name }}"
-                        class="h-full w-full object-cover object-center group-hover:opacity-75"></a>
+                    class="aspect-w-1 aspect-h-1 w-64 h-64 overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
+                    {% if inventory_item.inventoryitemimage_set.all|length > 0 %}
+                    <a href="{% url 'inventory_item_detail' inventory_item.pk %}">
+                        <img src="{{ inventory_item.inventoryitemimage_set.all.0.image.url }}"
+                            alt="{{ inventory_item.name }}"
+                            class="h-full w-full object-cover object-center group-hover:opacity-75 overflow-hidden">
+                    </a>
                     {% else %}
-                    <a href="{% url 'inventory_item_detail' inventory_item.pk %}"><img src="/static/images/noimageaviable/image.png" alt="{{ inventory_item.description }}"
-                        class="h-full w-full object-cover object-center group-hover:opacity-75"></a>
+                    <a href="{% url 'inventory_item_detail' inventory_item.pk %}">
+                        <img src="/static/images/noimageaviable/image.png" alt="{{ inventory_item.name }}"
+                            class="h-full w-full object-cover object-center group-hover:opacity-75">
+                    </a>
                     {% endif %}
                 </div>
 
@@ -35,24 +38,26 @@
                 <a href="{% url 'inventory_item_detail' inventory_item.pk %}" class="btn">Detail</a>
 
 
-            </b>
+            </div>
 
             {% endfor %}
+
+            {% else %}
+            <p>No data found.</p>
+            {% endif %}
         </div>
     </div>
 </div>
 
 
-{% else %}
-<p>No data found.</p>
-{% endif %}
+
 {% if user.is_superuser %}
 <!-- Button to show the complete list of inventory items, including the items whose 'active' variable is set to False -->
 {% if request.path == "/" %}
 <div class="mt-5 mb-10 w-60">
     <a class="btn" href="{% url 'complete_inventory_items_list' %}">Show all inventory items</a>
 </div>
-    {% else %}
+{% else %}
 <div class="mt-5 mb-10 w-60">
     <a class="btn" href="{% url 'inventory_items' %}">Show only active inventory items</a>
 </div>

@@ -45,10 +45,12 @@ order_css_class = 'iwa-input'
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['user', 'item', 'state', 'quantity']
+        fields = ['user', 'item', 'state', 'quantity', 'started_at', 'ended_at']
         widgets = {
             'user': forms.Select(attrs={'class': order_css_class}),
             'item': forms.Select(attrs={'class': order_css_class}),
             'state': forms.Select(attrs={'class': order_css_class}),
             'quantity': forms.NumberInput(attrs={'class': order_css_class}),
+            'started_at': forms.DateInput(attrs={'class': order_css_class, 'type': 'date'}, format='%Y-%m-%d'),
+            'ended_at': forms.DateInput(attrs={'class': order_css_class, 'type': 'date'}, format='%Y-%m-%d'),
         }

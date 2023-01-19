@@ -57,12 +57,6 @@ class InventoryItemDetailView(DetailView):
         context['images'] = InventoryItemImage.objects.filter(inventory_item=self.object)
         return context
 
-
-# class InventoryItemDetailView(DetailView):
-#     model = InventoryItem
-#     template_name = 'inventory/inventory_item_detail.html'
-#     context_object_name = 'inventory_item'
-
 # A function-based view to update an InventoryItem instance
 
 def UpdateView(request, pk):

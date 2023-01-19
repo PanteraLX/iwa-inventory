@@ -1,9 +1,9 @@
 from django import forms
 from app.models import InventoryItem, InventoryItemImage
 from django.forms import ClearableFileInput
+from django.contrib.auth.models import User as DjangoUser
 
-
-inventory_item_css_class = 'shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+inventory_item_css_class = 'iwa-input'
 
 class InventoryItemForm(forms.ModelForm):
     class Meta:
@@ -26,5 +26,17 @@ class InventoryItemImageForm(forms.ModelForm):
         }
         
 
+user_css_class = 'iwa-input'
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = DjangoUser
+        fields = ['username', 'first_name', 'last_name', 'email']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': user_css_class}),
+            'first_name': forms.TextInput(attrs={'class': user_css_class}),
+            'last_name': forms.TextInput(attrs={'class': user_css_class}),
+            'email': forms.TextInput(attrs={'class': user_css_class}),
+        }
 
 

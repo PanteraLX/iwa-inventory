@@ -527,7 +527,7 @@ video {
   opacity: 0;
 }
 
-.btn {
+button.btn, button.iwa-btn, a.btn, a.iwa-btn {
   margin-top: 1rem;
   border-radius: 0.375rem;
   --tw-bg-opacity: 1;
@@ -543,7 +543,7 @@ video {
   color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 
-.btn:hover {
+button.btn:hover, button.iwa-btn:hover, a.btn:hover, a.iwa-btn:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(125 131 148 / var(--tw-bg-opacity));
 }

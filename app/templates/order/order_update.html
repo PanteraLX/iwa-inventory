@@ -21,13 +21,15 @@ Order Update
 
 <script>
 
+    /**
+     * This is an example of how to add custom buttons to a date input field.
+     */
     const createDateShortcut = (text, inputElement, dateOffset = {}, readFromInput) => {
         const link = document.createElement('span');
         link.innerText = text;
         dateOffset.year = dateOffset.year || 0;
         dateOffset.month = dateOffset.month || 0;
         dateOffset.day = dateOffset.day || 0;
-        console.log(dateOffset)
         const date = readFromInput ? new Date(inputElement.value) : new Date();
         link.addEventListener('click', () => {
             const inOneWeek = new Date(
@@ -35,7 +37,7 @@ Order Update
                 date.getMonth() + dateOffset.month,
                 date.getDate() + dateOffset.day
             );
-            endedAtInput.value = inOneWeek.toISOString().split('T')[0];
+            inputElement.value = inOneWeek.toISOString().split('T')[0];
         });
         link.classList.add('iwa-badge');
         return link;
@@ -44,8 +46,8 @@ Order Update
     const startedAtButtons = document.getElementById('custom_started_at');
     const startedAtInput = document.getElementById('id_started_at');
     startedAtButtons.hidden = false
-    startedAtButtons.appendChild(createDateShortcut('Today', startedAtInput, { year: 0, month: 0, day: 0 }));
 
+    startedAtButtons.appendChild(createDateShortcut('Today', startedAtInput, { year: 0, month: 0, day: 0 }));
 
     const endedAtButtons = document.getElementById('custom_ended_at');
     const endedAtInput = document.getElementById('id_ended_at');

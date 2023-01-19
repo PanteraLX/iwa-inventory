@@ -100,3 +100,21 @@ class Order(models.Model):
 
     def __str__(self):
         return self.item.name + " ordered by " + self.user.username
+
+# A model for images that will be associated with the InventoryItem model
+
+class InventoryItemImage(models.Model):
+    inventory_item = models.ForeignKey(
+        InventoryItem,
+        default=None,
+        on_delete=models.CASCADE,
+        )
+    uploaded_at = models.DateTimeField(
+        auto_now_add=True
+        )
+    image = models.FileField(
+        upload_to='images/'
+        )
+    
+    def __str__(self):
+        return self.inventory_item.name + " image"

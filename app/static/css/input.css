@@ -9,7 +9,7 @@
     opacity: 1;
   }
   
-  .hide {
+.hide {
     transform: opacity-0 scale-95;
     transition: ease-in duration-75;
     visibility: hidden;
@@ -17,7 +17,6 @@
   }
   
 
-  .btn {
-    @apply text-gray-300 bg-[#696C7F] hover:bg-[#7D8394] px-3 py-2 rounded-md text-sm font-medium mt-4 w-full #{important};
-  }
-
+.btn {
+    @apply text-gray-300 bg-[#696C7F] hover:bg-[#7D8394] px-3 py-2 rounded-md text-sm font-medium mt-4 w-full;
+}

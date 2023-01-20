@@ -30,7 +30,7 @@ class InventoryItemListView(ListView):
 
 
 active_inventory_items_list = InventoryItemListView.as_view(
-    queryset=InventoryItem.objects.active()[:5],
+    queryset=InventoryItem.objects.active(),
     context_object_name='inventory_items_list',
     template_name='inventory/inventory_items.html',
 )

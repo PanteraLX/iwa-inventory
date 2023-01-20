@@ -29,8 +29,11 @@ class InventoryItemFormView(CustomFormView):
         ''' GET request handler'''
         pk = self.extract_pk(kwargs)
         form = self.form_class(instance=self.extract_object(pk))
-        image_form = InventoryItemImageForm()
-        return render(request, self.template_name, {'form': form, 'image_form': image_form, **self.get_context_data(request, *args, **kwargs)})
+        new_images = InventoryItemImageForm()
+        existing_images = InventoryItemImage.objects.filter(inventory_item=self.extract_object(pk))
+        return render(request, self.template_name, 
+                        {'form': form, 'new_images': new_images, 'existing_images': existing_images, 
+                        **self.get_context_data(request, *args, **kwargs)})
 
     def post(self, request, *args, **kwargs):
         ''' POST request handler'''
@@ -49,4 +52,7 @@ class InventoryItemFormView(CustomFormView):
 
     def get_context_data(self, request, *args, **kwargs):
         ''' Returns the context data for the view'''
-        return {'method': 'Create' if not self.extract_pk(kwargs) else 'Update'}
+        return {'method': 'Create' if not self.extract_pk(kwargs) else 'Update',
+                'new_existing_image': 'New Images' if self.extract_pk(kwargs) else 'Images',
+                'existing_images_label': 'Existing Images' if self.extract_pk(kwargs) else '',
+                }

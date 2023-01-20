@@ -3,16 +3,9 @@ from django.contrib.auth.models import User as DjangoUser
 
 # Create your models here.
 
-class CustomQuerySet(models.QuerySet):
-    def delete(self):
-        self.update(active=False)
-
 class ActiveManager(models.Manager):
     def active(self):
         return self.model.objects.filter(active=True)
-
-    def get_queryset(self):
-        return CustomQuerySet(self.model, using=self._db)
 
 class InventoryItem(models.Model):
     name = models.CharField(
@@ -47,10 +40,6 @@ class InventoryItem(models.Model):
     )
 
     objects = ActiveManager()
-
-    def delete(self):
-        self.active = False
-        self.save()
 
     def __str__(self):
         return self.name
@@ -113,7 +102,8 @@ class InventoryItemImage(models.Model):
         auto_now_add=True
         )
     image = models.FileField(
-        upload_to='images/'
+        upload_to='images/',
+        blank=True,
         )
     
     def __str__(self):

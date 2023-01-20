@@ -32,12 +32,13 @@ Order Update
         dateOffset.day = dateOffset.day || 0;
         const date = readFromInput ? new Date(inputElement.value) : new Date();
         link.addEventListener('click', () => {
-            const inOneWeek = new Date(
+            const dateWithOffset = new Date(
                 date.getFullYear() + dateOffset.year,
                 date.getMonth() + dateOffset.month,
-                date.getDate() + dateOffset.day
+                date.getDate() + dateOffset.day,
+                date.getHours(),
             );
-            inputElement.value = inOneWeek.toISOString().split('T')[0];
+            inputElement.value = dateWithOffset.toISOString().split('T')[0];
         });
         link.classList.add('iwa-badge');
         return link;
@@ -64,5 +65,21 @@ Order Update
     endedAtButtons.appendChild(todayLinks);
     endedAtButtons.appendChild(inOneWeekLinks);
     endedAtButtons.appendChild(inOneMonthLinks);
+
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    console.log(params)
+
+    const itemInput = document.getElementById('id_item');
+    Array.from(itemInput.options).map(option => option.selected = (option.value === params.inventory_item));
+
+    const userInput = document.getElementById('id_user');
+    Array.from(userInput.options).map(option => option.selected = (option.value === params.user));
+
+    if (params.now) {
+        const now = new Date();
+        startedAtInput.value = now.toISOString().split('T')[0];
+        endedAtInput.value = now.toISOString().split('T')[0];
+    }
 </script>
 {% endblock %}

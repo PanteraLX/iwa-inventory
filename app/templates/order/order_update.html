@@ -68,13 +68,16 @@ Order Update
 
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
-    console.log(params)
 
-    const itemInput = document.getElementById('id_item');
-    Array.from(itemInput.options).map(option => option.selected = (option.value === params.inventory_item));
+    if (params.inventory_item) {
+        const itemInput = document.getElementById('id_item');
+        Array.from(itemInput.options).map(option => option.selected = (option.value === params.inventory_item));
+    }
 
-    const userInput = document.getElementById('id_user');
-    Array.from(userInput.options).map(option => option.selected = (option.value === params.user));
+    if (params.user) {
+        const userInput = document.getElementById('id_user');
+        Array.from(userInput.options).map(option => option.selected = (option.value === params.user));
+    }
 
     if (params.now) {
         const now = new Date();

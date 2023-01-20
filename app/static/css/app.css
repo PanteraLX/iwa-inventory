@@ -670,6 +670,12 @@ thead.iwa-table-head {
   color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
+tr.iwa-table-row {
+  border-bottom-width: 1px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
 th.iwa-table-head-cell,
 td.iwa-table-cell {
   padding-left: 1rem;

@@ -53,6 +53,10 @@ thead.iwa-table-head {
   @apply text-xs text-gray-700 uppercase bg-gray-50;
 }
 
+tr.iwa-table-row {
+  @apply bg-gray-50 border-b;
+}
+
 th.iwa-table-head-cell,
 td.iwa-table-cell {
   @apply px-4 py-3;

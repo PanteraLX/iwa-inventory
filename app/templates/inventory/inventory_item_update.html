@@ -14,12 +14,27 @@ Inventory Item {{ method }}
         {{ field }}
     </div>
     {% endfor %}
-    {% for form in image_form %}
+    {% for form in new_images %}
     <div class="form__field mb-6">
-        <label class="block mb-2 text-sm font-medium text-gray-900" for="formInput#text">{{ form.label }}</label>
+        <label class="block mb-2 text-sm font-medium text-gray-900" for="formInput#text">{{ new_existing_image }}</label>
         {{ form }}
     </div>
     {% endfor %}
-    <button class="iwa-btn" type="submit">Submit</button>
+    <!-- Show existing images belonging to the inventory item -->
+    <label class="block mb-2 text-sm font-medium text-gray-900" for="formInput#text">{{ existing_images_label }}</label>
+    <div class="mb-6 flex flex-row">
+        {% for image in existing_images %}
+        <div class="basis-1/6 mx-2">
+            <img src="{{ image.image.url }}" alt="{{ image.image.name }}">
+            <div>
+                <input type="checkbox" name="delete_image" value="{{ image.id }}">
+                <label class="text-sm font-medium text-gray-900" for="delete_image">Delete Image</label>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="mb-16">
+        <button class="iwa-btn" type="submit">Submit</button>
+    </div>
 </form>
 {% endblock %}

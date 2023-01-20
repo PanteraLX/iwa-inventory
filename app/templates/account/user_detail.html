@@ -5,43 +5,45 @@ Inventory Item Update
 {% endblock %}
 
 {% block content %}
-<section>
-    <div class="py-4 px-4 mx-auto max-w-2xl lg:py-8 shadow-md rounded-md bg-white">
-        <h2 class="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl">{{ user.username }}</h2>
-        <dl>
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ user.description }}</dd>
-        </dl>
-        <dl class="flex items-center space-x-6">
-            <div>
-                <dt class="mb-2 font-semibold leading-none text-gray-900">ID</dt>
-                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ user.id }}</dd>
-            </div>
-            <div>
-                <dt class="mb-2 font-semibold leading-none text-gray-900">Username</dt>
-                <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{{ user.username }}</dd>
-            </div>
-            <div>
-                <dt class="mb-2 font-semibold leading-none text-gray-900">First name</dt>
-                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ user.first_name }}</dd>
-            </div>
-            <div>
-                <dt class="mb-2 font-semibold leading-none text-gray-900">Last name</dt>
-                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ user.last_name }}</dd>
-            </div>
-            <div>
-                <dt class="mb-2 font-semibold leading-none text-gray-900">Email</dt>
-                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ user.email }}</dd>
-            </div>
+<section class="iwa-section">
 
-        </dl>
-        <div class="flex items-center space-x-4">
-            <a href="{% url 'user_update' user.id %}" class="iwa-btn">
-                Edit
-            </a>   
-            <a href="{% url 'user_update' user.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">
-                Delete
-            </a> 
+    <h1 class="iwa-h1">{{ user.username }}</h1>
+
+    <dl>
+        <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ user.description }}</dd>
+    </dl>
+
+    <dl class="flex items-center space-x-6">
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">ID</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ user.id }}</dd>
         </div>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Username</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{{ user.username }}</dd>
+        </div>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">First name</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ user.first_name }}</dd>
+        </div>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Last name</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ user.last_name }}</dd>
+        </div>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Email</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ user.email }}</dd>
+        </div>
+    </dl>
+    
+    <div class="flex items-center space-x-4">
+        <a href="{% url 'user_update' user.id %}" class="iwa-btn">
+            Edit
+        </a>
+        <a href="{% url 'user_update' user.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">
+            Delete
+        </a>
     </div>
-  </section>
+
+</section>
 {% endblock %}

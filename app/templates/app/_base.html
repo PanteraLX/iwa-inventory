@@ -89,7 +89,9 @@
                   <!-- Active: "bg-gray-100", Not Active: "" -->
                   {% if user.is_authenticated %}
                   <a href="{% url 'user_detail' user.id %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                    id="user-menu-item-0">Your Profile</a>
+                    id="user-menu-item-0">Profile</a>
+                  <a href="{% url 'user_orders' user.id %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                    id="user-menu-item-0">My orders</a>
                   <a href="/accounts/logout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                     id="user-menu-item-2">Logout</a>
                   {% else %}

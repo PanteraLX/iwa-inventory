@@ -4,6 +4,7 @@ from app.view.form import CustomFormView
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from app.models import Order
+from django.utils import timezone
 
 
 class OrderDetailView(DetailView):
@@ -13,12 +14,22 @@ class OrderDetailView(DetailView):
     context_object_name = 'order'
 
 class OrderListView(ListView):
-    ''' A list view for the account models'''
+    ''' A list view for the order model'''
     model = Order
-    queryset = Order.objects.all()
     template_name = 'order/order_list.html'
     context_object_name = 'orders'
-
+    
+    # Get all orders
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        orders = Order.objects.all()
+        if self.request.user.is_authenticated and not self.request.user.is_superuser:
+            orders = orders.filter(user=self.request.user)
+        expired_orders = orders.filter(ended_at__lt=timezone.now())
+        context['all'] = orders
+        context['expired'] = expired_orders
+        return context
+    
 class OrderFormView(CustomFormView):
     ''' A custom form view that can be used to create and update order objects'''
     template_name = 'order/order_update.html'

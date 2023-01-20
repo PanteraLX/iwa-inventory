@@ -25,3 +25,6 @@
     @apply shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
   }
 
+  span.iwa-badge {
+    @apply bg-white text-gray-800 text-xs font-medium px-2 py-1 rounded-md cursor-pointer;
+  }

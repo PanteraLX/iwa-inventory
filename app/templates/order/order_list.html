@@ -6,12 +6,12 @@ Orders list
 
 {% block content %} 
 
-<h1>
+<h1 class="mb-6 text-xl font-bold">
     Orders list
 </h1>
 
-<table class="table-auto w-full">
-    <thead>
+<table class="table-auto w-full text-sm text-left text-gray-500">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
         <tr>
             <th class="px-4 py-2">User</th>
             <th class="px-4 py-2">Item</th>
@@ -22,16 +22,16 @@ Orders list
     </thead>
     <tbody>
         {% for order in orders %}
-        <tr>
+        <tr class="bg-white border-b">
             <td class="border px-4 py-2">{{ order.user }}</td>
             <td class="border px-4 py-2">{{ order.item }}</td>
             <td class="border px-4 py-2">{{ order.quantity }}</td>
             <td class="border px-4 py-2">{{ order.state }}</td>
             <td class="border px-4 py-2">
-                <a href="{% url 'order_detail' order.id %}" class="iwa-btn">
+                <a href="{% url 'order_detail' order.id %}" class="iwa-btn mr-1">
                     View
                 </a>
-                <a href="{% url 'order_update' order.id %}" class="iwa-btn">
+                <a href="{% url 'order_update' order.id %}" class="iwa-btn mr-1">
                     Edit
                 </a>
                 <a href="{% url 'order_update' order.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">

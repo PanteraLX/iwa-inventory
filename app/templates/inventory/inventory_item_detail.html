@@ -71,8 +71,9 @@ Inventory Item Update
         <div class="flex items-center space-x-4">
             <!-- A button to link to the update page of the inventory item.-->
             <a href="{% url 'inventory_item_update' inventory_item.id %}" class="btn">Update</a>
+            {% if inventory_item.active == True %}
             <a href="{% url 'archive_inventory_item' inventory_item.id %}" class="btn">Archive</a>
-            {% if inventory_item.active == False %}
+            {% else %}
             <a href="{% url 'unarchive_inventory_item' inventory_item.id %}" class="btn">Unarchive</a>
             {% endif %}
         </div>

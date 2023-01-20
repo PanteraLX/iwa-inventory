@@ -5,44 +5,47 @@ User list
 
 {% block content %}
 {% if users %}
-<h1 class="mb-6 text-xl font-bold">
-    User list
-</h1>
-<table class="table-auto w-full text-sm text-left text-gray-500">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-        <tr>
-            <th class="px-4 py-2">Username</th>
-            <th class="px-4 py-2">Email</th>
-            <th class="px-4 py-2">First name</th>
-            <th class="px-4 py-2">Last name</th>
-            <th class="px-4 py-2">Active</th>
-            <th class="px-4 py-2">Super User</th>
-            <th class="px-4 py-2">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr class="bg-white border-b">
-            <td class="border px-4 py-2">{{ user.username }}</td>
-            <td class="border px-4 py-2">{{ user.email }}</td>
-            <td class="border px-4 py-2">{{ user.first_name }}</td>
-            <td class="border px-4 py-2">{{ user.last_name }}</td>
-            <td class="border px-4 py-2">{{ user.is_active }}</td>
-            <td class="border px-4 py-2">{{ user.is_superuser }}</td>
-            <td class="border px-4 py-2">
-                <a href="{% url 'user_detail' user.id %}" class="iwa-btn mr-1">
-                    View
-                </a>
-                <a href="{% url 'user_update' user.id %}" class="iwa-btn mr-1">
-                    Edit
-                </a>
-                <a href="{% url 'user_update' user.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">
-                    Delete
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<section class="iwa-section">
+    <h1 class="iwa-h1">
+        User list
+    </h1>
+    <table class="iwa-table">
+        <thead class="iwa-table-head">
+            <tr class="border-b">
+                <th class="iwa-table-head-cell">Username</th>
+                <th class="iwa-table-head-cell">Email</th>
+                <th class="iwa-table-head-cell">First name</th>
+                <th class="iwa-table-head-cell">Last name</th>
+                <th class="iwa-table-head-cell">Active</th>
+                <th class="iwa-table-head-cell">Super User</th>
+                <th class="iwa-table-head-cell">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr class="iwa-table-row">
+                <td class="iwa-table-cell">{{ user.username }}</td>
+                <td class="iwa-table-cell">{{ user.email }}</td>
+                <td class="iwa-table-cell">{{ user.first_name }}</td>
+                <td class="iwa-table-cell">{{ user.last_name }}</td>
+                <td class="iwa-table-cell">{{ user.is_active }}</td>
+                <td class="iwa-table-cell">{{ user.is_superuser }}</td>
+                <td class="iwa-table-cell">
+                    <a href="{% url 'user_detail' user.id %}" class="iwa-btn mr-1">
+                        View
+                    </a>
+                    <a href="{% url 'user_update' user.id %}" class="iwa-btn mr-1">
+                        Edit
+                    </a>
+                    <a href="{% url 'user_update' user.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
 {% endif %}
 {% endblock %}

@@ -6,10 +6,12 @@ Products
 {% endblock %}
 
 {% block content %}
+{% if request.path == "/" %}
 <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
     <div class="mb-8">
         <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">The ICT Warrior Academy's inventory of great things</h2>
-        <p class="text-gray-500 sm:text-xl">We've seen the Amazon, hitchhiked across the Galaxus and searched all Microspot's. What we found is in our basement.<br>It's simply the best.</p>
+        <p class="text-gray-500 sm:text-xl">We've seen the Amazon, hitchhiked across the Galaxus and searched all Microspot's. What we found is in our basement.</p>
+        <p class="text-gray-500 sm:text-xl">Simply the best.</p>
     </div>
     <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
         <div>
@@ -35,12 +37,42 @@ Products
         </div>
     </div>
 </div>
+{% endif %}
 
 
 
 <div class="bg-white">
     <div class="mx-auto max-w-1xl py-16 px-2 sm:py-12 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h3 class="mt-0 mb-8 text-4xl text-gray-700 ">Inventory</h3>
+        {% if request.path == "/" %}
+        <h3 class="mt-0 mb-8 text-4xl text-gray-700 ">Inventory </h3>
+        {% endif %}
+        {% if request.path == "/inventory_item/complete" %}
+        <h3 class="mt-0 mb-8 text-4xl text-gray-700 ">Inventory complete</h3>
+        {% endif %}
+        {% if request.path == "/inventory_item/" %}
+        <h3 class="mt-0 mb-8 text-4xl text-gray-700 ">Inventory active</h3>
+        {% endif %}
+        {% if request.path == "/inventory_item/archive" %}
+        <h3 class="mt-0 mb-8 text-4xl text-gray-700 ">Inventory archive</h3>
+        {% endif %}
+        
+        {% if request.path == "/inventory_item/" %}
+        <!-- PLussymbol to add Items-->
+            <div class="flex justify-end on origin-top-right -mt-20 mb-8">
+                {% if user.is_superuser %}
+                <div class= "drop-shadow-lg" >
+                    <a type="button"  href="{% url 'inventory_item_create' %}"
+                        class="flex max-w-xs mb-8 -ml-0 rounded-full bg-gray-900 focus:outline-none focus:ring-1 focus:ring-grey focus:ring-offset-2 focus:ring-offset-grey-800"
+                        id="create-new-item-button">
+                        <img class="h-20 w-20 rounded-full" src="{% static '/images/symbols/add.png' %}" alt="">
+                        <span class="sr-only">Create new Item</span>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        {% endif %}
+        
+        
 
         <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {% if inventory_items_list %}
@@ -89,10 +121,29 @@ Products
 <div class="mt-5 mb-10 w-60">
     <a class="btn" href="{% url 'complete_inventory_items_list' %}">Show all inventory items</a>
 </div>
-{% else %}
+{% endif %}
+
+{% if request.path == "/inventory_item/" %}
+<div class="mt-5 mb-10 w-60">
+    <a class="btn" href="{% url 'complete_inventory_items_list' %}">Show all inventory items</a>
+</div>
+{% endif %}
+
+{% if request.path == "/inventory_item/complete" %}
 <div class="mt-5 mb-10 w-60">
     <a class="btn" href="{% url 'inventory_items' %}">Show only active inventory items</a>
 </div>
 {% endif %}
+{% if request.path == "/inventory_item/archive" %}
+<div class="mt-5 mb-10 w-60">
+    <a class="btn" href="{% url 'complete_inventory_items_list' %}">Show all inventory items</a>
+</div>
 {% endif %}
+
+
+
+
+{% endif %}
+
+
 {% endblock %}

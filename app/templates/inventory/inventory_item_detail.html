@@ -73,7 +73,7 @@ Inventory Item Update
             {% endif %}
             </div>
         </div>
-
+        {% if user.is_superuser %}
         <div class="flex items-center space-x-4">
             <!-- A button to link to the update page of the inventory item.-->
             <a href="{% url 'inventory_item_update' inventory_item.id %}" class="btn">Update</a>
@@ -87,6 +87,7 @@ Inventory Item Update
             <a href="{% url 'order_create' %}?inventory_item={{ inventory_item.id | urlencode }}&user={{ user.id | urlencode }}&now=1" class="btn">Order</a>
             {% endif %}
         </div>
+        {% endif %}
     </div>
   </section>
 {% endblock %}

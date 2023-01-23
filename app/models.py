@@ -6,6 +6,8 @@ from django.contrib.auth.models import User as DjangoUser
 class ActiveManager(models.Manager):
     def active(self):
         return self.model.objects.filter(active=True)
+    def inactive(self):
+        return self.model.objects.filter(active=False)
 
 class InventoryItem(models.Model):
     name = models.CharField(
@@ -59,19 +61,6 @@ class Order(models.Model):
         help_text='Item'
     )
 
-    STATE_CHOICES = (
-        ('ACTIVE', 'active'),
-        ('ARCHIVED', 'archived'),
-        ('RESERVED', 'reserved'),
-    )
-
-    state = models.CharField(
-        max_length=200,
-        choices=STATE_CHOICES,
-        default='ACTIVE',
-        verbose_name='Status',
-        help_text='status'
-    )
     quantity = models.IntegerField(
         verbose_name='Anzahl',
         help_text='Anzahl'
@@ -85,6 +74,12 @@ class Order(models.Model):
         null=True,
         verbose_name='Ende',
         help_text='Ende der Ausleihe'
+    )
+
+    returned = models.BooleanField(
+        default=False,
+        verbose_name='Zurückgegeben',
+        help_text='Item wurde zurückgegeben'
     )
 
     def __str__(self):

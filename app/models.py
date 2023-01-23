@@ -6,6 +6,8 @@ from django.contrib.auth.models import User as DjangoUser
 class ActiveManager(models.Manager):
     def active(self):
         return self.model.objects.filter(active=True)
+    def inactive(self):
+        return self.model.objects.filter(active=False)
 
 class InventoryItem(models.Model):
     name = models.CharField(

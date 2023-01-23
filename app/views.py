@@ -29,6 +29,12 @@ class InventoryItemListView(ListView):
     context_object_name = 'inventory_items'
 
 
+active_inventory_items_list_home = InventoryItemListView.as_view(
+    queryset=InventoryItem.objects.active()[:8],
+    context_object_name='inventory_items_list',
+    template_name='inventory/inventory_items.html',
+)
+
 active_inventory_items_list = InventoryItemListView.as_view(
     queryset=InventoryItem.objects.active(),
     context_object_name='inventory_items_list',
@@ -37,6 +43,12 @@ active_inventory_items_list = InventoryItemListView.as_view(
 
 complete_inventory_items_list = InventoryItemListView.as_view(
     queryset=InventoryItem.objects.all(),
+    context_object_name='inventory_items_list',
+    template_name='inventory/inventory_items.html',    
+)
+
+archive_inventory_items_list = InventoryItemListView.as_view(
+    queryset=InventoryItem.objects.inactive(),
     context_object_name='inventory_items_list',
     template_name='inventory/inventory_items.html',    
 )

@@ -18,51 +18,7 @@ Order Update
     {% endfor %}
     <button class="iwa-btn" type="submit">Submit</button>
 </form>
-
-<script>
-
-    /**
-     * This is an example of how to add custom buttons to a date input field.
-     */
-    const createDateShortcut = (text, inputElement, dateOffset = {}, readFromInput) => {
-        const link = document.createElement('span');
-        link.innerText = text;
-        dateOffset.year = dateOffset.year || 0;
-        dateOffset.month = dateOffset.month || 0;
-        dateOffset.day = dateOffset.day || 0;
-        const date = readFromInput ? new Date(inputElement.value) : new Date();
-        link.addEventListener('click', () => {
-            const inOneWeek = new Date(
-                date.getFullYear() + dateOffset.year,
-                date.getMonth() + dateOffset.month,
-                date.getDate() + dateOffset.day
-            );
-            inputElement.value = inOneWeek.toISOString().split('T')[0];
-        });
-        link.classList.add('iwa-badge');
-        return link;
-    }
-
-    const startedAtButtons = document.getElementById('custom_started_at');
-    const startedAtInput = document.getElementById('id_started_at');
-    startedAtButtons.hidden = false
-
-    startedAtButtons.appendChild(createDateShortcut('Today', startedAtInput, { year: 0, month: 0, day: 0 }));
-
-    const endedAtButtons = document.getElementById('custom_ended_at');
-    const endedAtInput = document.getElementById('id_ended_at');
-    endedAtButtons.hidden = false
-
-    const todayLinks = createDateShortcut('Today', endedAtInput, { year: 0, month: 0, day: 0 });
-    todayLinks.classList.add('mr-2');
-
-    const inOneWeekLinks = createDateShortcut('In One Week', endedAtInput, { year: 0, month: 0, day: 7 });
-    inOneWeekLinks.classList.add('mr-2');
-
-    const inOneMonthLinks = createDateShortcut('In One Month', endedAtInput, { year: 0, month: 1, day: 0 });
-
-    endedAtButtons.appendChild(todayLinks);
-    endedAtButtons.appendChild(inOneWeekLinks);
-    endedAtButtons.appendChild(inOneMonthLinks);
-</script>
+</section>
+{% load static %}
+<script src="{% static 'js/order-update.js' %}"></script>
 {% endblock %}

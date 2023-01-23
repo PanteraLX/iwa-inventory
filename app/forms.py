@@ -45,12 +45,20 @@ order_css_class = 'iwa-input'
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['user', 'item', 'state', 'quantity', 'started_at', 'ended_at']
+        fields = ['user', 'item', 'returned', 'quantity', 'started_at', 'ended_at']
         widgets = {
             'user': forms.Select(attrs={'class': order_css_class}),
             'item': forms.Select(attrs={'class': order_css_class}),
-            'state': forms.Select(attrs={'class': order_css_class}),
+            'returned': forms.CheckboxInput(attrs={'class': order_css_class }),
             'quantity': forms.NumberInput(attrs={'class': order_css_class}),
             'started_at': forms.DateInput(attrs={'class': order_css_class, 'type': 'date'}, format='%Y-%m-%d'),
             'ended_at': forms.DateInput(attrs={'class': order_css_class, 'type': 'date'}, format='%Y-%m-%d'),
         }
+
+    # Disable the 'returned' field if the order has not been created yet and the user is not an admin
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if kwargs['instance'] is None or not kwargs['instance'].user.is_superuser:
+            # Hide de 'returned' field along with its label
+            self.fields['returned'].label = ''
+            self.fields['returned'].widget = forms.HiddenInput()

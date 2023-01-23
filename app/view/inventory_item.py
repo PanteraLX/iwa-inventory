@@ -1,7 +1,6 @@
 from django.views.generic import DetailView, ListView
 from app.forms import InventoryItemForm, InventoryItemImageForm
 from app.view.form import CustomFormView
-from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from app.models import InventoryItem, InventoryItemImage
 
@@ -42,12 +41,21 @@ class InventoryItemFormView(CustomFormView):
         image_form = InventoryItemImageForm(request.POST, request.FILES)
         images = request.FILES.getlist('image')
         if form.is_valid() and image_form.is_valid():
+
+            # Save the inventory item and create the images
             inventory_item = form.save(commit=False)
             inventory_item.save()
             for image in images:
-                InventoryItemImage.objects.create(
-                    inventory_item=inventory_item, image=image)
+                InventoryItemImage.objects.create(inventory_item=inventory_item, image=image)
+
+            # If the checkbox with name 'delete_image' is checked, delete the image with the id in value
+            if 'delete_image' in request.POST:
+                delete_image = request.POST.getlist('delete_image')
+                for image in delete_image:
+                    InventoryItemImage.objects.filter(id=image).delete()
             return redirect(self.success_url, pk=inventory_item.id)
+        
+        # If the form is not valid, render the form with the errors
         return render(request, self.template_name, {'form': form, 'image_form': image_form, **self.get_context_data(request, *args, **kwargs)})
 
     def get_context_data(self, request, *args, **kwargs):

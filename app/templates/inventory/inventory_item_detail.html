@@ -39,12 +39,17 @@ Inventory Item Update
         <div id="default-carousel" class="relative" data-carousel="static">
             <!-- Carousel wrapper -->
             <div class="relative h-56 max-w-xl overflow-hidden rounded-lg md:h-96">
-                <!-- Iterate over the images of inventory_item and create a corresponding image -->                
+                <!-- Iterate over the images of inventory_item and create a corresponding image -->
+                {% if images|length > 1 %}                
                 {% for image in images %}
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
                     <img src="{{ image.image.url }}" class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                 </div>
                 {% endfor %}
+                {% else %}
+                <img src="{{ images.0.image.url }}" class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                {% endif %}
+            {% if images|length > 1 %}
             <!-- Slider indicators -->
             <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
                 {% for i in images %}
@@ -65,16 +70,21 @@ Inventory Item Update
                     <span class="sr-only">Next</span>
                 </span>
             </button>
+            {% endif %}
             </div>
         </div>
         {% if user.is_superuser %}
         <div class="flex items-center space-x-4">
             <!-- A button to link to the update page of the inventory item.-->
             <a href="{% url 'inventory_item_update' inventory_item.id %}" class="btn">Update</a>
+
             {% if inventory_item.active == True %}
             <a href="{% url 'archive_inventory_item' inventory_item.id %}" class="btn">Archive</a>
             {% else %}
             <a href="{% url 'unarchive_inventory_item' inventory_item.id %}" class="btn">Unarchive</a>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <a href="{% url 'order_create' %}?inventory_item={{ inventory_item.id | urlencode }}&user={{ user.id | urlencode }}&now=1" class="btn">Order</a>
             {% endif %}
         </div>
         {% endif %}

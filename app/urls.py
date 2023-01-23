@@ -15,15 +15,13 @@ urlpatterns = [
     path('inventory_item/complete', views.complete_inventory_items_list, name='complete_inventory_items_list'),
 
     path('account/<int:pk>/update', AccountFormView.as_view(), name='user_update'),
+    path('account/<int:pk>/orders', OrderListView.as_view(), name='user_orders'),
     path('account/<int:pk>', AccountDetailView.as_view(), name='user_detail'),
     path('account/create', AccountFormView.as_view(), name='user_create'),
     path('accounts', AccountListView.as_view(), name='user_list'),
-
 
     path('order/<int:pk>/update', OrderFormView.as_view(), name='order_update'),
     path('order/<int:pk>', OrderDetailView.as_view(), name='order_detail'),
     path('order/create', OrderFormView.as_view(), name='order_create'),
     path('orders', OrderListView.as_view(), name='order_list'),
-
-
 ]

@@ -2,7 +2,7 @@ from django.urls import path
 from app import views
 from app.view.account import AccountDetailView, AccountListView, AccountFormView
 from app.view.order import OrderDetailView, OrderListView, OrderFormView
-from app.view.inventory_item import InventoryItemDetailView, InventoryItemFormView
+from app.view.inventory_item import InventoryItemDetailView, InventoryItemFormView, image_upload    
 
 
 urlpatterns = [
@@ -11,6 +11,7 @@ urlpatterns = [
     path('inventory_item/<int:pk>/update', InventoryItemFormView.as_view(), name='inventory_item_update'),
     path('inventory_item/<int:pk>/', InventoryItemDetailView.as_view(), name='inventory_item_detail'),
     path('inventory_item/create', InventoryItemFormView.as_view(), name='inventory_item_create'),
+    path('inventory_item/create_with_cam', image_upload, name='image_upload'),
     path('inventory_item/archive/<int:id>/', views.inventory_item_archive, name='archive_inventory_item'),
     path('inventory_item/unarchive/<int:id>/', views.inventory_item_unarchive, name='unarchive_inventory_item'),
     path('inventory_item/complete', views.complete_inventory_items_list, name='complete_inventory_items_list'),

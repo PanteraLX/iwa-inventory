@@ -1,8 +1,10 @@
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView
 from app.forms import InventoryItemForm, InventoryItemImageForm
 from app.view.form import CustomFormView
 from django.shortcuts import render, redirect
 from app.models import InventoryItem, InventoryItemImage
+from django.core.files.base import ContentFile
+from urllib.request import urlopen
 
 
 class InventoryItemDetailView(DetailView):
@@ -64,3 +66,17 @@ class InventoryItemFormView(CustomFormView):
                 'new_existing_image': 'New Images' if self.extract_pk(kwargs) else 'Images',
                 'existing_images_label': 'Existing Images' if self.extract_pk(kwargs) else '',
                 }
+
+def image_upload(request):
+    context = dict()
+    if request.method == 'POST':
+        webimg = urlopen(request.POST["webimg"])
+        data = webimg.read()
+        content_file = ContentFile(data, 'webcam.jpg')
+        if content_file is not None:
+            obj = InventoryItemImage.objects.create(image=content_file)
+            obj.save()
+        else :
+            return redirect('/')
+        return redirect('/')
+    return render(request, 'inventory/inventory_item_camera.html', context=context)  

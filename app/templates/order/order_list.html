@@ -16,7 +16,6 @@ Orders list
             <th class="px-4 py-2">User</th>
             <th class="px-4 py-2">Item</th>
             <th class="px-4 py-2">Quantity</th>
-            <th class="px-4 py-2">State</th>
             <th class="px-4 py-2">Actions</th>
         </tr>
     </thead>
@@ -27,7 +26,6 @@ Orders list
             <td class="border px-4 py-2">{{ order.user }}</td>
             <td class="border px-4 py-2">{{ order.item }}</td>
             <td class="border px-4 py-2">{{ order.quantity }}</td>
-            <td class="border px-4 py-2">{{ order.state }}</td>
             <td class="border px-4 py-2">
                 <a href="{% url 'order_detail' order.id %}" class="iwa-btn mr-1">
                     View
@@ -45,7 +43,43 @@ Orders list
 </table>
 
 <h1 class="my-6 text-xl font-bold">
-    Past orders
+    Past due orders
+</h1>
+
+<table class="table-auto w-full text-sm text-left text-gray-500">
+    <thead class="text-xs text-gray-700 uppercase bg-[#fca5a5]">
+        <tr>
+            <th class="px-4 py-2">User</th>
+            <th class="px-4 py-2">Item</th>
+            <th class="px-4 py-2">Quantity</th>
+            <th class="px-4 py-2">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in past_due %}
+
+        <tr class="bg-white border-b">
+            <td class="border px-4 py-2">{{ order.user }}</td>
+            <td class="border px-4 py-2">{{ order.item }}</td>
+            <td class="border px-4 py-2">{{ order.quantity }}</td>
+            <td class="border px-4 py-2">
+                <a href="{% url 'order_detail' order.id %}" class="iwa-btn mr-1">
+                    View
+                </a>
+                <a href="{% url 'order_update' order.id %}" class="iwa-btn mr-1">
+                    Edit
+                </a>
+                <a href="{% url 'order_update' order.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h1 class="my-6 text-xl font-bold">
+    Settled orders
 </h1>
 
 <table class="table-auto w-full text-sm text-left text-gray-500">
@@ -54,18 +88,16 @@ Orders list
             <th class="px-4 py-2">User</th>
             <th class="px-4 py-2">Item</th>
             <th class="px-4 py-2">Quantity</th>
-            <th class="px-4 py-2">State</th>
             <th class="px-4 py-2">Actions</th>
         </tr>
     </thead>
     <tbody>
-        {% for order in expired %}
+        {% for order in settled %}
 
         <tr class="bg-white border-b">
             <td class="border px-4 py-2">{{ order.user }}</td>
             <td class="border px-4 py-2">{{ order.item }}</td>
             <td class="border px-4 py-2">{{ order.quantity }}</td>
-            <td class="border px-4 py-2">{{ order.state }}</td>
             <td class="border px-4 py-2">
                 <a href="{% url 'order_detail' order.id %}" class="iwa-btn mr-1">
                     View

@@ -25,9 +25,11 @@ class OrderListView(ListView):
         orders = Order.objects.all()
         if self.request.user.is_authenticated and not self.request.user.is_superuser:
             orders = orders.filter(user=self.request.user)
-        expired_orders = orders.filter(ended_at__lt=timezone.now())
+        past_due_orders = orders.filter(ended_at__lt=timezone.now(), returned=False)
+        settled_orders = orders.filter(ended_at__lt=timezone.now(), returned=True)
         context['all'] = orders
-        context['expired'] = expired_orders
+        context['past_due'] = past_due_orders
+        context['settled'] = settled_orders
         return context
     
 class OrderFormView(CustomFormView):

@@ -5,19 +5,22 @@ Order Update
 {% endblock %}
 
 {% block content %}
-<h1 class="mb-6 text-xl font-bold">{{ method }} Order</h1>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% for field in form %}
-    <div class="mb-6">
-        <label class="block mb-2 text-sm font-medium text-gray-900" for="{{ field.auto_id }}">{{ field.label }}</label>
-        {{ field }}
-        <div hidden="true" class="mt-2" id="custom_{{ field.name }}"></div>
-        {{ field.errors }}
-    </div>
-    {% endfor %}
-    <button class="iwa-btn" type="submit">Submit</button>
-</form>
+<section class="iwa-section">
+    <h1 class="iwa-h1">{{ method }} Order</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-6">
+            <label class="block mb-2 text-sm font-medium text-gray-900" for="{{ field.auto_id }}">
+                {{ field.label}}
+            </label>
+            {{ field }}
+            <div hidden="true" class="mt-2" id="custom_{{ field.name }}"></div>
+            {{ field.errors }}
+        </div>
+        {% endfor %}
+        <button class="iwa-btn" type="submit">Submit</button>
+    </form>
 </section>
 {% load static %}
 <script src="{% static 'js/order-update.js' %}"></script>

@@ -3,28 +3,61 @@
 @tailwind utilities;
 
 .show {
-    transform: opacity-100 scale-100;
-    transition: ease-out duration-100;
-    visibility: visible;
-    opacity: 1;
-  }
-  
+  transform: opacity-100 scale-100;
+  transition: ease-out duration-100;
+  visibility: visible;
+  opacity: 1;
+}
+
 .hide {
-    transform: opacity-0 scale-95;
-    transition: ease-in duration-75;
-    visibility: hidden;
-    opacity: 0;
-  }
-  
+  transform: opacity-0 scale-95;
+  transition: ease-in duration-75;
+  visibility: hidden;
+  opacity: 0;
+}
 
-  button.btn, button.iwa-btn, a.btn, a.iwa-btn {
-    @apply text-gray-300 bg-[#696C7F] hover:bg-[#7D8394] px-3 py-2 rounded-md text-sm font-medium mt-4 cursor-pointer;
-  }
 
-  input.iwa-input, select.iwa-input {
-    @apply shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
-  }
+button.btn,
+button.iwa-btn,
+a.btn,
+a.iwa-btn {
+  @apply text-gray-300 bg-[#696C7F] hover:bg-[#7D8394] px-3 py-2 rounded-md text-sm font-medium mt-4 cursor-pointer;
+}
 
-  span.iwa-badge {
-    @apply bg-white text-gray-800 text-xs font-medium px-2 py-1 rounded-md cursor-pointer;
-  }
+input.iwa-input,
+select.iwa-input {
+  @apply shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
+}
+
+span.iwa-badge {
+  @apply bg-white text-gray-800 text-xs font-medium px-2 py-1 rounded-md cursor-pointer;
+}
+
+h1.iwa-h1 {
+  @apply mb-6 text-xl font-semibold leading-none text-gray-900 md:text-2xl;
+}
+
+section.iwa-section {
+  @apply py-4 px-4 mx-auto mb-8 lg:py-8 shadow-md rounded-md bg-white border;
+}
+
+label.iwa-form-label {
+  @apply block mb-2 text-sm font-medium text-gray-900
+}
+
+table.iwa-table {
+  @apply table-auto w-full text-sm text-left text-gray-500;
+}
+
+thead.iwa-table-head {
+  @apply text-xs text-gray-700 uppercase bg-gray-50;
+}
+
+tr.iwa-table-row {
+  @apply bg-gray-50 border-b;
+}
+
+th.iwa-table-head-cell,
+td.iwa-table-cell {
+  @apply px-4 py-3;
+}

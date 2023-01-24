@@ -6,6 +6,7 @@ from django.contrib.auth.models import User as DjangoUser
 inventory_item_css_class = 'iwa-input'
 
 class InventoryItemForm(forms.ModelForm):
+    '''Form for creating and editing InventoryItems'''
     class Meta:
         model = InventoryItem
         fields = ['name', 'description', 'quantity', 'position', 'producer']
@@ -18,7 +19,9 @@ class InventoryItemForm(forms.ModelForm):
         }
 
 class InventoryItemImageForm(forms.ModelForm):
+    '''Form for creating and editing InventoryItemImages'''
     class Meta:
+        '''Meta class for InventoryItemImageForm'''
         model = InventoryItemImage
         fields = ['image']
         widgets = {
@@ -29,7 +32,9 @@ class InventoryItemImageForm(forms.ModelForm):
 user_css_class = 'iwa-input'
 
 class AccountForm(forms.ModelForm):
+    '''Form for creating and editing Accounts'''
     class Meta:
+        '''Meta class for AccountForm'''
         model = DjangoUser
         fields = ['username', 'first_name', 'last_name', 'is_active', 'email']
         widgets = {
@@ -43,9 +48,11 @@ class AccountForm(forms.ModelForm):
 order_css_class = 'iwa-input'
 
 class OrderForm(forms.ModelForm):
+    '''Form for creating and editing Orders'''
     class Meta:
+        '''Meta class for OrderForm'''
         model = Order
-        fields = ['user', 'item', 'returned', 'quantity', 'started_at', 'ended_at']
+        fields = ['item', 'user', 'returned', 'quantity', 'started_at', 'ended_at']
         widgets = {
             'user': forms.Select(attrs={'class': order_css_class}),
             'item': forms.Select(attrs={'class': order_css_class}),
@@ -57,6 +64,7 @@ class OrderForm(forms.ModelForm):
 
     # Disable the 'returned' field if the order has not been created yet and the user is not an admin
     def __init__(self, *args, **kwargs):
+        '''Initialize the OrderForm'''
         super().__init__(*args, **kwargs)
         if kwargs['instance'] is None or not kwargs['instance'].user.is_superuser:
             # Hide de 'returned' field along with its label

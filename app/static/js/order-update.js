@@ -85,3 +85,102 @@ const createDateShortcut = (text, inputElement, dateOffset = {}, readFromInput) 
     }
 })();
 
+
+
+
+/**
+ * Format a DateTime object to a string.
+ * 
+ * @param {*} date 
+ * @returns string
+ */
+const getTimestamp = (date) => {
+    const pad = (n, s = 2) => (`${new Array(s).fill(0)}${n}`).slice(-s);
+    return `${pad(date.getDate(),)}.${pad(date.getMonth() + 1)}.${pad(date.getFullYear(), 4)}`;
+}
+
+const writeErrorMessages = (errors) => {
+    const errorContainer = document.getElementById('error-container');
+    errorContainer.innerHTML = '';
+    const errorTitle = document.createElement('div');
+    errorTitle.innerText = `There is an overlap with existing orders:`;
+    errorTitle.classList.add('block', 'mb-2', 'text-sm', 'font-medium', 'text-gray-900');
+    errorContainer.appendChild(errorTitle);
+
+    errors.forEach((error, index) => {
+        const errorElement = document.createElement('div');
+        errorElement.innerText = `(${index + 1}.) Timespan: ${getTimestamp(error.startedAt)} - ${getTimestamp(error.endedAt)}, Quantity: ${error.quantity}`;
+        errorElement.classList.add('block', 'mb-2', 'text-sm', 'font-medium', 'text-gray-900', 'ml-4');
+        errorContainer.appendChild(errorElement);
+    });
+}
+
+
+
+
+
+
+/**
+ * Check if the order overlaps with other orders.
+ */
+(async () => {
+    const quantityInput = document.getElementById('id_quantity');
+    const startedAtInput = document.getElementById('id_started_at');
+    const endedAtInput = document.getElementById('id_ended_at');
+    const orderId = Number.parseInt(document.getElementById('id_item').value, 10)
+
+    if (!orderId) {
+        return;
+    }
+
+    /**
+    * 
+    * @returns {Promise<void>}
+    */
+    const changeCallback = async () => {
+        const quantity = Number.parseInt(quantityInput.value, 10);
+        const startedAt = new Date(startedAtInput.value);
+        const endedAt = new Date(endedAtInput.value);
+
+        const host = 'http://127.0.0.1:8000';
+        const url = new URL(`${host}/api/orders-by-item/${orderId}`);
+
+        const response = await fetch(url.href, {
+            mode: 'cors',
+            credentials: 'omit'
+        })
+
+        const data = await response.json();
+
+        if (!data) {
+            return;
+        }
+
+        const orders = data.map(dataSet => {
+            const order = {}
+            order.startedAt = new Date(dataSet.fields.started_at);
+            order.endedAt = new Date(dataSet.fields.ended_at);
+            order.quantity = dataSet.fields.quantity;
+            return order;
+        });
+
+        const ordersInTimeframe = orders
+            .filter(order => {
+                const selfDeclaredStartInTimeFrame = startedAt >= order.startedAt && startedAt <= order.endedAt;
+                const selfDeclaredEndInTimeFrame = endedAt >= order.startedAt && endedAt <= order.endedAt;
+                const orderCompleteInTimeframe = selfDeclaredStartInTimeFrame && selfDeclaredEndInTimeFrame || (selfDeclaredStartInTimeFrame && !selfDeclaredEndInTimeFrame) || (!selfDeclaredStartInTimeFrame && selfDeclaredEndInTimeFrame);
+                const existingOrderStartInTimeframe = order.startedAt >= startedAt && order.startedAt <= endedAt;
+                const existingOrderEndInTimeframe = order.endedAt >= startedAt && order.endedAt <= endedAt;
+                const ExistingOrderInTimeframe = existingOrderStartInTimeframe && existingOrderEndInTimeframe || (existingOrderStartInTimeframe && !existingOrderEndInTimeframe) || (!existingOrderStartInTimeframe && existingOrderEndInTimeframe);
+                return orderCompleteInTimeframe || ExistingOrderInTimeframe;
+            }).filter(order => order.quantity <= quantity);
+
+        if (ordersInTimeframe.length > 0) {
+            writeErrorMessages(ordersInTimeframe);
+        }
+    }
+    quantityInput.addEventListener('change', changeCallback)
+    startedAtInput.addEventListener('change', changeCallback);
+    endedAtInput.addEventListener('change', changeCallback);
+    changeCallback()
+})();

@@ -41,4 +41,4 @@ class OrderFormView(CustomFormView):
 
     def get_context_data(self, request, *args, **kwargs):
         ''' Returns the context data for the view'''
-        return {'method': 'Create' if not self.extract_pk(kwargs) else 'Update'}
+        return {'method': 'Create' if not self.extract_pk(kwargs) else 'Update', 'pk': self.extract_pk(kwargs)}

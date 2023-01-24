@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
-from app.models import InventoryItem, InventoryItemImage
-from app.forms import InventoryItemForm, InventoryItemImageForm
-from django.views.generic import ListView, DetailView
+from app.models import InventoryItem
+from django.views.generic import ListView
 
 # Switching the 'active' variable of an InventoryItem instance to False
 

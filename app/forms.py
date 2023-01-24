@@ -52,7 +52,7 @@ class OrderForm(forms.ModelForm):
     class Meta:
         '''Meta class for OrderForm'''
         model = Order
-        fields = ['user', 'item', 'returned', 'quantity', 'started_at', 'ended_at']
+        fields = ['item', 'user', 'returned', 'quantity', 'started_at', 'ended_at']
         widgets = {
             'user': forms.Select(attrs={'class': order_css_class}),
             'item': forms.Select(attrs={'class': order_css_class}),

@@ -17,6 +17,7 @@ Orders list
             <th class="iwa-table-head-cell">User</th>
             <th class="iwa-table-head-cell">Item</th>
             <th class="iwa-table-head-cell">Quantity</th>
+            <th class="iwa-table-head-cell">Timespan</th>
             <th class="iwa-table-head-cell">Actions</th>
         </tr>
     </thead>
@@ -27,6 +28,7 @@ Orders list
             <td class="iwa-table-cell">{{ order.user }}</td>
             <td class="iwa-table-cell">{{ order.item }}</td>
             <td class="iwa-table-cell">{{ order.quantity }}</td>
+            <td class="iwa-table-cell">{{ order.started_at|date:'d.m.Y' }} - {{ order.ended_at|date:'d.m.Y' }}</td>
             <td class="iwa-table-cell">
                 <a href="{% url 'order_detail' order.id %}" class="iwa-btn mr-1">
                     View
@@ -53,6 +55,7 @@ Orders list
             <th class="iwa-table-head-cell">User</th>
             <th class="iwa-table-head-cell">Item</th>
             <th class="iwa-table-head-cell">Quantity</th>
+            <th class="iwa-table-head-cell">Timespan</th>
             <th class="iwa-table-head-cell">Actions</th>
         </tr>
     </thead>
@@ -63,6 +66,7 @@ Orders list
             <td class="iwa-table-cell">{{ order.user }}</td>
             <td class="iwa-table-cell">{{ order.item }}</td>
             <td class="iwa-table-cell">{{ order.quantity }}</td>
+            <td class="iwa-table-cell">{{ order.started_at|date:'d.m.Y' }} - {{ order.ended_at|date:'d.m.Y' }}</td>
             <td class="iwa-table-cell">
                 <a href="{% url 'order_detail' order.id %}" class="iwa-btn mr-1">
                     View
@@ -89,6 +93,7 @@ Orders list
             <th class="iwa-table-head-cell">User</th>
             <th class="iwa-table-head-cell">Item</th>
             <th class="iwa-table-head-cell">Quantity</th>
+            <th class="iwa-table-head-cell">Timespan</th>
             <th class="iwa-table-head-cell">Actions</th>
         </tr>
     </thead>
@@ -99,6 +104,7 @@ Orders list
             <td class="iwa-table-cell">{{ order.user }}</td>
             <td class="iwa-table-cell">{{ order.item }}</td>
             <td class="iwa-table-cell">{{ order.quantity }}</td>
+            <td class="iwa-table-cell">{{ order.started_at|date:'d.m.Y' }} - {{ order.ended_at|date:'d.m.Y' }}</td>
             <td class="iwa-table-cell">
                 <a href="{% url 'order_detail' order.id %}" class="iwa-btn mr-1">
                     View

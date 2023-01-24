@@ -8,95 +8,98 @@ Inventory Item Update
 
 <section class="iwa-section">
     <h1 class="iwa-h1">{{ inventory_item.name }}</h1>
-        <dl>
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.description }}</dd>
-        </dl>
-        <dl class="flex space-x-6">
-            <div>
-                <dt class="mb-2 font-semibold leading-none text-gray-900">ID</dt>
-                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.id }}</dd>
-            </div>
-            <div>
-                <dt class="mb-2 font-semibold leading-none text-gray-900">Quantity</dt>
-                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.quantity }}</dd>
-            </div>
-            <div>
-                <dt class="mb-2 font-semibold leading-none text-gray-900">Producer</dt>
-                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.producer }}</dd>
-            </div>
-            <div>
-                <dt class="mb-2 font-semibold leading-none text-gray-900">Position</dt>
-                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.position }}</dd>
-            </div>
-            <div>
-                <dt class="mb-2 font-semibold leading-none text-gray-900">Active</dt>
-                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.active }}</dd>
-            </div>
-        </dl>
-
-        <!-- Add a carousel to contain all the images of an item -->
-        <div id="default-carousel" class="relative" data-carousel="static">
-            <!-- Carousel wrapper -->
-            <div class="relative h-56 max-w-xl overflow-hidden rounded-lg md:h-96">
-                <!-- Iterate over the images of inventory_item and create a corresponding image -->
-                {% if images|length > 1 %}
-                {% for image in images %}
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="{{ image.image.url }}"
-                        class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                </div>
-                {% endfor %}
-                {% else %}
-                <img src="{{ images.0.image.url }}"
-                    class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                {% endif %}
-                {% if images|length > 1 %}
-                <!-- Slider indicators -->
-                <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-                    {% for i in images %}
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="{{i}}"
-                        data-carousel-slide-to="{{forloop.counter0}}"></button>
-                    {% endfor %}
-
-                </div>
-                <!-- Slider controls -->
-                <button type="button"
-                    class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                    data-carousel-prev>
-                    <span
-                        class="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                        <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
-                            </path>
-                        </svg>
-                        <span class="sr-only">Previous</span>
-                    </span>
-                </button>
-                <button type="button"
-                    class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                    data-carousel-next>
-                    <span
-                        class="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                        <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
-                            </path>
-                        </svg>
-                        <span class="sr-only">Next</span>
-                    </span>
-                </button>
-                {% endif %}
-            </div>
+    <dl>
+        <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.description }}</dd>
+    </dl>
+    <dl class="flex space-x-6">
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">ID</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.id }}</dd>
         </div>
-        {% if user.is_superuser %}
-        <div class="flex items-center space-x-4">
-            <!-- A button to link to the update page of the inventory item.-->
-            <a href="{% url 'inventory_item_update' inventory_item.id %}" class="btn">Update</a>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Quantity</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.quantity }}</dd>
+        </div>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Producer</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.producer }}</dd>
+        </div>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Position</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.position }}</dd>
+        </div>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Active</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.active }}</dd>
+        </div>
+    </dl>
 
-            <a href="{% url 'order_create' %}?inventory_item={{ inventory_item.id | urlencode }}&user={{ user.id | urlencode }}&now=1"
-                class="btn">Order</a>
+    <!-- Add a carousel to contain all the images of an item -->
+    <div id="default-carousel" class="relative" data-carousel="static">
+        <!-- Carousel wrapper -->
+        {% if images|length > 1 %}
+        <div class="relative h-56 max-w-xl overflow-hidden rounded-lg md:h-96">
+            <!-- Iterate over the images of inventory_item and create a corresponding image -->
+
+            {% for image in images %}
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="{{ image.image.url }}"
+                    class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            </div>
+            {% endfor %}
+            <!-- Slider indicators -->
+            <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
+                {% for i in images %}
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="{{i}}"
+                    data-carousel-slide-to="{{forloop.counter0}}"></button>
+                {% endfor %}
+
+            </div>
+            <!-- Slider controls -->
+            <button type="button"
+                class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                data-carousel-prev>
+                <span
+                    class="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                    <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                        </path>
+                    </svg>
+                    <span class="sr-only">Previous</span>
+                </span>
+            </button>
+            <button type="button"
+                class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                data-carousel-next>
+                <span
+                    class="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                    <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                        </path>
+                    </svg>
+                    <span class="sr-only">Next</span>
+                </span>
+            </button>
+        </div>
+        {% else %}
+        <div class="relative h-56 max-w-xl overflow-hidden rounded-lg md:h-96 bg-gray-200">
+            <span class="fa-stack fa-2x w-full h-full text-center text-4xl align-middle inline-block mt-16 text-gray-600">
+                <i class="fa fa-slash fa-stack-2x"></i>
+                <i class="fa fa-image fa-stack-2x"></i>
+            </span>
         </div>
         {% endif %}
-  </section>
+    </div>
+    {% if user.is_superuser %}
+    <div class="flex items-center space-x-4">
+        <!-- A button to link to the update page of the inventory item.-->
+        <a href="{% url 'inventory_item_update' inventory_item.id %}" class="btn">Update</a>
+
+        <a href="{% url 'order_create' %}?inventory_item={{ inventory_item.id | urlencode }}&user={{ user.id | urlencode }}&now=1"
+            class="btn">Order</a>
+    </div>
+    {% endif %}
+</section>
 {% endblock %}

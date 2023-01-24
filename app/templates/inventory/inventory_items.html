@@ -86,7 +86,10 @@ Products
                     </a>
                     {% else %}
                     <a href="{% url 'inventory_item_detail' inventory_item.pk %}" class="h-full w-full inline-block align-middle">
-                        <i class="fa-regular fa-image w-full h-full text-center text-4xl align-middle inline-block"></i>    
+                        <span class="fa-stack fa-2x w-full h-full text-center text-4xl align-middle inline-block mt-16 text-gray-600">
+                            <i class="fa fa-slash fa-stack-2x"></i>
+                            <i class="fa fa-image fa-stack-2x"></i>
+                        </span>   
                     </a>
                     {% endif %}
                 </div>

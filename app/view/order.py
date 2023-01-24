@@ -26,7 +26,7 @@ class OrderListView(ListView):
         if self.request.user.is_authenticated and not self.request.user.is_superuser:
             orders = orders.filter(user=self.request.user)
         past_due_orders = orders.filter(ended_at__lt=timezone.now(), returned=False)
-        settled_orders = orders.filter(ended_at__lt=timezone.now(), returned=True)
+        settled_orders = orders.filter(returned=True)
         context['all'] = orders
         context['past_due'] = past_due_orders
         context['settled'] = settled_orders

@@ -92,6 +92,8 @@ class InventoryItemImage(models.Model):
         InventoryItem,
         default=None,
         on_delete=models.CASCADE,
+        null=True,
+        blank=True,
         )
     uploaded_at = models.DateTimeField(
         auto_now_add=True

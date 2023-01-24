@@ -1,8 +1,6 @@
 from django.views.generic import DetailView, ListView
 from app.forms import OrderForm
 from app.view.form import CustomFormView
-from django.urls import reverse_lazy
-from django.shortcuts import render, redirect
 from app.models import Order
 from django.utils import timezone
 

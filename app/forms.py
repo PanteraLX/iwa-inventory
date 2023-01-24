@@ -31,7 +31,7 @@ user_css_class = 'iwa-input'
 class AccountForm(forms.ModelForm):
     class Meta:
         model = DjangoUser
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['username', 'first_name', 'last_name', 'is_active', 'email']
         widgets = {
             'username': forms.TextInput(attrs={'class': user_css_class}),
             'first_name': forms.TextInput(attrs={'class': user_css_class}),
@@ -49,7 +49,7 @@ class OrderForm(forms.ModelForm):
         widgets = {
             'user': forms.Select(attrs={'class': order_css_class}),
             'item': forms.Select(attrs={'class': order_css_class}),
-            'returned': forms.CheckboxInput(attrs={'class': order_css_class }),
+            'returned': forms.CheckboxInput(),
             'quantity': forms.NumberInput(attrs={'class': order_css_class}),
             'started_at': forms.DateInput(attrs={'class': order_css_class, 'type': 'date'}, format='%Y-%m-%d'),
             'ended_at': forms.DateInput(attrs={'class': order_css_class, 'type': 'date'}, format='%Y-%m-%d'),

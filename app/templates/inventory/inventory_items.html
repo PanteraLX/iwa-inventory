@@ -41,35 +41,31 @@ Products
 
 
 
-<div class="bg-white">
-    <div class="mx-auto max-w-1xl py-16 px-2 sm:py-12 sm:px-6 lg:max-w-7xl lg:px-8">
+    <section class="iwa-section">
         {% if request.path == "/" %}
-        <h3 class="mt-0 mb-8 text-4xl text-gray-700 ">Inventory </h3>
+        <h1 class="iwa-h1">Inventory </h1>
         {% endif %}
         {% if request.path == "/inventory_item/complete" %}
-        <h3 class="mt-0 mb-8 text-4xl text-gray-700 ">Inventory complete</h3>
+        <h1 class="iwa-h1">Inventory complete</h1>
         {% endif %}
         {% if request.path == "/inventory_item/" %}
-        <h3 class="mt-0 mb-8 text-4xl text-gray-700 ">Inventory active</h3>
+        <h1 class="iwa-h1">Inventory active  
+            {% if user.is_superuser %}
+                <a type="button"  href="{% url 'inventory_item_create' %}"
+                    class="inline-block float-right max-w-xs w-12 h-12 mb-0 mt-0 mr-2 rounded-full bg-gray-900 focus:outline-none focus:ring-1 focus:ring-grey focus:ring-offset-2 focus:ring-offset-grey-800"
+                    id="create-new-item-button">
+                    <i class="fa fa-plus text-white text-center h-full w-full mt-3"></i>
+                </a>
+            {% endif %}
+        </h1>
         {% endif %}
         {% if request.path == "/inventory_item/archive" %}
-        <h3 class="mt-0 mb-8 text-4xl text-gray-700 ">Inventory archive</h3>
+        <h3 class="mt-0 mb-0 text-4xl text-gray-700 ">Inventory archive</h3>
         {% endif %}
         
         {% if request.path == "/inventory_item/" %}
         <!-- PLussymbol to add Items-->
-            <div class="flex justify-end on origin-top-right -mt-20 mb-8">
-                {% if user.is_superuser %}
-                <div class= "drop-shadow-lg" >
-                    <a type="button"  href="{% url 'inventory_item_create' %}"
-                        class="flex max-w-xs mb-8 -ml-0 rounded-full bg-gray-900 focus:outline-none focus:ring-1 focus:ring-grey focus:ring-offset-2 focus:ring-offset-grey-800"
-                        id="create-new-item-button">
-                        <img class="h-20 w-20 rounded-full" src="{% static '/images/symbols/add.png' %}" alt="">
-                        <span class="sr-only">Create new Item</span>
-                    </a>
-                </div>
-                {% endif %}
-            </div>
+
         {% endif %}
         
         
@@ -89,9 +85,8 @@ Products
                             class="h-full w-full object-cover object-center group-hover:opacity-75 overflow-hidden">
                     </a>
                     {% else %}
-                    <a href="{% url 'inventory_item_detail' inventory_item.pk %}">
-                        <img src="/static/images/noimageaviable/image.png" alt="{{ inventory_item.name }}"
-                            class="h-full w-full object-cover object-center group-hover:opacity-75">
+                    <a href="{% url 'inventory_item_detail' inventory_item.pk %}" class="h-full w-full inline-block align-middle">
+                        <i class="fa-regular fa-image w-full h-full text-center text-4xl align-middle inline-block"></i>    
                     </a>
                     {% endif %}
                 </div>
@@ -110,8 +105,7 @@ Products
             <p>No data found.</p>
             {% endif %}
         </div>
-    </div>
-</div>
+    </section>
 
 
 

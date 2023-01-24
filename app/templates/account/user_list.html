@@ -6,9 +6,16 @@ User list
 {% block content %}
 {% if users %}
 <section class="iwa-section">
-    <h1 class="iwa-h1">
-        User list
+    <h1 class="iwa-h1">User list
+        {% if user.is_superuser %}
+            <a type="button"  href="{% url 'user_create' %}"
+                class="inline-block float-right max-w-xs w-12 h-12 mb-0 mt-0 mr-2 rounded-full bg-gray-900 focus:outline-none focus:ring-1 focus:ring-grey focus:ring-offset-2 focus:ring-offset-grey-800"
+                id="create-new-user-button">
+                <i class="fa fa-plus text-white text-center h-full w-full mt-3"></i>
+            </a>
+        {% endif %}
     </h1>
+    
     <table class="iwa-table">
         <thead class="iwa-table-head">
             <tr class="border-b">

@@ -26,8 +26,19 @@ Order Detail
             <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ order.item }}</dd>
         </div>
         <div>
-            <dt class="mb-2 font-semibold leading-none text-gray-900">Status</dt>
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ order.state }}</dd>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Timespan</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ order.started_at|date:'d.m.Y' }} - {{ order.ended_at|date:'d.m.Y' }}</dd>
+        </div>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Returned
+            </dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+            {% if order.returned %}
+                <span class="fa fa-check"></span>
+            {% else %}
+                <span class="fa fa-xmark"></span>
+            {% endif %}
+            </dd>
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Quantity</dt>

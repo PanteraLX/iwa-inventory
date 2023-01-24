@@ -11,8 +11,8 @@ urlpatterns = [
     path('inventory_item/<int:pk>/update', InventoryItemFormView.as_view(), name='inventory_item_update'),
     path('inventory_item/<int:pk>/', InventoryItemDetailView.as_view(), name='inventory_item_detail'),
     path('inventory_item/create', InventoryItemFormView.as_view(), name='inventory_item_create'),
-    path('inventory_item/archive/<int:id>/', views.inventory_item_archive, name='archive_inventory_item'),
-    path('inventory_item/unarchive/<int:id>/', views.inventory_item_unarchive, name='unarchive_inventory_item'),
+    path('inventory_item/archive/<int:pk>/', views.inventory_item_archive, name='archive_inventory_item'),
+    path('inventory_item/unarchive/<int:pk>/', views.inventory_item_unarchive, name='unarchive_inventory_item'),
     path('inventory_item/complete', views.complete_inventory_items_list, name='complete_inventory_items_list'),
     path('inventory_item/archive', views.archive_inventory_items_list, name='archive_inventory_items_list'),
 
@@ -27,5 +27,5 @@ urlpatterns = [
     path('order/create', OrderFormView.as_view(), name='order_create'),
     path('orders', OrderListView.as_view(), name='order_list'),
 
-    path('api/orders-by-item/<int:pk>', views.orders_by_item, name='order_detail'),
+    path('api/orders-by-item/<int:pk>', views.orders_by_item, name='order_by_item'),
 ]

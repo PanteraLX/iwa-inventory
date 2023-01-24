@@ -7,8 +7,8 @@ import json
 
 # Switching the 'active' variable of an InventoryItem instance to False
 
-def inventory_item_archive(request, id):
-    inventory_item = InventoryItem.objects.get(id=id)
+def inventory_item_archive(request, pk):
+    inventory_item = InventoryItem.objects.get(id=pk)
     inventory_item.active = False
     inventory_item.save()
     return redirect('complete_inventory_items_list')

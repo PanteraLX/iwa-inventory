@@ -27,11 +27,12 @@ class InventoryItemFormView(CustomFormView):
     def get(self, request, *args, **kwargs):
         ''' GET request handler'''
         pk = self.extract_pk(kwargs)
-        form = self.form_class(instance=self.extract_object(pk))
+        item = self.extract_object(pk)
+        form = self.form_class(instance=item)
         new_images = InventoryItemImageForm()
         existing_images = InventoryItemImage.objects.filter(inventory_item=self.extract_object(pk))
         return render(request, self.template_name, 
-                        {'form': form, 'new_images': new_images, 'existing_images': existing_images, 
+                        {'form': form, 'new_images': new_images, 'existing_images': existing_images, 'item': item,
                         **self.get_context_data(request, *args, **kwargs)})
 
     def post(self, request, *args, **kwargs):

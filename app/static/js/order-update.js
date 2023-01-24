@@ -115,11 +115,6 @@ const writeErrorMessages = (errors) => {
     });
 }
 
-
-
-
-
-
 /**
  * Check if the order overlaps with other orders.
  */
@@ -127,9 +122,11 @@ const writeErrorMessages = (errors) => {
     const quantityInput = document.getElementById('id_quantity');
     const startedAtInput = document.getElementById('id_started_at');
     const endedAtInput = document.getElementById('id_ended_at');
-    const orderId = Number.parseInt(document.getElementById('id_item').value, 10)
+    const itemId = Number.parseInt(document.getElementById('id_item').value, 10)
+    const orderId = Number.parseInt(document.getElementById('order-id').innerText, 10)
+    const orderSubmit = document.getElementById('order-submit');
 
-    if (!orderId) {
+    if (!itemId) {
         return;
     }
 
@@ -143,7 +140,7 @@ const writeErrorMessages = (errors) => {
         const endedAt = new Date(endedAtInput.value);
 
         const host = 'http://127.0.0.1:8000';
-        const url = new URL(`${host}/api/orders-by-item/${orderId}`);
+        const url = new URL(`${host}/api/orders-by-item/${itemId}`);
 
         const response = await fetch(url.href, {
             mode: 'cors',
@@ -161,6 +158,7 @@ const writeErrorMessages = (errors) => {
             order.startedAt = new Date(dataSet.fields.started_at);
             order.endedAt = new Date(dataSet.fields.ended_at);
             order.quantity = dataSet.fields.quantity;
+            order.pk = dataSet.pk;
             return order;
         });
 
@@ -173,8 +171,13 @@ const writeErrorMessages = (errors) => {
                 const existingOrderEndInTimeframe = order.endedAt >= startedAt && order.endedAt <= endedAt;
                 const ExistingOrderInTimeframe = existingOrderStartInTimeframe && existingOrderEndInTimeframe || (existingOrderStartInTimeframe && !existingOrderEndInTimeframe) || (!existingOrderStartInTimeframe && existingOrderEndInTimeframe);
                 return orderCompleteInTimeframe || ExistingOrderInTimeframe;
-            }).filter(order => order.quantity <= quantity);
+            })
+            .filter(order => order.quantity <= quantity)
+            .filter(order => order.pk !== orderId);
 
+        const errorContainer = document.getElementById('error-container');
+        errorContainer.innerHTML = '';
+        ordersInTimeframe.length > 0 ? orderSubmit.disabled = true : orderSubmit.disabled = false;
         if (ordersInTimeframe.length > 0) {
             writeErrorMessages(ordersInTimeframe);
         }

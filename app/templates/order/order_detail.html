@@ -19,25 +19,30 @@ Order Detail
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">User</dt>
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{{ order.user }}</dd>
+            <a href="{% url 'user_detail' order.user.id %}">
+                <dd class="mb-4 font-light text-gray-500 sm:mb-5 cursor-pointer">{{ order.user }}</dd>
+            </a>
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Item</dt>
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ order.item }}</dd>
+            <a href="{% url 'inventory_item_detail' order.item.id %}">
+                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ order.item }}</dd>
+            </a>
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Timespan</dt>
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ order.started_at|date:'d.m.Y' }} - {{ order.ended_at|date:'d.m.Y' }}</dd>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                {{ order.started_at|date:'d.m.Y' }} - {{order.ended_at|date:'d.m.Y' }}</dd>
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Returned
             </dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-            {% if order.returned %}
+                {% if order.returned %}
                 <span class="fa fa-check"></span>
-            {% else %}
+                {% else %}
                 <span class="fa fa-xmark"></span>
-            {% endif %}
+                {% endif %}
             </dd>
         </div>
         <div>

@@ -24,7 +24,7 @@ Orders list
     <tbody>
         {% for order in all %}
 
-        <tr class="bg-white border-b">
+        <tr class="iwa-table-row">
             <td class="iwa-table-cell">{{ order.user }}</td>
             <td class="iwa-table-cell">{{ order.item }}</td>
             <td class="iwa-table-cell">{{ order.quantity }}</td>
@@ -35,9 +35,6 @@ Orders list
                 </a>
                 <a href="{% url 'order_update' order.id %}" class="iwa-btn mr-1">
                     Edit
-                </a>
-                <a href="{% url 'order_update' order.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">
-                    Delete
                 </a>
             </td>
         </tr>
@@ -62,7 +59,7 @@ Orders list
     <tbody>
         {% for order in past_due %}
 
-        <tr class="bg-white border-b">
+        <tr class="iwa-table-row">
             <td class="iwa-table-cell">{{ order.user }}</td>
             <td class="iwa-table-cell">{{ order.item }}</td>
             <td class="iwa-table-cell">{{ order.quantity }}</td>
@@ -73,9 +70,6 @@ Orders list
                 </a>
                 <a href="{% url 'order_update' order.id %}" class="iwa-btn mr-1">
                     Edit
-                </a>
-                <a href="{% url 'order_update' order.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">
-                    Delete
                 </a>
             </td>
         </tr>
@@ -100,7 +94,7 @@ Orders list
     <tbody>
         {% for order in settled %}
 
-        <tr class="bg-white border-b">
+        <tr class="iwa-table-row">
             <td class="iwa-table-cell">{{ order.user }}</td>
             <td class="iwa-table-cell">{{ order.item }}</td>
             <td class="iwa-table-cell">{{ order.quantity }}</td>
@@ -111,9 +105,6 @@ Orders list
                 </a>
                 <a href="{% url 'order_update' order.id %}" class="iwa-btn mr-1">
                     Edit
-                </a>
-                <a href="{% url 'order_update' order.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">
-                    Delete
                 </a>
             </td>
         </tr>

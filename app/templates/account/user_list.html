@@ -35,17 +35,25 @@ User list
                 <td class="iwa-table-cell">{{ user.email }}</td>
                 <td class="iwa-table-cell">{{ user.first_name }}</td>
                 <td class="iwa-table-cell">{{ user.last_name }}</td>
-                <td class="iwa-table-cell">{{ user.is_active }}</td>
-                <td class="iwa-table-cell">{{ user.is_superuser }}</td>
+                <td class="iwa-table-cell">
+                    {% if user.is_active %}
+                    <span class="fa fa-check"></span>
+                    {% else %}
+                    <span class="fa fa-xmark"></span>
+                    {% endif %}
+                </td>
+                <td class="iwa-table-cell">
+                    {% if user.is_superuser %}
+                    <span class="fa fa-check"></span>
+                    {% else %}
+                    <span class="fa fa-xmark"></span>
+                    {% endif %}
                 <td class="iwa-table-cell">
                     <a href="{% url 'user_detail' user.id %}" class="iwa-btn mr-1">
                         View
                     </a>
                     <a href="{% url 'user_update' user.id %}" class="iwa-btn mr-1">
                         Edit
-                    </a>
-                    <a href="{% url 'user_update' user.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">
-                        Delete
                     </a>
                 </td>
             </tr>

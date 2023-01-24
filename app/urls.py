@@ -26,4 +26,6 @@ urlpatterns = [
     path('order/<int:pk>', OrderDetailView.as_view(), name='order_detail'),
     path('order/create', OrderFormView.as_view(), name='order_create'),
     path('orders', OrderListView.as_view(), name='order_list'),
+
+    path('api/orders-by-item/<int:pk>', views.orders_by_item, name='order_detail'),
 ]

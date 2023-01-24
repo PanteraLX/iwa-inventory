@@ -6,7 +6,7 @@ Order Update
 
 {% block content %}
 <section class="iwa-section">
-    <h1 class="iwa-h1">{{ method }} Order</h1>
+    <h1 class="iwa-h1">{{ method }} Order <span class="iwa-badge float-right"> ID: <span id="order-id">{{ pk }}</span></span></h1>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
@@ -19,6 +19,7 @@ Order Update
             {{ field.errors }}
         </div>
         {% endfor %}
+        <div id="error-container"></div>
         <button class="iwa-btn" type="submit">Submit</button>
     </form>
 </section>

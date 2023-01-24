@@ -5,23 +5,25 @@ Login
 {% block content %}
 
 <div class="bg-white w-full mx-auto max-w-sm p-4 rounded-md shadow-md sm:p-6 md:p-8 text-black">
-  <h1 class="mb-4 text-xl font-medium text-ellipsis">Login</h1>
+  <h1 class="iwa-h1">Login</h1>
+
   <form method="post">
     {% csrf_token %}
 
-    {% for field in form %}
-    <div class="mb-4">
+    {{ form.non_field_errors }}
+    <span class="block mb-2 text-sm font-medium text-gray-900">Username</span>
+    <input class="w-full iwa-input mt-2 mb-6" id="{{ form.username.id_for_label }}" maxlength="30"
+      name="{{ form.username.html_name }}" type="text" />
+    <p class="block mb-2 text-sm font-medium"> {{ form.username.errors }}</p>
 
-      {{field.type}}
-        <span class="">{{ field.name }}</span>
-        <input class="w-full iwa-input mt-2" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}" type="text" /> 
-        {{ field.errors }}
-    </div>
-    {% endfor %}
-    <button type="submit"
-      class="iwa-btn w-full">
-      Log In
-    </button>
+
+    <span class="mt-4 block mb-2 text-sm font-medium text-gray-900">Password</span>
+    <input class="w-full iwa-input mt-2" id="{{ form.password.id_for_label }}" maxlength="30"
+      name="{{ form.password.html_name }}" type="password" />
+    <p class="block mb-2 text-sm font-medium"> {{ form.password.errors }}</p>
+
+    <button type="submit" class="iwa-btn w-full">Login</button>
+
   </form>
 </div>
 {% endblock %}

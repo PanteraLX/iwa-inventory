@@ -24,6 +24,11 @@ a.iwa-btn {
   @apply text-gray-300 bg-[#696C7F] hover:bg-[#7D8394] px-3 py-2 rounded-md text-sm font-medium mt-4 cursor-pointer;
 }
 
+button.iwa-btn-danger,
+a.iwa-btn-danger {
+  @apply text-gray-800 bg-red-300 hover:bg-[#7D8394] px-3 py-2 rounded-md text-sm font-medium mt-4 cursor-pointer;
+}
+
 input.iwa-input,
 select.iwa-input {
   @apply shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;

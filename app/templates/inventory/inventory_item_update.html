@@ -42,6 +42,11 @@ Inventory Item {{ method }}
         </div>
         <div class="mb-4">
             <button class="iwa-btn" type="submit">Submit</button>
+            {% if inventory_item.active == True %}
+            <button href="{% url 'archive_inventory_item' inventory_item.id %}" class="iwa-btn">Archive</button>
+            {% else %}
+            <button href="{% url 'unarchive_inventory_item' inventory_item.id %}" class="iwa-btn">Unarchive</button>
+            {% endif %}
         </div>
     </form>
 </section>

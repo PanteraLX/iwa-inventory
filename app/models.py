@@ -13,32 +13,32 @@ class InventoryItem(models.Model):
     name = models.CharField(
         max_length=200,
         verbose_name='Item Name',
-        help_text='Name des Items'
+        help_text='Name of the Item'
     )
     producer = models.CharField(
         max_length=200,
-        verbose_name='Hersteller',
-        help_text='Hersteller des Items'
+        verbose_name='Producer',
+        help_text='Producer of them Items'
     )
     description = models.TextField(
-        verbose_name='Beschreibung',
-        help_text='Längere Beschreibung des Items'
+        verbose_name='Description',
+        help_text='Detailed desscription of the Item'
     )
     quantity = models.IntegerField(
-        verbose_name='Anzahl',
-        help_text='Anzahl'
+        verbose_name='Quantity',
+        help_text='Quantity'
     )
     position = models.CharField(
         max_length=200,
         verbose_name='Position',
-        help_text='Position im Lager'
+        help_text='Position in the basement'
     )
 
     active = models.BooleanField(
         default=True, 
         editable=False,
-        verbose_name='Aktiv',
-        help_text='Item ist aktiv'
+        verbose_name='Active',
+        help_text='Item ist active'
     )
 
     objects = ActiveManager()
@@ -51,8 +51,8 @@ class Order(models.Model):
     user = models.ForeignKey(
         DjangoUser,
         on_delete=models.CASCADE,
-        verbose_name='Benutzer',
-        help_text='Benutzer'
+        verbose_name='User',
+        help_text='User'
     )
     item = models.ForeignKey(
         InventoryItem,
@@ -62,24 +62,24 @@ class Order(models.Model):
     )
 
     quantity = models.IntegerField(
-        verbose_name='Anzahl',
-        help_text='Anzahl'
+        verbose_name='Quantity',
+        help_text='Quantity'
     )
     started_at = models.DateTimeField(
         null=True,
-        verbose_name='Beginn',
-        help_text='Beginn der Ausleihe'
+        verbose_name='Start',
+        help_text='Start of the Order'
     )
     ended_at = models.DateTimeField(
         null=True,
-        verbose_name='Ende',
-        help_text='Ende der Ausleihe'
+        verbose_name='End',
+        help_text='End of the Order'
     )
 
     returned = models.BooleanField(
         default=False,
-        verbose_name='Zurückgegeben',
-        help_text='Item wurde zurückgegeben'
+        verbose_name='Returned',
+        help_text='Item was returned'
     )
 
     def __str__(self):

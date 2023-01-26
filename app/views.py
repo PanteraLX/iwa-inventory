@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from app.models import InventoryItem, Order
 from django.views.generic import ListView
-from django.http import JsonResponse
-from django.core.serializers import serialize
-import json
+
 
 # Switching the 'active' variable of an InventoryItem instance to False
+
 
 def inventory_item_archive(request, pk):
     inventory_item = InventoryItem.objects.get(id=pk)
@@ -22,13 +21,6 @@ def inventory_item_unarchive(request, id):
     inventory_item.save()
     return redirect('inventory_items')
 
-
-
-def orders_by_item(request, pk):
-    orders = Order.objects.filter(item=pk, returned=False)
-    serialized_data = serialize("json", orders)
-    serialized_data = json.loads(serialized_data)
-    return JsonResponse(serialized_data, safe=False, status=200)
 
 # A list view of all the InventoryItems
 
@@ -54,11 +46,11 @@ active_inventory_items_list = InventoryItemListView.as_view(
 complete_inventory_items_list = InventoryItemListView.as_view(
     queryset=InventoryItem.objects.all(),
     context_object_name='inventory_items_list',
-    template_name='inventory/inventory_items.html',    
+    template_name='inventory/inventory_items.html',
 )
 
 archive_inventory_items_list = InventoryItemListView.as_view(
     queryset=InventoryItem.objects.inactive(),
     context_object_name='inventory_items_list',
-    template_name='inventory/inventory_items.html',    
+    template_name='inventory/inventory_items.html',
 )

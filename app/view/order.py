@@ -5,6 +5,12 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from app.models import Order
 from django.utils import timezone
+from django.http import JsonResponse
+from django.core.serializers import serialize
+import json
+import io
+from django.http import HttpResponse, FileResponse
+from fpdf import FPDF
 
 
 class OrderDetailView(DetailView):
@@ -43,3 +49,21 @@ class OrderFormView(CustomFormView):
     def get_context_data(self, request, *args, **kwargs):
         ''' Returns the context data for the view'''
         return {'method': 'Create' if not self.extract_pk(kwargs) else 'Update', 'pk': self.extract_pk(kwargs)}
+
+
+def orders_by_item(request, pk):
+    orders = Order.objects.filter(item=pk, returned=False)
+    serialized_data = serialize("json", orders)
+    serialized_data = json.loads(serialized_data)
+    return JsonResponse(serialized_data, safe=False, status=200)
+
+
+def order_pdf(request, pk):
+    order = Order.objects.get(id=pk)
+    file_name = f'order_{order.id}.pdf'
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font('Arial', 'B', 16)
+    pdf.cell(40, 10, 'Hello World!')
+    content = io.BytesIO(bytes(pdf.output(dest = 'S'), encoding='latin1'))
+    return FileResponse(content, content_type='application/pdf', as_attachment=True, filename=file_name)

@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User as DjangoUser
+from hashlib import sha1
+import random
 
 # Create your models here.
 
@@ -24,10 +26,7 @@ class InventoryItem(models.Model):
         verbose_name='Description',
         help_text='Detailed desscription of the Item'
     )
-    quantity = models.IntegerField(
-        verbose_name='Quantity',
-        help_text='Quantity'
-    )
+
     position = models.CharField(
         max_length=200,
         verbose_name='Position',
@@ -103,3 +102,42 @@ class InventoryItemImage(models.Model):
     
     def __str__(self):
         return self.inventory_item.name + " image"
+
+# A model for single inventory items that with a foreign key to the InventoryItem model, contains all the attributes
+# of the InventoryItem model, but also has a hash to uniquely identify the item and a field called 'serial_number'
+# which is the serial number of the item.
+
+def _createHash():
+    """This function generates a 40 character long hash"""
+    encoded_rand = str(random.getrandbits(64)).encode('utf-8')
+    encoded_rand = sha1(encoded_rand).hexdigest()
+    return  encoded_rand
+
+class SingleInventoryItem(models.Model):
+    inventory_item = models.ForeignKey(
+        InventoryItem,
+        default=None,
+        on_delete=models.CASCADE,
+        )
+    hash = models.CharField(
+        max_length=48,
+        default=_createHash,
+        unique=True,
+        verbose_name='Hash',
+        help_text='Hash of the Item'
+    )
+    serial_number = models.CharField(
+        max_length=200,
+        verbose_name='Serial Number',
+        help_text='Serial Number of the Item'
+    )
+    active = models.BooleanField(
+        default=True,
+        verbose_name='Active',
+        help_text='Item ist active'
+    )
+
+    objects = ActiveManager()
+
+    def __str__(self):
+        return self.inventory_item.name + " " + self.serial_number

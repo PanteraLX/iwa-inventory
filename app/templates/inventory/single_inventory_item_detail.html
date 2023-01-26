@@ -1,0 +1,38 @@
+<!-- An update view of a single InventoryItem to view and change its attributes -->
+{% extends "app/_base.html" %}
+{% block title %}
+Single inventory item detail
+{% endblock %}
+
+{% block content %}
+
+<section class="iwa-section">
+    <h1 class="iwa-h1">A single inventory item of {{ inventory_item.name }}</h1>
+    <dl class="flex space-x-6">
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Hash</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ single_inventory_item.hash }}</dd>
+        </div>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Serial Number</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ single_inventory_item.serial_number }}</dd>
+        </div>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Active</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ single_inventory_item.active }}</dd>
+        </div>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Actions</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                <a href="{% url 'single_inventory_item_update' single_inventory_item.hash %}" class="iwa-btn mr-1">
+                    Update
+                </a>
+                <a href="{% url 'single_inventory_item_delete' single_inventory_item.hash %}" class="iwa-btn mr-1">
+                    Delete
+                </a>
+            </dd>
+        </div>
+    </dl>
+</section>
+
+{% endblock %}

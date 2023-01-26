@@ -1,21 +1,20 @@
 from django import forms
-from app.models import InventoryItem, InventoryItemImage, Order
+from app.models import InventoryItem, SingleInventoryItem, InventoryItemImage, Order
 from django.forms import ClearableFileInput
 from django.contrib.auth.models import User as DjangoUser
 
-inventory_item_css_class = 'iwa-input'
-
 class InventoryItemForm(forms.ModelForm):
     '''Form for creating and editing InventoryItems'''
+    quantity = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'iwa-input'}))
+
     class Meta:
         model = InventoryItem
-        fields = ['name', 'description', 'quantity', 'position', 'producer']
+        fields = ['name', 'description', 'position', 'producer']
         widgets = {
-            'name': forms.TextInput(attrs={'class': inventory_item_css_class}),
+            'name': forms.TextInput(attrs={'class': 'iwa-input'}),
             'description': forms.Textarea(attrs={'class': 'block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500'}),
-            'quantity': forms.NumberInput(attrs={'class': inventory_item_css_class}),
-            'position': forms.TextInput(attrs={'class': inventory_item_css_class}),
-            'producer': forms.TextInput(attrs={'class': inventory_item_css_class}),
+            'position': forms.TextInput(attrs={'class': 'iwa-input'}),
+            'producer': forms.TextInput(attrs={'class': 'iwa-input'}),
         }
 
 class InventoryItemImageForm(forms.ModelForm):
@@ -27,7 +26,18 @@ class InventoryItemImageForm(forms.ModelForm):
         widgets = {
             'image': ClearableFileInput(attrs={'multiple': True}),
         }
-        
+    
+class SingleInventoryItemForm(forms.ModelForm):
+    '''Form for creating and editing SingleInventoryItems'''
+    class Meta:
+        '''Meta class for SingleInventoryItemForm'''
+        model = SingleInventoryItem
+        fields = ['inventory_item', 'serial_number', 'active']
+        widgets = {
+            'inventory_item': forms.Select(attrs={'class': 'iwa-input'}),
+            'serial_number': forms.TextInput(attrs={'class': 'iwa-input'}),
+            'active': forms.CheckboxInput(attrs={'class': 'iwa-input w-1/2', 'style': 'width: 1.5rem;'}),
+        }
 
 user_css_class = 'iwa-input'
 

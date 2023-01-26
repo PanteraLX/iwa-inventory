@@ -9,9 +9,10 @@ class InventoryItemForm(forms.ModelForm):
     '''Form for creating and editing InventoryItems'''
     class Meta:
         model = InventoryItem
-        fields = ['name', 'description', 'quantity', 'position', 'producer']
+        fields = ['name', 'category', 'description', 'quantity', 'position', 'producer']
         widgets = {
             'name': forms.TextInput(attrs={'class': inventory_item_css_class}),
+            'category': forms.Select(attrs={'class': inventory_item_css_class}),
             'description': forms.Textarea(attrs={'class': 'block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500'}),
             'quantity': forms.NumberInput(attrs={'class': inventory_item_css_class}),
             'position': forms.TextInput(attrs={'class': inventory_item_css_class}),

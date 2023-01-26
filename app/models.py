@@ -3,11 +3,14 @@ from django.contrib.auth.models import User as DjangoUser
 
 # Create your models here.
 
+
 class ActiveManager(models.Manager):
     def active(self):
         return self.model.objects.filter(active=True)
+
     def inactive(self):
         return self.model.objects.filter(active=False)
+
 
 class InventoryItem(models.Model):
     name = models.CharField(
@@ -35,7 +38,7 @@ class InventoryItem(models.Model):
     )
 
     active = models.BooleanField(
-        default=True, 
+        default=True,
         editable=False,
         verbose_name='Active',
         help_text='Item ist active'
@@ -82,24 +85,30 @@ class Order(models.Model):
         help_text='Item was returned'
     )
 
+    document = models.FileField(
+        upload_to='documents/',
+        blank=True,
+    )
+
     def __str__(self):
         return self.item.name + " ordered by " + self.user.username
 
 # A model for images that will be associated with the InventoryItem model
+
 
 class InventoryItemImage(models.Model):
     inventory_item = models.ForeignKey(
         InventoryItem,
         default=None,
         on_delete=models.CASCADE,
-        )
+    )
     uploaded_at = models.DateTimeField(
         auto_now_add=True
-        )
+    )
     image = models.FileField(
         upload_to='images/',
         blank=True,
-        )
-    
+    )
+
     def __str__(self):
         return self.inventory_item.name + " image"

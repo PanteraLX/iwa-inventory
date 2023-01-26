@@ -31,12 +31,10 @@ class OrderListView(ListView):
         orders = Order.objects.all()
         if self.request.user.is_authenticated and not self.request.user.is_superuser:
             orders = orders.filter(user=self.request.user)
-        current_orders = orders.filter(ended_at__gte=timezone.now(), returned=False)
-        past_due_orders = orders.filter(ended_at__lt=timezone.now(), returned=False)
-        settled_orders = orders.filter(returned=True)
-        context['all'] = current_orders
-        context['past_due'] = past_due_orders
-        context['settled'] = settled_orders
+        current_orders = {'data': orders.filter(ended_at__gte=timezone.now(), returned=False), 'title': 'Current Orders'}
+        past_due_orders = {'data': orders.filter(ended_at__lt=timezone.now(), returned=False), 'title': 'Past Due Orders'}
+        settled_orders = {'data': orders.filter(returned=True), 'title': 'Settled Orders'}
+        context['all'] = [current_orders, past_due_orders, settled_orders]
         return context
     
 class OrderFormView(CustomFormView):

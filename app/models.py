@@ -11,6 +11,42 @@ class ActiveManager(models.Manager):
     def inactive(self):
         return self.model.objects.filter(active=False)
 
+class Category(models.Model):
+    name = models.CharField(
+        max_length=200,
+        verbose_name='Category Name',
+        help_text='Name of the Category'
+    )
+    description = models.TextField(
+        verbose_name='Description',
+        help_text='Detailed description of the Category',
+        null=True
+    )
+    active = models.BooleanField(
+        default=True, 
+        editable=False,
+        verbose_name='Active',
+        help_text='Category ist active'
+    )
+
+    color = models.CharField(
+        max_length=200,
+        verbose_name='Color',
+        help_text='Color of the Category',
+        null=True
+    )
+
+    icon = models.CharField(
+        max_length=200,
+        verbose_name='Icon',
+        help_text='Icon of the Category',
+        null=True
+    )
+
+    objects = ActiveManager()
+
+    def __str__(self):
+        return self.name
 
 class InventoryItem(models.Model):
     name = models.CharField(
@@ -42,6 +78,15 @@ class InventoryItem(models.Model):
         editable=False,
         verbose_name='Active',
         help_text='Item ist active'
+    )
+
+    category = models.ForeignKey(
+        Category,
+        default=None,
+        on_delete=models.DO_NOTHING,
+        null=True,
+        verbose_name='Category',
+        help_text='Category of the Item'
     )
 
     objects = ActiveManager()

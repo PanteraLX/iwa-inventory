@@ -21,6 +21,7 @@ class OrderListView(ListView):
     
     # Get all orders
     def get_context_data(self, **kwargs):
+        ''' Returns the context data for the view '''
         context = super().get_context_data(**kwargs)
         orders = Order.objects.all()
         if self.request.user.is_authenticated and not self.request.user.is_superuser:

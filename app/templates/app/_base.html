@@ -34,8 +34,8 @@
                 <a href="{% url 'inventory_items'%}"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Inventory</a>
                 
-                <a href="{% url 'order_list'%}"
-                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Orders</a>
+                <a href="{% url 'lend_list'%}"
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Lend</a>
                 
                 <a href="{% url 'user_list'%}"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">User</a>
@@ -80,8 +80,8 @@
                   {% if user.is_authenticated %}
                   <a href="{% url 'user_detail' user.id %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                     id="user-menu-item-0">Profile</a>
-                  <a href="{% url 'user_orders' user.id %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                    id="user-menu-item-0">My orders</a>
+                  <a href="{% url 'user_lends' user.id %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                    id="user-menu-item-0">My lends</a>
                   <a href="/accounts/logout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                     id="user-menu-item-2">Logout</a>
                   {% else %}
@@ -133,7 +133,7 @@
             class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inventory</a>
 
           <a href="{% url 'inventory_items'%}"
-            class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Orders</a>
+            class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Lend</a>
           
           <a href="{% url 'user_create'%}"
             class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">User</a>
@@ -159,8 +159,8 @@
             <a href="{% url 'user_update' user.id %}"
               class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Your
               Profile</a>
-              <a href="{% url 'user_orders' user.id %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-              id="user-menu-item-0">My orders</a>
+              <a href="{% url 'user_lends' user.id %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+              id="user-menu-item-0">My lends</a>
             <a href="/accounts/logout"
               class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Logout</a>
             {% else %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from app.models import InventoryItem, Order
+from app.models import InventoryItem, Lend
 from django.views.generic import ListView
 from django.http import JsonResponse
 from django.core.serializers import serialize
@@ -24,9 +24,9 @@ def inventory_item_unarchive(request, id):
 
 
 
-def orders_by_item(request, pk):
-    orders = Order.objects.filter(item=pk, returned=False)
-    serialized_data = serialize("json", orders)
+def lends_by_item(request, pk):
+    lends = Lend.objects.filter(item=pk, returned=False)
+    serialized_data = serialize("json", lends)
     serialized_data = json.loads(serialized_data)
     return JsonResponse(serialized_data, safe=False, status=200)
 

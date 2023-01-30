@@ -1,12 +1,12 @@
 {% extends "app/_base.html" %}
 
 {% block title %}
-Order Update
+Lend Update
 {% endblock %}
 
 {% block content %}
 <section class="iwa-section">
-    <h1 class="iwa-h1">{{ method }} Order <span class="iwa-badge float-right"> ID: <span id="order-id">{{ pk }}</span></span></h1>
+    <h1 class="iwa-h1">{{ method }} Lend <span class="iwa-badge float-right"> ID: <span id="lend-id">{{ pk }}</span></span></h1>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
@@ -20,9 +20,9 @@ Order Update
         </div>
         {% endfor %}
         <div id="error-container"></div>
-        <button class="iwa-btn" id="order-submit" type="">Submit</button>
+        <button class="iwa-btn" id="lend-submit" type="">Submit</button>
     </form>
 </section>
 {% load static %}
-<script src="{% static 'js/order-update.js' %}"></script>
+<script src="{% static 'js/lend-update.js' %}"></script>
 {% endblock %}

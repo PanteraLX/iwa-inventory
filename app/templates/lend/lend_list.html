@@ -1,14 +1,14 @@
 {% extends "app/_base.html" %}
 
 {% block title %} 
-Orders list
+Lends list
 {% endblock %} 
 
 {% block content %} 
 <section class="iwa-section">
-    <h1 class="iwa-h1">Orders 
+    <h1 class="iwa-h1">Lends
         {% if user.is_superuser %}
-            <a type="button"  href="{% url 'order_create' %}"
+            <a type="button"  href="{% url 'lend_create' %}"
                 class="inline-block float-right max-w-xs w-12 h-12 mb-0 mt-0 mr-2 rounded-full bg-gray-900 focus:outline-none focus:ring-1 focus:ring-grey focus:ring-offset-2 focus:ring-offset-grey-800"
                 id="create-new-item-button">
                 <i class="fa fa-plus text-white text-center h-full w-full mt-3"></i>
@@ -17,7 +17,7 @@ Orders list
     </h1>
     
 <h1 class="iwa-h1">
-    Current orders
+    Current lends
 </h1>
 
 <table class="iwa-table">
@@ -31,18 +31,18 @@ Orders list
         </tr>
     </thead>
     <tbody>
-        {% for order in all %}
+        {% for lend in all %}
 
         <tr class="iwa-table-row">
-            <td class="iwa-table-cell">{{ order.user }}</td>
-            <td class="iwa-table-cell">{{ order.item }}</td>
-            <td class="iwa-table-cell">{{ order.quantity }}</td>
-            <td class="iwa-table-cell">{{ order.started_at|date:'d.m.Y' }} - {{ order.ended_at|date:'d.m.Y' }}</td>
+            <td class="iwa-table-cell">{{ lend.user }}</td>
+            <td class="iwa-table-cell">{{ lend.item }}</td>
+            <td class="iwa-table-cell">{{ lend.quantity }}</td>
+            <td class="iwa-table-cell">{{ lend.started_at|date:'d.m.Y' }} - {{ lend.ended_at|date:'d.m.Y' }}</td>
             <td class="iwa-table-cell">
-                <a href="{% url 'order_detail' order.id %}" class="iwa-btn mr-1">
+                <a href="{% url 'lend_detail' lend.id %}" class="iwa-btn mr-1">
                     View
                 </a>
-                <a href="{% url 'order_update' order.id %}" class="iwa-btn mr-1">
+                <a href="{% url 'lend_update' lend.id %}" class="iwa-btn mr-1">
                     Edit
                 </a>
             </td>
@@ -52,7 +52,7 @@ Orders list
 </table>
 
 <h1 class="iwa-h1 mt-4">
-    Past due orders
+    Past due lends
 </h1>
 
 <table class="iwa-table">
@@ -66,18 +66,18 @@ Orders list
         </tr>
     </thead>
     <tbody>
-        {% for order in past_due %}
+        {% for lend in past_due %}
 
         <tr class="iwa-table-row">
-            <td class="iwa-table-cell">{{ order.user }}</td>
-            <td class="iwa-table-cell">{{ order.item }}</td>
-            <td class="iwa-table-cell">{{ order.quantity }}</td>
-            <td class="iwa-table-cell">{{ order.started_at|date:'d.m.Y' }} - {{ order.ended_at|date:'d.m.Y' }}</td>
+            <td class="iwa-table-cell">{{ lend.user }}</td>
+            <td class="iwa-table-cell">{{ lend.item }}</td>
+            <td class="iwa-table-cell">{{ lend.quantity }}</td>
+            <td class="iwa-table-cell">{{ lend.started_at|date:'d.m.Y' }} - {{ lend.ended_at|date:'d.m.Y' }}</td>
             <td class="iwa-table-cell">
-                <a href="{% url 'order_detail' order.id %}" class="iwa-btn mr-1">
+                <a href="{% url 'lend_detail' lend.id %}" class="iwa-btn mr-1">
                     View
                 </a>
-                <a href="{% url 'order_update' order.id %}" class="iwa-btn mr-1">
+                <a href="{% url 'lend_update' lend.id %}" class="iwa-btn mr-1">
                     Edit
                 </a>
             </td>
@@ -87,7 +87,7 @@ Orders list
 </table>
 
 <h1 class="iwa-h1 mt-4">
-    Settled orders
+    Settled lends
 </h1>
 
 <table class="iwa-table">
@@ -101,18 +101,18 @@ Orders list
         </tr>
     </thead>
     <tbody>
-        {% for order in settled %}
+        {% for lend in settled %}
 
         <tr class="iwa-table-row">
-            <td class="iwa-table-cell">{{ order.user }}</td>
-            <td class="iwa-table-cell">{{ order.item }}</td>
-            <td class="iwa-table-cell">{{ order.quantity }}</td>
-            <td class="iwa-table-cell">{{ order.started_at|date:'d.m.Y' }} - {{ order.ended_at|date:'d.m.Y' }}</td>
+            <td class="iwa-table-cell">{{ lend.user }}</td>
+            <td class="iwa-table-cell">{{ lend.item }}</td>
+            <td class="iwa-table-cell">{{ lend.quantity }}</td>
+            <td class="iwa-table-cell">{{ lend.started_at|date:'d.m.Y' }} - {{ lend.ended_at|date:'d.m.Y' }}</td>
             <td class="iwa-table-cell">
-                <a href="{% url 'order_detail' order.id %}" class="iwa-btn mr-1">
+                <a href="{% url 'lend_detail' lend.id %}" class="iwa-btn mr-1">
                     View
                 </a>
-                <a href="{% url 'order_update' order.id %}" class="iwa-btn mr-1">
+                <a href="{% url 'lend_update' lend.id %}" class="iwa-btn mr-1">
                     Edit
                 </a>
             </td>

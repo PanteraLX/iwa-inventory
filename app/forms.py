@@ -1,5 +1,5 @@
 from django import forms
-from app.models import InventoryItem, SingleInventoryItem, InventoryItemImage, Order
+from app.models import InventoryItem, SingleInventoryItem, InventoryItemImage, Lend
 from django.forms import ClearableFileInput
 from django.contrib.auth.models import User as DjangoUser
 
@@ -57,11 +57,11 @@ class AccountForm(forms.ModelForm):
 
 order_css_class = 'iwa-input'
 
-class OrderForm(forms.ModelForm):
+class LendForm(forms.ModelForm):
     '''Form for creating and editing Orders'''
     class Meta:
-        '''Meta class for OrderForm'''
-        model = Order
+        '''Meta class for LendForm'''
+        model = Lend
         fields = ['item', 'user', 'returned', 'quantity', 'started_at', 'ended_at']
         widgets = {
             'user': forms.Select(attrs={'class': order_css_class}),
@@ -74,7 +74,7 @@ class OrderForm(forms.ModelForm):
 
     # Disable the 'returned' field if the order has not been created yet or the user is not an admin
     def __init__(self, *args, **kwargs):
-        '''Initialize the OrderForm'''
+        '''Initialize the LendForm'''
         super().__init__(*args, **kwargs)
         if kwargs['instance'] is None or not kwargs['instance'].user.is_superuser:
             # Hide de 'returned' field along with its label

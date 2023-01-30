@@ -1,44 +1,44 @@
 <!-- An update view of a single InventoryItem to view and change its attributes -->
 {% extends "app/_base.html" %}
 {% block title %}
-Order Detail
+Lend Detail
 {% endblock %}
 
 {% block content %}
 <section class="iwa-section">
 
-    <h1 class="iwa-h1">{{ order }}</h1>
-    {{order.status }}
+    <h1 class="iwa-h1">{{ lend }}</h1>
+    {{lend.status }}
     <dl>
-        <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ order.description }}</dd>
+        <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ lend.description }}</dd>
     </dl>
     <dl class="flex items-center space-x-6">
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">ID</dt>
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ order.id }}</dd>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ lend.id }}</dd>
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">User</dt>
-            <a href="{% url 'user_detail' order.user.id %}">
-                <dd class="mb-4 font-light text-gray-500 sm:mb-5 cursor-pointer">{{ order.user }}</dd>
+            <a href="{% url 'user_detail' lend.user.id %}">
+                <dd class="mb-4 font-light text-gray-500 sm:mb-5 cursor-pointer">{{ lend.user }}</dd>
             </a>
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Item</dt>
-            <a href="{% url 'inventory_item_detail' order.item.id %}">
-                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ order.item }}</dd>
+            <a href="{% url 'inventory_item_detail' lend.item.id %}">
+                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ lend.item }}</dd>
             </a>
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Timespan</dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-                {{ order.started_at|date:'d.m.Y' }} - {{order.ended_at|date:'d.m.Y' }}</dd>
+                {{ lend.started_at|date:'d.m.Y' }} - {{lend.ended_at|date:'d.m.Y' }}</dd>
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Returned
             </dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-                {% if order.returned %}
+                {% if lend.returned %}
                 <span class="fa fa-check"></span>
                 {% else %}
                 <span class="fa fa-xmark"></span>
@@ -47,15 +47,15 @@ Order Detail
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Quantity</dt>
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ order.quantity }}</dd>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ lend.quantity }}</dd>
         </div>
 
     </dl>
     <div class="flex items-center space-x-4">
-        <a href="{% url 'order_update' order.id %}" class="iwa-btn">
+        <a href="{% url 'lend_update' lend.id %}" class="iwa-btn">
             Edit
         </a>
-        <a href="{% url 'order_update' order.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">
+        <a href="{% url 'lend_update' lend.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">
             Delete
         </a>
     </div>

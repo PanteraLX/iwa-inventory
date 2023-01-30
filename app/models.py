@@ -3,8 +3,6 @@ from django.contrib.auth.models import User as DjangoUser
 from hashlib import sha1
 import random
 
-# Create your models here.
-
 class ActiveManager(models.Manager):
     def active(self):
         return self.model.objects.filter(active=True)
@@ -45,47 +43,7 @@ class InventoryItem(models.Model):
     def __str__(self):
         return self.name
 
-
-class Order(models.Model):
-    user = models.ForeignKey(
-        DjangoUser,
-        on_delete=models.CASCADE,
-        verbose_name='User',
-        help_text='User'
-    )
-    item = models.ForeignKey(
-        InventoryItem,
-        on_delete=models.CASCADE,
-        verbose_name='Item',
-        help_text='Item'
-    )
-
-    quantity = models.IntegerField(
-        verbose_name='Quantity',
-        help_text='Quantity'
-    )
-    started_at = models.DateTimeField(
-        null=True,
-        verbose_name='Start',
-        help_text='Start of the Order'
-    )
-    ended_at = models.DateTimeField(
-        null=True,
-        verbose_name='End',
-        help_text='End of the Order'
-    )
-
-    returned = models.BooleanField(
-        default=False,
-        verbose_name='Returned',
-        help_text='Item was returned'
-    )
-
-    def __str__(self):
-        return self.item.name + " ordered by " + self.user.username
-
 # A model for images that will be associated with the InventoryItem model
-
 class InventoryItemImage(models.Model):
     inventory_item = models.ForeignKey(
         InventoryItem,
@@ -106,7 +64,6 @@ class InventoryItemImage(models.Model):
 # A model for single inventory items that with a foreign key to the InventoryItem model, contains all the attributes
 # of the InventoryItem model, but also has a hash to uniquely identify the item and a field called 'serial_number'
 # which is the serial number of the item.
-
 def _createHash():
     """This function generates a 40 character long hash"""
     encoded_rand = str(random.getrandbits(64)).encode('utf-8')
@@ -141,3 +98,42 @@ class SingleInventoryItem(models.Model):
 
     def __str__(self):
         return self.inventory_item.name + " " + self.serial_number
+
+# A model for the lendings of the items
+class Lend(models.Model):
+    user = models.ForeignKey(
+        DjangoUser,
+        on_delete=models.CASCADE,
+        verbose_name='User',
+        help_text='User'
+    )
+    item = models.ForeignKey(
+        SingleInventoryItem,
+        on_delete=models.CASCADE,
+        verbose_name='Item',
+        help_text='Item'
+    )
+
+    quantity = models.IntegerField(
+        verbose_name='Quantity',
+        help_text='Quantity'
+    )
+    started_at = models.DateTimeField(
+        null=True,
+        verbose_name='Start',
+        help_text='Start of the Order'
+    )
+    ended_at = models.DateTimeField(
+        null=True,
+        verbose_name='End',
+        help_text='End of the Order'
+    )
+
+    returned = models.BooleanField(
+        default=False,
+        verbose_name='Returned',
+        help_text='Item was returned'
+    )
+
+    def __str__(self):
+        return self.item.name + " ordered by " + self.user.username

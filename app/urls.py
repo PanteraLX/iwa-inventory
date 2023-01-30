@@ -1,7 +1,7 @@
 from django.urls import path
 from app import views
 from app.view.account import AccountDetailView, AccountListView, AccountFormView
-from app.view.order import OrderDetailView, OrderListView, OrderFormView
+from app.view.lend import LendDetailView, LendListView, LendFormView
 from app.view.inventory_item import *
 
 
@@ -21,15 +21,15 @@ urlpatterns = [
     path('inventory_item/archive', views.archive_inventory_items_list, name='archive_inventory_items_list'),
 
     path('account/<int:pk>/update', AccountFormView.as_view(), name='user_update'),
-    path('account/<int:pk>/orders', OrderListView.as_view(), name='user_orders'),
+    path('account/<int:pk>/lends', LendListView.as_view(), name='user_lends'),
     path('account/<int:pk>', AccountDetailView.as_view(), name='user_detail'),
     path('account/create', AccountFormView.as_view(), name='user_create'),
     path('accounts', AccountListView.as_view(), name='user_list'),
 
-    path('order/<int:pk>/update', OrderFormView.as_view(), name='order_update'),
-    path('order/<int:pk>', OrderDetailView.as_view(), name='order_detail'),
-    path('order/create', OrderFormView.as_view(), name='order_create'),
-    path('orders', OrderListView.as_view(), name='order_list'),
+    path('lend/<int:pk>/update', LendFormView.as_view(), name='lend_update'),
+    path('lend/<int:pk>', LendDetailView.as_view(), name='lend_detail'),
+    path('lend/create', LendFormView.as_view(), name='lend_create'),
+    path('lends', LendListView.as_view(), name='lend_list'),
 
-    path('api/orders-by-item/<int:pk>', views.orders_by_item, name='order_by_item'),
+    path('api/lends-by-item/<int:pk>', views.lends_by_item, name='lend_by_item'),
 ]

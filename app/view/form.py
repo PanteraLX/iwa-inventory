@@ -26,3 +26,7 @@ class CustomFormView(ViewMixin, View):
             object.save()
             return redirect(self.success_url, pk=object.id)
         return render(request, self.template_name, {'form': form, **self.get_context_data(request, *args, **kwargs)})
+
+    def get_context_data(self, request, *args, **kwargs):
+        ''' Returns the context data for the view'''
+        return {**self.context}

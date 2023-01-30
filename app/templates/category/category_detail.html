@@ -1,0 +1,45 @@
+<!-- An update view of a single InventoryItem to view and change its attributes -->
+{% extends "app/_base.html" %}
+{% block title %}
+Category Update
+{% endblock %}
+
+{% block content %}
+<section class="iwa-section">
+
+    <h1 class="iwa-h1">{{ category.name }}</h1>
+
+    <dl>
+        <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ category.description }}</dd>
+    </dl>
+
+    <dl class="flex items-center space-x-6">
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">ID</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ category.id }}</dd>
+        </div>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Name</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ category.name }}</dd>
+        </div>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">color</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ category.color }}</dd>
+        </div>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Icon</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ category.icon }}</dd>
+        </div>
+    </dl>
+    
+    <div class="flex items-center space-x-4">
+        <a href="{% url 'category_update' category.id %}" class="iwa-btn">
+            Edit
+        </a>
+        <a href="{% url 'category_update' category.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">
+            Delete
+        </a>
+    </div>
+
+</section>
+{% endblock %}

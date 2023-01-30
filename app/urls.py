@@ -3,7 +3,7 @@ from app import views
 from app.view.account import AccountDetailView, AccountListView, AccountFormView
 from app.view.order import OrderDetailView, OrderListView, OrderFormView, order_pdf, orders_by_item
 from app.view.inventory_item import InventoryItemDetailView, InventoryItemFormView
-
+from app.view.category import CategoryDetailView, CategoryListView, CategoryFormView
 
 urlpatterns = [
     path('', views.active_inventory_items_list_home, name='inventory_items'),
@@ -21,6 +21,11 @@ urlpatterns = [
     path('account/<int:pk>', AccountDetailView.as_view(), name='user_detail'),
     path('account/create', AccountFormView.as_view(), name='user_create'),
     path('accounts', AccountListView.as_view(), name='user_list'),
+
+    path('category/<int:pk>/update', CategoryFormView.as_view(), name='category_update'),
+    path('category/<int:pk>', CategoryDetailView.as_view(), name='category_detail'),
+    path('category/create', CategoryFormView.as_view(), name='category_create'),
+    path('categories', CategoryListView.as_view(), name='category_list'),
 
     path('order/<int:pk>/update', OrderFormView.as_view(), name='order_update'),
     path('order/<int:pk>', OrderDetailView.as_view(), name='order_detail'),

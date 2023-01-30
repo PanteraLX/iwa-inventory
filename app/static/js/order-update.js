@@ -139,10 +139,9 @@ const writeErrorMessages = (errors) => {
         const startedAt = new Date(startedAtInput.value);
         const endedAt = new Date(endedAtInput.value);
 
-        const host = 'http://127.0.0.1:8000';
-        const url = new URL(`${host}/api/orders-by-item/${itemId}`);
+        const url = `/api/orders-by-item/${itemId}`;
 
-        const response = await fetch(url.href, {
+        const response = await fetch(url, {
             mode: 'cors',
             credentials: 'omit'
         })

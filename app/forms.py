@@ -45,6 +45,22 @@ class AccountForm(forms.ModelForm):
             'email': forms.TextInput(attrs={'class': user_css_class}),
         }
 
+user_css_class = 'iwa-input'
+
+class AccountRegisterForm(forms.ModelForm):
+    '''Form for creating and editing Accounts'''
+    class Meta:
+        '''Meta class for AccountForm'''
+        model = DjangoUser
+        fields = ['username', 'first_name', 'last_name', 'email', 'password']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': user_css_class}),
+            'first_name': forms.TextInput(attrs={'class': user_css_class}),
+            'last_name': forms.TextInput(attrs={'class': user_css_class}),
+            'email': forms.TextInput(attrs={'class': user_css_class}),
+            'password': forms.TextInput(attrs={'class': user_css_class, 'type': 'password'}),
+        }
+
 
 order_css_class = 'iwa-input'
 

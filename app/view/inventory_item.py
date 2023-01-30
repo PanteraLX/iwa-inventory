@@ -12,6 +12,7 @@ class InventoryItemDetailView(DetailView):
     context_object_name = 'inventory_item'
 
     def get_context_data(self, **kwargs):
+        ''' Returns the context data for the view '''
         context = super().get_context_data(**kwargs)
         context['images'] = InventoryItemImage.objects.filter(inventory_item=self.object)
         return context

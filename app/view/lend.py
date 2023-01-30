@@ -38,7 +38,8 @@ class LendFormView(CustomFormView):
     model = Lend
     success_url = 'lend_detail'
 
-    # If a lend is created, 
+    # If a lend is created, associate it with as many SingleInventoryItem objects as the 'quantity' field indicates
+    def get(self, request, *)
 
     def get_context_data(self, request, *args, **kwargs):
         ''' Returns the context data for the view'''

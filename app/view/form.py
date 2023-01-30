@@ -20,7 +20,7 @@ class CustomFormView(ViewMixin, View):
     def post(self, request, *args, **kwargs):
         ''' POST request handler'''
         pk = self.extract_pk(kwargs)
-        form = self.form_class(request.POST, instance=self.extract_object(pk))
+        form = self.form_class(request.POST, request.FILES, instance=self.extract_object(pk))
         if form.is_valid():
             object = form.save(commit=False)
             object.save()

@@ -1,5 +1,5 @@
 from django import forms
-from app.models import InventoryItem, InventoryItemImage, Order
+from app.models import InventoryItem, InventoryItemImage, Order, Category
 from django.forms import ClearableFileInput
 from django.contrib.auth.models import User as DjangoUser
 
@@ -9,9 +9,10 @@ class InventoryItemForm(forms.ModelForm):
     '''Form for creating and editing InventoryItems'''
     class Meta:
         model = InventoryItem
-        fields = ['name', 'description', 'quantity', 'position', 'producer']
+        fields = ['name', 'category', 'description', 'quantity', 'position', 'producer']
         widgets = {
             'name': forms.TextInput(attrs={'class': inventory_item_css_class}),
+            'category': forms.Select(attrs={'class': inventory_item_css_class}),
             'description': forms.Textarea(attrs={'class': 'block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500'}),
             'quantity': forms.NumberInput(attrs={'class': inventory_item_css_class}),
             'position': forms.TextInput(attrs={'class': inventory_item_css_class}),
@@ -68,7 +69,7 @@ class OrderForm(forms.ModelForm):
     class Meta:
         '''Meta class for OrderForm'''
         model = Order
-        fields = ['item', 'user', 'returned', 'quantity', 'started_at', 'ended_at']
+        fields = ['item', 'user', 'returned', 'quantity', 'started_at', 'ended_at', 'document']
         widgets = {
             'user': forms.Select(attrs={'class': order_css_class}),
             'item': forms.Select(attrs={'class': order_css_class}),
@@ -76,13 +77,33 @@ class OrderForm(forms.ModelForm):
             'quantity': forms.NumberInput(attrs={'class': order_css_class}),
             'started_at': forms.DateInput(attrs={'class': order_css_class, 'type': 'date'}, format='%Y-%m-%d'),
             'ended_at': forms.DateInput(attrs={'class': order_css_class, 'type': 'date'}, format='%Y-%m-%d'),
+            'document': forms.FileInput(attrs={'type': 'file'}),
         }
 
     # Disable the 'returned' field if the order has not been created yet or the user is not an admin
     def __init__(self, *args, **kwargs):
         '''Initialize the OrderForm'''
         super().__init__(*args, **kwargs)
+        print(kwargs['instance'].user)
         if kwargs['instance'] is None or not kwargs['instance'].user.is_superuser:
             # Hide de 'returned' field along with its label
             self.fields['returned'].label = ''
             self.fields['returned'].widget = forms.HiddenInput()
+
+        if kwargs['instance'] is None or kwargs['instance'].document:
+            self.fields['document'].label = ''
+            self.fields['document'].widget = forms.HiddenInput()
+
+
+class CategoryForm(forms.ModelForm):
+    '''Form for creating and editing Categories'''
+    class Meta:
+        '''Meta class for CategoryForm'''
+        model = Category
+        fields = ['name', 'description', 'color', 'icon']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'iwa-input'}),
+            'description': forms.Textarea(attrs={'class': 'block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500'}),
+            'color': forms.TextInput(attrs={'class': 'iwa-input', 'type': 'color'}),
+            'icon': forms.TextInput(attrs={'class': 'iwa-input'}),
+        }

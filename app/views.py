@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from django.http import JsonResponse
 from django.core.serializers import serialize
 import json
-from django.core.paginator import Paginator
+
 
 
 

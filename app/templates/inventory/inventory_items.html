@@ -124,7 +124,7 @@ Products
         {% if page_obj.has_previous %}
         <b><a class="iwa-btn" href="?page={{ PaginatedItemLIstView.previous_page_number }}">first</a></b>
         {% else %}
-        <b><a class="na-btn">first</a></b>
+        <b><a class="iwa.na-btn">first</a></b>
 
         {% endif %}
         {% for i in paginator.page_range %}
@@ -138,7 +138,7 @@ Products
         {% if page_obj.has_next %}
         <a class="iwa-btn" href="?page={{ page_obj.paginator.num_pages }}">last</a>
         {% else %}
-        <a class="na-btn">last</a>
+        <a class="iwa.na-btn">last</a>
         {% endif %}
 
     </ul>

@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0005_order_document_alter_inventoryitem_active_and_more'),
+        ('app', '0006_order_document_alter_inventoryitem_active_and_more'),
     ]
 
     operations = [

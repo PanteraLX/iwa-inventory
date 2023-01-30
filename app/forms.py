@@ -52,7 +52,7 @@ class OrderForm(forms.ModelForm):
     class Meta:
         '''Meta class for OrderForm'''
         model = Order
-        fields = ['item', 'user', 'returned', 'quantity', 'started_at', 'ended_at']
+        fields = ['item', 'user', 'returned', 'quantity', 'started_at', 'ended_at', 'document']
         widgets = {
             'user': forms.Select(attrs={'class': order_css_class}),
             'item': forms.Select(attrs={'class': order_css_class}),
@@ -60,13 +60,19 @@ class OrderForm(forms.ModelForm):
             'quantity': forms.NumberInput(attrs={'class': order_css_class}),
             'started_at': forms.DateInput(attrs={'class': order_css_class, 'type': 'date'}, format='%Y-%m-%d'),
             'ended_at': forms.DateInput(attrs={'class': order_css_class, 'type': 'date'}, format='%Y-%m-%d'),
+            'document': forms.FileInput(attrs={'type': 'file'}),
         }
 
     # Disable the 'returned' field if the order has not been created yet or the user is not an admin
     def __init__(self, *args, **kwargs):
         '''Initialize the OrderForm'''
         super().__init__(*args, **kwargs)
+        print(kwargs['instance'].user)
         if kwargs['instance'] is None or not kwargs['instance'].user.is_superuser:
             # Hide de 'returned' field along with its label
             self.fields['returned'].label = ''
             self.fields['returned'].widget = forms.HiddenInput()
+
+        if kwargs['instance'] is None or kwargs['instance'].document:
+            self.fields['document'].label = ''
+            self.fields['document'].widget = forms.HiddenInput()

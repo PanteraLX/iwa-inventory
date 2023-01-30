@@ -107,7 +107,7 @@ class Lend(models.Model):
         verbose_name='User',
         help_text='User'
     )
-    item = models.ForeignKey(
+    item = models.ManyToManyField(
         SingleInventoryItem,
         on_delete=models.CASCADE,
         verbose_name='Item',

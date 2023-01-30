@@ -101,19 +101,16 @@ class SingleInventoryItemFormView(CustomFormView):
 
     def get(self, request, *args, **kwargs):
         ''' GET request handler'''
-        pk = self.extract_pk(kwargs)
-        item = self.extract_object(pk)
+        item = SingleInventoryItem.objects.get(hash=self.kwargs.get('hash'))
         form = self.form_class(instance=item)
-        return render(request, self.template_name, {'form': form, **self.get_context_data(request, *args, **kwargs)})
+        return render(request, self.template_name, {'form': form})
     
     def post(self, request, *args, **kwargs):
         ''' POST request handler'''
-        pk = self.extract_pk(kwargs)
-        form = self.form_class(request.POST, instance=self.extract_object(pk))
+        form = self.form_class(request.POST, instance=SingleInventoryItem.objects.get(hash=self.kwargs.get('hash')))
         if form.is_valid():
             form.save()
-            return redirect(self.success_url, hash=self.extract_object(pk).hash)
-        return render(request, self.template_name, {'form': form, **self.get_context_data(request, *args, **kwargs)})
+            return redirect(self.success_url, hash=self.kwargs.get('hash'))
 
 # Delete a single inventory item with a function view
 def single_inventory_item_delete(request, hash):
@@ -121,3 +118,10 @@ def single_inventory_item_delete(request, hash):
     single_item = SingleInventoryItem.objects.get(hash=hash)
     single_item.delete()
     return redirect('inventory_item_detail', pk=InventoryItem.objects.get(id=single_item.inventory_item.id).id)
+
+# Create a new single inventory item with a function view
+def single_inventory_item_create(request, pk):
+    ''' Creates a new single inventory item'''
+    inventory_item = InventoryItem.objects.get(id=pk)
+    SingleInventoryItem.objects.create(inventory_item=inventory_item)
+    return redirect('inventory_item_detail', pk=inventory_item.id)

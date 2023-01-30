@@ -35,14 +35,14 @@ Inventory Item Update
     </dl>
 
     <!-- Show the SingleInventoryItem objects associated with the InventoryItem as a list -->
-    <h2 class="iwa-h2">Single items</h2>
-    <table class="iwa-table">
+    <table class="iwa-table mb-6">
         <thead class="iwa-table-head">
             <tr>
                 <th class="iwa-table-head-cell">Inventory Item</th>
                 <th class="iwa-table-head-cell">Hash</th>
                 <th class="iwa-table-head-cell">Serial Number</th>
                 <th class="iwa-table-head-cell">Active</th>
+                <th class="iwa-table-head-cell"></th>
             </tr>
         </thead>
         <tbody>
@@ -60,6 +60,16 @@ Inventory Item Update
                 </td>
             </tr>
             {% endfor %}
+            <!-- A table row that contains the 'create' button -->
+            <tr class="iwa-table-row">
+                <td class="iwa-table-cell">
+                    <a href="{% url 'single_inventory_item_create' inventory_item.id %}" class="btn">Create</a>
+                </td>
+                <td class="iwa-table-cell">
+                <td class="iwa-table-cell">
+                <td class="iwa-table-cell">
+                <td class="iwa-table-cell">
+            </tr>
         </tbody>
     </table>
 

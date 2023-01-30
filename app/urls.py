@@ -11,6 +11,7 @@ urlpatterns = [
     path('inventory_item/<int:pk>/update', InventoryItemFormView.as_view(), name='inventory_item_update'),
     path('inventory_item/<int:pk>/', InventoryItemDetailView.as_view(), name='inventory_item_detail'),
     path('inventory_item/single/<slug:hash>', SingleInventoryItemDetailView.as_view(), name='single_inventory_item_detail'),
+    path('inventory_item/<int:pk>/single_inventory_item_create', single_inventory_item_create, name='single_inventory_item_create'),
     path('inventory_item/single/<slug:hash>/update', SingleInventoryItemFormView.as_view(), name='single_inventory_item_update'),
     path('inventory_item/single/<slug:hash>/delete', single_inventory_item_delete, name='single_inventory_item_delete'),
     path('inventory_item/create', InventoryItemFormView.as_view(), name='inventory_item_create'),

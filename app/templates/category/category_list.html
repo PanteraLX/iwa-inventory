@@ -1,0 +1,62 @@
+{% extends "app/_base.html" %}
+{% block title %}
+Category list
+{% endblock %}
+
+{% block content %}
+{% if categories %}
+<section class="iwa-section">
+    <h1 class="iwa-h1">Category list
+        {% if user.is_superuser %}
+            <a type="button"  href="{% url 'category_create' %}"
+                class="inline-block float-right max-w-xs w-12 h-12 mb-0 mt-0 mr-2 rounded-full bg-gray-900 focus:outline-none focus:ring-1 focus:ring-grey focus:ring-offset-2 focus:ring-offset-grey-800"
+                id="create-new-category-button">
+                <i class="fa fa-plus text-white text-center h-full w-full mt-3"></i>
+            </a>
+        {% endif %}
+    </h1>
+    
+    <table class="iwa-table">
+        <thead class="iwa-table-head">
+            <tr class="border-b">
+                <th class="iwa-table-head-cell">Name</th>
+                <th class="iwa-table-head-cell">Active</th>
+                <th class="iwa-table-head-cell">Color</th>
+                <th class="iwa-table-head-cell">Icon</th>
+                <th class="iwa-table-head-cell">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr class="iwa-table-row">
+                <td class="iwa-table-cell">{{ category.name }}</td>
+                <td class="iwa-table-cell">
+                    {% if category.active %}
+                    <span class="fa fa-check"></span>
+                    {% else %}
+                    <span class="fa fa-xmark"></span>
+                    {% endif %}
+                </td>
+                <td class="iwa-table-cell">
+                    {{category.color}}
+                    <span class="bg-[{{category.color}}]"></span>
+                </td>
+                <td class="iwa-table-cell">
+                    <span class="fa fa-{{category.icon}}"></span>
+                </td>
+                <td class="iwa-table-cell">
+                    <a href="{% url 'category_detail' category.id %}" class="iwa-btn mr-1">
+                        View
+                    </a>
+                    <a href="{% url 'category_update' category.id %}" class="iwa-btn mr-1">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+{% endif %}
+{% endblock %}

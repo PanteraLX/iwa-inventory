@@ -2,7 +2,7 @@
 from django.views.generic import DetailView, ListView
 from django.contrib.auth.models import User as DjangoUser
 from django.contrib.auth import get_user_model
-from app.forms import AccountForm
+from app.forms import AccountForm, AccountRegisterForm
 from app.view.form import CustomFormView
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
@@ -75,5 +75,22 @@ class AccountFormView(CustomFormView):
 
     def get_context_data(self, request, *args, **kwargs):
         ''' Returns the context data for the view'''
-
         return {'method': 'Create' if not self.extract_pk(kwargs) else 'Update'}
+
+
+class AccountRegisterFormView(CustomFormView):
+    ''' A custom form view that can be used to register a new account'''
+    template_name = 'account/user_update.html'
+    form_class = AccountRegisterForm
+    model = DjangoUser
+    success_url = 'user_detail'
+    context = {'method': 'Register'}
+
+    def get(self, request, *args, **kwargs):
+        ''' GET request handler'''
+        # Only unauthenticated users can register
+        if not request.user.is_authenticated:
+            return render(request, self.template_name, {'form': self.form_class()})
+
+        # If the user is authenticated, raise a permission denied error
+        raise PermissionDenied

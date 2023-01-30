@@ -1,6 +1,6 @@
 from django.urls import path
 from app import views
-from app.view.account import AccountDetailView, AccountListView, AccountFormView
+from app.view.account import AccountDetailView, AccountListView, AccountFormView, AccountRegisterFormView
 from app.view.order import OrderDetailView, OrderListView, OrderFormView
 from app.view.inventory_item import InventoryItemDetailView, InventoryItemFormView
 
@@ -20,6 +20,7 @@ urlpatterns = [
     path('account/<int:pk>/orders', OrderListView.as_view(), name='user_orders'),
     path('account/<int:pk>', AccountDetailView.as_view(), name='user_detail'),
     path('account/create', AccountFormView.as_view(), name='user_create'),
+    path('account/register', AccountRegisterFormView.as_view(), name='user_register'),
     path('accounts', AccountListView.as_view(), name='user_list'),
 
     path('order/<int:pk>/update', OrderFormView.as_view(), name='order_update'),

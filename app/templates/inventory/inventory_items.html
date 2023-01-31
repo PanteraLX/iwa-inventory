@@ -6,7 +6,7 @@ Products
 {% endblock %}
 
 {% block content %}
-{% if request.path == "/" %}
+{% if page_name == 'home' %}
 <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
     <div class="mb-8">
         <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">The ICT Warrior Academy's inventory of
@@ -44,16 +44,14 @@ Products
 </div>
 {% endif %}
 
-
-
 <section class="iwa-section">
-    {% if request.path == "/" %}
+    {% if page_name == 'home' %}
     <h1 class="iwa-h1">Inventory </h1>
     {% endif %}
-    {% if request.path == "/inventory_item/complete" %}
+    {% if page_name == 'complete' %}
     <h1 class="iwa-h1">Inventory complete</h1>
     {% endif %}
-    {% if request.path == "/inventory_item/" %}
+    {% if page_name == 'active' %}
     <h1 class="iwa-h1">Inventory active
         {% if user.is_superuser %}
         <!-- PLussymbol to add Items-->
@@ -65,8 +63,8 @@ Products
         {% endif %}
     </h1>
     {% endif %}
-    {% if request.path == "/inventory_item/archive" %}
-    <h3 class="mt-0 mb-0 text-4xl text-gray-700 ">Inventory archive</h3>
+    {% if page_name == 'inactive' %}
+    <h1 class="iwa-h1">Inventory archive</h3>
     {% endif %}
 
 
@@ -100,14 +98,8 @@ Products
 
             <!-- Button that links to an object's detail view -->
             <a href="{% url 'inventory_item_detail' inventory_item.pk %}" class="btn">Detail</a>
-
-
         </div>
-
         {% endfor %}
-
-
-
 
         {% else %}
         <p>No data found.</p>
@@ -115,14 +107,11 @@ Products
 
     </div>
 
-
-
     {% if is_paginated %}
-
     <ul class="pagination mt-10">
 
         {% if page_obj.has_previous %}
-        <b><a class="iwa-btn" href="?page={{ PaginatedItemLIstView.previous_page_number }}">first</a></b>
+        <b><a class="iwa-btn" href="?page={{ PaginatedItemLIstView.previous_page_number }}&paginate_by={{ paginate_by }}">first</a></b>
         {% else %}
         <b><a class="iwa.na-btn">first</a></b>
 
@@ -131,12 +120,12 @@ Products
         {% if page_obj.number == i %}
         <b><a class="na-btn">{{ i }}</a></b>
         {% else %}
-        <b><a class="iwa-btn" href="?page={{ i }}">{{ i }}</a></b>
+        <b><a class="iwa-btn" href="?page={{ i }}&paginate_by={{ paginate_by }}">{{ i }}</a></b>
         {% endif %}
         {% endfor %}
 
         {% if page_obj.has_next %}
-        <a class="iwa-btn" href="?page={{ page_obj.paginator.num_pages }}">last</a>
+        <a class="iwa-btn" href="?page={{ page_obj.paginator.num_pages }}&paginate_by={{ paginate_by }}">last</a>
         {% else %}
         <a class="iwa.na-btn">last</a>
         {% endif %}
@@ -144,44 +133,25 @@ Products
     </ul>
     {% endif %}
 
-
-
-
-
     {% if user.is_superuser %}
     <!-- Button to show the complete list of inventory items, including the items whose 'active' variable is set to False -->
-    {% if request.path == "/" or request.path == "/inventory_item/" %}
     <div class="flex">
+        {% if page_name == 'complete' or page_name == 'inactive' %}
+        <div class=" mt-10 mb-5 flex-initial">
+            <a class="iwa-btn" href="{% url 'inventory_items' %}">Show only active inventory items</a>
+        </div>
+        {% endif %}
+        {% if page_name == 'home' or page_name == 'active' or page_name == 'inactive' %}
         <div class="mt-10 mb-5 w-60 flex-initial">
-            <a class="btn" href="{% url 'complete_inventory_items_list' %}">Show all inventory items</a>
+            <a class="iwa-btn" href="{% url 'complete_inventory_items_list' %}">Show all inventory items</a>
         </div>
+        {% endif %}
+        {% if page_name == 'home' or page_name == 'complete' or page_name == 'active' %}
         <div class="mt-10 mb-5 w-60 flex-auto">
-            <a class="btn" href="{% url 'archive_inventory_items_list' %}">Show only archived inventory items</a>
+            <a class="iwa-btn" href="{% url 'archive_inventory_items_list' %}">Show only archived inventory items</a>
         </div>
+        {% endif %}
     </div>
-    {% endif %}
-
-    {% if request.path == "/inventory_item/complete" %}
-    <div class="flex">
-        <div class=" mt-10 mb-5 w-60 flex-initial">
-            <a class="btn" href="{% url 'inventory_items' %}">Show only active inventory items</a>
-        </div>
-        <div class=" mt-10 mb-5 w-60 flex-auto">
-            <a class="btn" href="{% url 'archive_inventory_items_list' %}">Show only archived inventory items</a>
-        </div>
-    </div>
-    {% endif %}
-
-    {% if request.path == "/inventory_item/archive" %}
-    <div class="flex">
-        <div class=" mt-10 mb-5 w-60 flex-initial">
-            <a class="btn" href="{% url 'complete_inventory_items_list' %}">Show all inventory items</a>
-        </div>
-        <div class=" mt-10 mb-5 w-60 flex-auto">
-            <a class="btn" href="{% url 'inventory_items' %}">Show only active inventory items</a>
-        </div>
-    </div>
-    {% endif %}
     {% endif %}
 </section>
 

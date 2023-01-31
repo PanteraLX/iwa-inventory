@@ -3,12 +3,12 @@ from django.views.generic import DetailView, ListView
 from django.contrib.auth.models import User as DjangoUser
 from django.contrib.auth import get_user_model
 from app.forms import AccountForm, AccountRegisterForm
-from app.view.form import CustomFormView
+from app.views.form import CustomFormView
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
-from app.view.view_mixin import ViewMixin
+from app.views.view_mixin import ViewMixin
 
 
 class AccountDetailView(ViewMixin, DetailView):

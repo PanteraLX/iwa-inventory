@@ -9,8 +9,11 @@ class ViewMixin():
 
     def extract_query_value(self, request, key):
         ''' Extracts the value of a key from the request dictionary'''
-        if request and request.GET and request.GET[key]:
-            return request.GET[key]
+        if request and request.GET:
+            try:
+                return request.GET[key]
+            except:
+                return None
         return None
 
     def extract_object(self, pk):

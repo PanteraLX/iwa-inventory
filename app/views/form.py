@@ -1,6 +1,6 @@
 from django.views.generic import View
 from django.shortcuts import render, redirect
-from app.view.view_mixin import ViewMixin
+from app.views.view_mixin import ViewMixin
 
 
 class CustomFormView(ViewMixin, View):

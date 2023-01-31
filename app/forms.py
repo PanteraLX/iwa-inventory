@@ -3,20 +3,18 @@ from app.models import InventoryItem, InventoryItemImage, Order, Category
 from django.forms import ClearableFileInput
 from django.contrib.auth.models import User as DjangoUser
 
-inventory_item_css_class = 'iwa-input'
-
 class InventoryItemForm(forms.ModelForm):
     '''Form for creating and editing InventoryItems'''
     class Meta:
         model = InventoryItem
         fields = ['name', 'category', 'description', 'quantity', 'position', 'producer']
         widgets = {
-            'name': forms.TextInput(attrs={'class': inventory_item_css_class}),
-            'category': forms.Select(attrs={'class': inventory_item_css_class}),
+            'name': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'category': forms.Select(attrs={'class': 'iwa-input w-full'}),
             'description': forms.Textarea(attrs={'class': 'block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500'}),
-            'quantity': forms.NumberInput(attrs={'class': inventory_item_css_class}),
-            'position': forms.TextInput(attrs={'class': inventory_item_css_class}),
-            'producer': forms.TextInput(attrs={'class': inventory_item_css_class}),
+            'quantity': forms.NumberInput(attrs={'class': 'iwa-input w-full'}),
+            'position': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'producer': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
         }
 
 class InventoryItemImageForm(forms.ModelForm):
@@ -30,7 +28,6 @@ class InventoryItemImageForm(forms.ModelForm):
         }
         
 
-user_css_class = 'iwa-input'
 
 class AccountForm(forms.ModelForm):
     '''Form for creating and editing Accounts'''
@@ -39,13 +36,11 @@ class AccountForm(forms.ModelForm):
         model = DjangoUser
         fields = ['username', 'first_name', 'last_name', 'is_active', 'email']
         widgets = {
-            'username': forms.TextInput(attrs={'class': user_css_class}),
-            'first_name': forms.TextInput(attrs={'class': user_css_class}),
-            'last_name': forms.TextInput(attrs={'class': user_css_class}),
-            'email': forms.TextInput(attrs={'class': user_css_class}),
+            'username': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'first_name': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'last_name': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'email': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
         }
-
-user_css_class = 'iwa-input'
 
 class AccountRegisterForm(forms.ModelForm):
     '''Form for creating and editing Accounts'''
@@ -54,15 +49,15 @@ class AccountRegisterForm(forms.ModelForm):
         model = DjangoUser
         fields = ['username', 'first_name', 'last_name', 'email', 'password']
         widgets = {
-            'username': forms.TextInput(attrs={'class': user_css_class}),
-            'first_name': forms.TextInput(attrs={'class': user_css_class}),
-            'last_name': forms.TextInput(attrs={'class': user_css_class}),
-            'email': forms.TextInput(attrs={'class': user_css_class}),
-            'password': forms.TextInput(attrs={'class': user_css_class, 'type': 'password'}),
+            'username': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'first_name': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'last_name': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'email': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'password': forms.TextInput(attrs={'class': 'iwa-input w-full', 'type': 'password'}),
         }
 
 
-order_css_class = 'iwa-input'
+order_css_class = 'iwa-input w-full'
 
 class OrderForm(forms.ModelForm):
     '''Form for creating and editing Orders'''
@@ -101,8 +96,8 @@ class CategoryForm(forms.ModelForm):
         model = Category
         fields = ['name', 'description', 'color', 'icon']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'iwa-input'}),
+            'name': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
             'description': forms.Textarea(attrs={'class': 'block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500'}),
             'color': forms.TextInput(attrs={'class': 'iwa-input', 'type': 'color'}),
-            'icon': forms.TextInput(attrs={'class': 'iwa-input'}),
+            'icon': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
         }

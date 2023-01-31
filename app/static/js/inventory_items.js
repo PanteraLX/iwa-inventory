@@ -27,4 +27,19 @@
         params.set('page', 1);
         window.location = window.location.pathname + '?' + params.toString();
     });
+
+    // Pagination
+    const paginationSelect = document.getElementById('pagination-select');
+
+    const page = params.get('paginate_by')
+    if (page && page !== 'None') {
+        paginationSelect.value = page;
+    }
+
+    paginationSelect.addEventListener('change', () => {
+        params.set('page', 1);
+        params.set('paginate_by', paginationSelect.value);
+        window.location = window.location.pathname + '?' + params.toString();
+    });
+
 })();

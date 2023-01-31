@@ -582,7 +582,6 @@ a.iwa-btn-danger:hover {
 input.iwa-input,
 select.iwa-input {
   display: block;
-  width: 100%;
   border-radius: 0.5rem;
   border-width: 1px;
   --tw-border-opacity: 1;

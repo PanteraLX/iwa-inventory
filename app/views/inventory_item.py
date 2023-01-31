@@ -82,24 +82,31 @@ class InventoryItemListViewPaginated(ViewMixin, InventoryItemListView):
     ''' A list view for the inventory item model (paginated)'''
     paginate_by = 4
     category = None
+    search = None
 
     def setup(self, request, *args, **kwargs):
         ''' Sets up the view (is called before get_context_data)'''
         paginate_by = self.extract_query_value(request, 'paginate_by')
-        if paginate_by:
+        if paginate_by and paginate_by != 'None':
             self.paginate_by = paginate_by
+
         category = self.extract_query_value(request, 'category')
-        if category:
+        if category and category != 'None':
             self.queryset = self.queryset.filter(category=category)
+            self.category = category
+
         search = self.extract_query_value(request, 'search')
-        if search:
+        if search and search != 'None':
             self.queryset = self.queryset.filter(name__icontains=search)
+            self.search = search
         return super().setup(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         ''' Returns the context data for the view '''
         context = super().get_context_data(**kwargs)
         context['paginate_by'] = self.paginate_by
+        context['category'] = self.category
+        context['search'] = self.search
         context['categories'] = Category.objects.all()
         return context
 

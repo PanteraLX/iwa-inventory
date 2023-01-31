@@ -120,7 +120,7 @@ Products
     <ul class="pagination mt-10">
 
         {% if page_obj.has_previous %}
-        <b><a class="iwa-btn" href="?page={{ PaginatedItemLIstView.previous_page_number }}&paginate_by={{ paginate_by }}">first</a></b>
+        <b><a class="iwa-btn" href="?page={{ PaginatedItemLIstView.previous_page_number }}&paginate_by={{ paginate_by }}&search={{ search }}&category={{ category }}">first</a></b>
         {% else %}
         <b><a class="iwa.na-btn">first</a></b>
 
@@ -129,12 +129,12 @@ Products
         {% if page_obj.number == i %}
         <b><a class="na-btn">{{ i }}</a></b>
         {% else %}
-        <b><a class="iwa-btn" href="?page={{ i }}&paginate_by={{ paginate_by }}">{{ i }}</a></b>
+        <b><a class="iwa-btn" href="?page={{ i }}&paginate_by={{ paginate_by }}&search={{ search }}&category={{ category }}">{{ i }}</a></b>
         {% endif %}
         {% endfor %}
 
         {% if page_obj.has_next %}
-        <a class="iwa-btn" href="?page={{ page_obj.paginator.num_pages }}&paginate_by={{ paginate_by }}">last</a>
+        <a class="iwa-btn" href="?page={{ page_obj.paginator.num_pages }}&paginate_by={{ paginate_by }}&search={{ search }}&category={{ category }}">last</a>
         {% else %}
         <a class="iwa.na-btn">last</a>
         {% endif %}

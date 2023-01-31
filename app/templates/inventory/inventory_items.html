@@ -62,12 +62,17 @@ Products
             id="create-new-item-button">
             <i class="fa fa-plus text-white text-center h-full w-full mt-3"></i>
         </a>
+    
         {% endif %}
     </h1>
+
+        
+    
     {% endif %}
     {% if request.path == "/inventory_item/archive" %}
-    <h3 class="mt-0 mb-0 text-4xl text-gray-700 ">Inventory archive</h3>
+    <h1 class="iwa-h1">Inventory archive</h1>
     {% endif %}
+
 
 
     <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
@@ -124,12 +129,12 @@ Products
         {% if page_obj.has_previous %}
         <b><a class="iwa-btn" href="?page={{ PaginatedItemLIstView.previous_page_number }}">first</a></b>
         {% else %}
-        <b><a class="iwa.na-btn">first</a></b>
+        <b><a class="iwa-na-btn">first</a></b>
 
         {% endif %}
         {% for i in paginator.page_range %}
         {% if page_obj.number == i %}
-        <b><a class="na-btn">{{ i }}</a></b>
+        <b><a class="iwa-na-btn">{{ i }}</a></b>
         {% else %}
         <b><a class="iwa-btn" href="?page={{ i }}">{{ i }}</a></b>
         {% endif %}
@@ -138,7 +143,7 @@ Products
         {% if page_obj.has_next %}
         <a class="iwa-btn" href="?page={{ page_obj.paginator.num_pages }}">last</a>
         {% else %}
-        <a class="iwa.na-btn">last</a>
+        <a class="iwa-na-btn">last</a>
         {% endif %}
 
     </ul>

@@ -3,7 +3,7 @@ from django.views.generic import DetailView, ListView
 from django.contrib.auth import get_user_model
 from app.forms import CategoryForm
 from app.models import Category
-from app.view.form import CustomFormView
+from app.views.form import CustomFormView
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 

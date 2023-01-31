@@ -84,7 +84,6 @@ class OrderForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         '''Initialize the OrderForm'''
         super().__init__(*args, **kwargs)
-        print(kwargs['instance'].user)
         if kwargs['instance'] is None or not kwargs['instance'].user.is_superuser:
             # Hide de 'returned' field along with its label
             self.fields['returned'].label = ''

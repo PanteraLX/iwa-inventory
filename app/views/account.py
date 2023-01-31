@@ -3,12 +3,12 @@ from django.views.generic import DetailView, ListView
 from django.contrib.auth.models import User as DjangoUser
 from django.contrib.auth import get_user_model
 from app.forms import AccountForm, AccountRegisterForm
-from app.view.form import CustomFormView
+from app.views.form import CustomFormView
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
-from app.view.view_mixin import ViewMixin
+from app.views.view_mixin import ViewMixin
 
 
 class AccountDetailView(ViewMixin, DetailView):
@@ -24,15 +24,15 @@ class AccountDetailView(ViewMixin, DetailView):
             user = self.extract_object(pk)
         except DjangoUser.DoesNotExist:
             raise Http404
-    
+
         logged_in_user = request.user
 
         # Only superusers can view other users. Users can only view their own account
         if logged_in_user.is_superuser or logged_in_user.id == user.id:
             return super(AccountDetailView, self).dispatch(request, *args, **kwargs)
+
         # If the user is not a superuser and is not viewing their own account, raise a permission denied error
         raise PermissionDenied
-
 
 
 class AccountListView(ListView):
@@ -46,7 +46,8 @@ class AccountListView(ListView):
         ''' Dispatches the request to the appropriate handler'''
         # Only superusers can view other users
         if request.user.is_superuser:
-            return super(AccountDetailView, self).dispatch(request, *args, **kwargs)
+            return super(AccountListView, self).dispatch(request, *args, **kwargs)
+
         # If the user is not a superuser, raise a permission denied error
         raise PermissionDenied
 
@@ -71,7 +72,6 @@ class AccountFormView(CustomFormView):
 
         # If the user is not a superuser and is trying to view another user's account, raise a permission denied error
         raise PermissionDenied
-            
 
     def get_context_data(self, request, *args, **kwargs):
         ''' Returns the context data for the view'''

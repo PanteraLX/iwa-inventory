@@ -4,7 +4,7 @@ Category list
 {% endblock %}
 
 {% block content %}
-{% if categories %}
+
 <section class="iwa-section">
     <h1 class="iwa-h1">Category list
         {% if user.is_superuser %}
@@ -15,7 +15,7 @@ Category list
             </a>
         {% endif %}
     </h1>
-    
+    {% if categories %}
     <table class="iwa-table">
         <thead class="iwa-table-head">
             <tr class="border-b">
@@ -56,7 +56,9 @@ Category list
             {% endfor %}
         </tbody>
     </table>
+    {% else %}
+    <p>No data found.</p>
+    {% endif %}
 </section>
 
-{% endif %}
 {% endblock %}

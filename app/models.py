@@ -67,6 +67,14 @@ class InventoryItem(models.Model):
         verbose_name='Quantity',
         help_text='Quantity'
     )
+    priceperunit = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+        null=True,
+        verbose_name='Price per Unit',
+        help_text='Price per Unit'
+    )
     position = models.CharField(
         max_length=200,
         verbose_name='Position',

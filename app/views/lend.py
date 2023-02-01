@@ -43,15 +43,10 @@ class LendFormView(CustomFormView):
     form_class = LendForm
     model = Lend
     success_url = 'lend_detail'
-
-    # Get an empty lend form
-    def get(self, request, *args, **kwargs):
-        ''' GET request handler'''
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form, **self.get_context_data(request, *args, **kwargs)})
     
-    # Save the lend object and associate the SingleInventoryItem(s) with it
     def post(self, request, *args, **kwargs):
+        ''' Handles the post request for the view'''
+        # Save the lend object and associate the SingleInventoryItem(s) with it
         pk = self.extract_pk(kwargs)
         lend = self.extract_object(pk)
         form = self.form_class(request.POST, instance=lend)
@@ -124,6 +119,7 @@ def lend_delete(request, pk):
     return redirect('lend_list')
 
 def lends_by_item(request, pk):
+    ''' Returns all lends for a given item'''
     orders = Lend.objects.filter(item=pk, returned=False)
     serialized_data = serialize("json", orders)
     serialized_data = loads(serialized_data)
@@ -131,6 +127,7 @@ def lends_by_item(request, pk):
 
 
 def lend_pdf(request, pk):
+    ''' Returns a pdf file for a given lend'''
     lend = Lend.objects.get(id=pk)
     file_name = f'lend_{lend.id}.pdf'
     content = create_receipt(lend)

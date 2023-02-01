@@ -1,9 +1,10 @@
 from fpdf import FPDF
 from pathlib import Path
 from io import BytesIO
+from functools import reduce
 
-def create_receipt(order):
-    '''Create a PDFreceipt for the given order.'''
+def create_receipt(lend):
+    '''Create a PDFreceipt for the given lend.'''
 
     date_format = "%d.%m.%Y"
     pdf_config = {
@@ -49,36 +50,40 @@ def create_receipt(order):
     pdf.set_font('Arial', '', pdf_config['font_size'])  
     pdf.cell(pdf_config['margin_left'], pdf_config['line_height'], f'Hiermit bestätigt:')
     pdf.set_font('Arial', 'I', pdf_config['font_size'])  
-    pdf.cell(180, pdf_config['line_height'], f'{order.user.first_name} {order.user.last_name}')
+    pdf.cell(180, pdf_config['line_height'], f'{lend.user.first_name} {lend.user.last_name}')
     pdf.ln(pdf_config['line_height'])
     pdf.set_font('Arial', '', pdf_config['font_size'])  
     pdf.cell(pdf_config['margin_left'], pdf_config['line_height'], f'Adresse:')
     pdf.set_font('Arial', 'I', pdf_config['font_size'])  
-    pdf.cell(150, pdf_config['line_height'], f'{order.user.email}')
+    pdf.cell(150, pdf_config['line_height'], f'{lend.user.email}')
 
     pdf.ln(2 * pdf_config['line_height'])
+    single_items = lend.single_item.all()
+    inventory_item = single_items[0].inventory_item
 
+    serial_number = reduce(lambda x, y: f'{x}, {y}', [item.serial_number for item in single_items])
+    
     pdf.set_font('Arial', '', pdf_config['font_size'])
     pdf.cell(pdf_config['margin_left'], pdf_config['line_height'], f'den Erhalt:')
     pdf.set_font('Arial', 'I', pdf_config['font_size'])  
-    pdf.cell(150, pdf_config['line_height'], f'{order.item.name}')
+    pdf.cell(150, pdf_config['line_height'], f'{inventory_item.name}')
     pdf.ln(pdf_config['line_height'])
     pdf.set_font('Arial', '', pdf_config['font_size'])  
     pdf.cell(pdf_config['margin_left'], pdf_config['line_height'], f'Interne Bezeichnung:')
     pdf.set_font('Arial', 'I', pdf_config['font_size'])  
-    pdf.cell(150, pdf_config['line_height'], f'{order.item.description}')
+    pdf.cell(150, pdf_config['line_height'], f'{serial_number}')
 
     pdf.ln(2 * pdf_config['line_height'])
 
     pdf.set_font('Arial', '', pdf_config['font_size'])
     pdf.cell(pdf_config['margin_left'], pdf_config['line_height'], f'für die Nutzung im Rahmen:')
     pdf.set_font('Arial', 'I', pdf_config['font_size'])  
-    pdf.cell(150, pdf_config['line_height'], f'{order.item.name}')
+    pdf.cell(150, pdf_config['line_height'], f'{inventory_item.name}')
     pdf.ln(pdf_config['line_height'])
     pdf.set_font('Arial', '', pdf_config['font_size'])
     pdf.cell(pdf_config['margin_left'], pdf_config['line_height'], f'für die Dauer:')
     pdf.set_font('Arial', 'I', pdf_config['font_size'])  
-    pdf.cell(150, pdf_config['line_height'], f'{order.started_at.strftime(date_format)} - {order.ended_at.strftime(date_format)}')
+    pdf.cell(150, pdf_config['line_height'], f'{lend.started_at.strftime(date_format)} - {lend.ended_at.strftime(date_format)}')
 
 
     pdf.ln(5 * pdf_config['line_height'])

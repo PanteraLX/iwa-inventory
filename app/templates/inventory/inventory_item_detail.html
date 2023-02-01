@@ -13,10 +13,6 @@ Inventory Item Update
     </dl>
     <dl class="flex space-x-6">
         <div>
-            <dt class="mb-2 font-semibold leading-none text-gray-900">ID</dt>
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.id }}</dd>
-        </div>
-        <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Quantity</dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ item_quantity }}</dd>
         </div>
@@ -24,6 +20,16 @@ Inventory Item Update
             <dt class="mb-2 font-semibold leading-none text-gray-900">Producer</dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.producer }}</dd>
         </div>
+        {% if user.is_superuser %}
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">ID</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.id }}</dd>
+        </div>
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Price per Unit</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.priceperunit }}</dd>
+        </div>
+
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Position</dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.position }}</dd>
@@ -32,6 +38,7 @@ Inventory Item Update
             <dt class="mb-2 font-semibold leading-none text-gray-900">Active</dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.active }}</dd>
         </div>
+        {% endif %}
     </dl>
 
     <!-- Show the SingleInventoryItem objects associated with the InventoryItem as a list -->
@@ -79,12 +86,13 @@ Inventory Item Update
     <!-- Add a carousel to contain all the images of an item -->
     <div id="default-carousel" class="relative" data-carousel="static">
         <!-- Carousel wrapper -->
-        {% if images|length > 0 %}
-        <div class="relative h-56 max-w-xl overflow-hidden rounded-lg md:h-96">
-            <!-- Iterate over the images of inventory_item and create a corresponding image -->
+        <div class="relative h-56 max-w-xl overflow-hidden rounded-lg md:h-96 bg-gray-200">
+            {% if images|length > 1 %}
 
+            <!-- Iterate over the images of inventory_item and create a corresponding image -->
             {% for image in images %}
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+
+            <div class="hidden duration-700 ease-in-out" data-carousel-item id="carousel-item-{{forloop.counter}}">
                 <img src="{{ image.image.url }}"
                     class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             </div>
@@ -93,7 +101,7 @@ Inventory Item Update
             <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
                 {% for i in images %}
                 <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="{{i}}"
-                    data-carousel-slide-to="{{forloop.counter0}}"></button>
+                    data-carousel-slide-to="{{forloop.counter}}"></button>
                 {% endfor %}
 
             </div>
@@ -124,24 +132,27 @@ Inventory Item Update
                     <span class="sr-only">Next</span>
                 </span>
             </button>
-        </div>
-        {% else %}
-        <div class="relative h-56 max-w-xl overflow-hidden rounded-lg md:h-96 bg-gray-200">
-            <span class="fa-stack fa-2x w-full h-full text-center text-4xl align-middle inline-block mt-16 text-gray-600">
+
+            {% elif images|length == 1 %}
+
+            <img src="{{ images.0.image.url }}"
+                class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            {% else %}
+            <span
+                class="fa-stack fa-2x w-full h-full text-center text-4xl align-middle inline-block mt-16 text-gray-600">
                 <i class="fa fa-slash fa-stack-2x"></i>
                 <i class="fa fa-image fa-stack-2x"></i>
             </span>
+            {% endif %}
+        </div>
+        {% if user.is_superuser %}
+        <div class="flex items-center space-x-4">
+            <!-- A button to link to the update page of the inventory item.-->
+            <a href="{% url 'inventory_item_update' inventory_item.id %}" class="btn">Update</a>
+
+            <a href="{% url 'lend_create' %}?inventory_item={{ inventory_item.id | urlencode }}&user={{ user.id | urlencode }}&now=1"
+                class="btn">Lend</a>
         </div>
         {% endif %}
-    </div>
-    {% if user.is_superuser %}
-    <div class="flex items-center space-x-4">
-        <!-- A button to link to the update page of the inventory item.-->
-        <a href="{% url 'inventory_item_update' inventory_item.id %}" class="btn">Update</a>
-
-        <a href="{% url 'lend_create' %}?inventory_item={{ inventory_item.id | urlencode }}&user={{ user.id | urlencode }}&now=1"
-            class="btn">Order</a>
-    </div>
-    {% endif %}
 </section>
 {% endblock %}

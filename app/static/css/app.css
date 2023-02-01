@@ -582,7 +582,6 @@ a.iwa-btn-danger:hover {
 input.iwa-input,
 select.iwa-input {
   display: block;
-  width: 100%;
   border-radius: 0.5rem;
   border-width: 1px;
   --tw-border-opacity: 1;
@@ -707,3 +706,47 @@ td.iwa-table-cell {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
 }
+
+button.iwa-na-btn,
+a.iwa-na-btn {
+  margin-top: 1rem;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(160 162 165 / var(--tw-bg-opacity));
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+
+button.iwa-na-btn:hover,
+a.iwa-na-btn:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(125 131 148 / var(--tw-bg-opacity));
+}
+
+button.iwa-plus-btn,
+a.iwa-plus-btn {
+  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-right: 0.5rem;
+  height: 3rem;
+  width: 3rem;
+  max-width: 20rem;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(105 108 127 / var(--tw-bg-opacity));
+}
+
+button.iwa-plus-btn:hover,
+a.iwa-plus-btn:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(125 131 148 / var(--tw-bg-opacity));
+}
+

@@ -30,15 +30,18 @@
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                {% if user.is_authenticated %}
+                
                 <a href="{% url 'inventory_items'%}"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Inventory</a>
-                
+                {% if user.is_authenticated %}
                 <a href="{% url 'lend_list'%}"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Lend</a>
-                
+                {% if user.is_superuser %}
                 <a href="{% url 'user_list'%}"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">User</a>
+                <a href="{% url 'category_list'%}"
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Category</a>
+                {% endif %}
                 {% endif %}
 
               </div>
@@ -46,6 +49,8 @@
           </div>
           <div class="hidden md:block">
             <div class="ml-4 flex items-center md:ml-6">
+
+              
               
 
               <!-- Profile dropdown -->
@@ -56,7 +61,7 @@
                   class="flex max-w-xs items-center rounded-full bg-gray-300 text-sm focus:outline-none focus:ring-1 focus:ring-grey focus:ring-offset-2 focus:ring-offset-grey-800"
                   id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                   <span class="sr-only">Open user menu</span>
-                  <img class="h-9 w-9 rounded-full" src="{% static '/images/user/user.png' %}" alt="">
+                  <span class="inline-block h-9 w-9 text-xl rounded-full overflow-hidden fa fa-user pt-0.5">
                 </button>
 
 
@@ -87,6 +92,8 @@
                   {% else %}
                   <a href="/accounts/login" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                     id="user-menu-item-2">Login</a>
+                  <a href="{% url 'user_register' %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                    id="user-menu-item-2">Register</a>
                   {% endif %}
                 </div>
               </div>
@@ -127,11 +134,10 @@
       <div class="md:hidden" id="mobile-menu">
         <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
           <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-          <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
-          {% if user.is_authenticated %}
+         
           <a href="{% url 'inventory_items'%}"
             class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Inventory</a>
-
+          {% if user.is_authenticated %}
           <a href="{% url 'inventory_items'%}"
             class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Lend</a>
           
@@ -189,14 +195,22 @@
         {% block content %}{% endblock %}
       </div>
     </main>
-
+    {% if user.is_superuser %}
+    <footer class="bg-[#FA8072] w-full fixed bottom-0 left-0 text-black">
+      <p class="max-w-7xl mx-auto px-4 py-2 sm:px-6 lg:px-8">the logged-in user is an administrator</p>
+    </footer>
+    {% else %}
     <footer class="bg-[#050C34] w-full fixed bottom-0 left-0 text-gray-300">
+
       <p class="max-w-7xl mx-auto px-4 py-2 sm:px-6 lg:px-8">© ICT Warrior Academy 2023</p>
+    </p>
+    {% endif %}
       {% if not user.is_superuser %}
       <div class= "drop-shadow-2xl" >
       <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="ictwa" data-description="If you want your Product fast buy us a coffee or maybe two" data-message="If you want your Product fast buy us a coffee or maybe two" data-color="#696c7f" data-position="Right" data-x_margin="15" data-y_margin="15"></script>
       </div>
       {% endif %}
+
     </footer>
     
   </div>

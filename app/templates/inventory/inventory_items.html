@@ -6,11 +6,13 @@ Products
 {% endblock %}
 
 {% block content %}
-{% if request.path == "/" %}
+{% if page_name == 'home' %}
 <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
     <div class="mb-8">
-        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">The ICT Warrior Academy's inventory of great things</h2>
-        <p class="text-gray-500 sm:text-xl">We've seen the Amazon, hitchhiked across the Galaxus and searched all Microspot's. What we found is in our basement.</p>
+        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">The ICT Warrior Academy's inventory of
+            great things</h2>
+        <p class="text-gray-500 sm:text-xl">We've seen the Amazon, hitchhiked across the Galaxus and searched all
+            Microspot's. What we found is in our basement.</p>
         <p class="text-gray-500 sm:text-xl">Simply the best.</p>
     </div>
     <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
@@ -19,56 +21,100 @@ Products
                 <i class="fa-solid fa-gamepad text-3xl"></i>
             </div>
             <h3 class="mb-2 text-xl font-bold">Overview</h3>
-            <p class="text-gray-500 dark:text-gray-400">See what you got: Never buy twice and quickly understand your resources.</p>
+            <p class="text-gray-500 dark:text-gray-400">See what you got: Never buy twice and quickly understand your
+                resources.</p>
         </div>
         <div>
             <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12">
-                <i class="fa-solid fa-truck-ramp-box text-3xl"></i>            
+                <i class="fa-solid fa-truck-ramp-box text-3xl"></i>
             </div>
             <h3 class="mb-2 text-xl font-bold">Rent</h3>
-            <p class="text-gray-500 dark:text-gray-400">Share the resources with co-workers and fellow military people.</p>
+            <p class="text-gray-500 dark:text-gray-400">Share the resources with co-workers and fellow military people.
+            </p>
         </div>
         <div>
             <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12">
                 <i class="fa-solid fa-rotate-left text-3xl"></i>
             </div>
             <h3 class="mb-2 text-xl font-bold">Return</h3>
-            <p class="text-gray-500 dark:text-gray-400">Rest assured that everything you've given will be returned on time.</p>
+            <p class="text-gray-500 dark:text-gray-400">Rest assured that everything you've given will be returned on
+                time.</p>
         </div>
     </div>
 </div>
 {% endif %}
 
-
-
-    <section class="iwa-section">
-        {% if request.path == "/" %}
-        <h1 class="iwa-h1">Inventory </h1>
-        {% endif %}
-        {% if request.path == "/inventory_item/complete" %}
-        <h1 class="iwa-h1">Inventory complete</h1>
-        {% endif %}
-        {% if request.path == "/inventory_item/" %}
-        <h1 class="iwa-h1">Inventory active  
-            {% if user.is_superuser %}
-                <a type="button"  href="{% url 'inventory_item_create' %}"
-                    class="inline-block float-right max-w-xs w-12 h-12 mb-0 mt-0 mr-2 rounded-full bg-gray-900 focus:outline-none focus:ring-1 focus:ring-grey focus:ring-offset-2 focus:ring-offset-grey-800"
-                    id="create-new-item-button">
-                    <i class="fa fa-plus text-white text-center h-full w-full mt-3"></i>
-                </a>
-            {% endif %}
-        </h1>
-        {% endif %}
-        {% if request.path == "/inventory_item/archive" %}
-        <h3 class="mt-0 mb-0 text-4xl text-gray-700 ">Inventory archive</h3>
-        {% endif %}
-        
-        {% if request.path == "/inventory_item/" %}
+<section class="iwa-section">
+    {% if page_name == 'home' %}
+    <h1 class="iwa-h1">Inventory </h1>
+    {% endif %}
+    {% if page_name == 'complete' %}
+    <h1 class="iwa-h1">Inventory complete</h1>
+    {% endif %}
+    {% if page_name == 'active' %}
+    <h1 class="iwa-h1">Inventory active
+        {% if user.is_superuser %}
         <!-- PLussymbol to add Items-->
+        <a type="button" href="{% url 'inventory_item_create' %}"
+            class="iwa-plus-btn float-right inline-block"
+            id="create-new-item-button">
+            <i class="fa fa-plus text-white text-center h-full w-full mt-3"></i>
+        </a>
 
         {% endif %}
+    </h1>
+    <label for="inventory-filter-select" class="block mb-2 text-sm font-medium text-gray-900">Filter by category</label>
+    <select class="iwa-input mb-4" id="inventory-filter-select">
+        <option value="" selected>-----</option>
+        {% for category in categories %}
+        <option value="{{category.id}}">{{ category }}</option>
+        {% endfor %}
+    </select> 
+    <label for="inventory-search" class="block mb-2 text-sm font-medium text-gray-900">Search</label>
+    <input class="iwa-input mb-4 normal-case fa fa-search" id="inventory-search" type="text"  placeholder="&#xF002;">
+    {% endif %}
+    {% if page_name == 'inactive' %}
+    <h1 class="iwa-h1">Inventory archive</h3>
+
+    {% endif %}
+    {% if page_name != "home" %}
+        <label for="inventory-filter-select" class="block mb-2 text-sm font-medium text-gray-900">Filter by category</label>
+        <select class="iwa-input mb-4 w-60" id="inventory-filter-select">
+            <option value="" selected>-----</option>
+            {% for category in categories %}
+            <option value="{{category.id}}">{{ category }}</option>
+            {% endfor %}
+        </select>
+        <label for="inventory-search" class="block mb-2 text-sm font-medium text-gray-900">Search</label>
+        <input class="iwa-input mb-4 w-60" id="inventory-search" type="text" style="font-family: FontAwesome"
+            placeholder="&#xF002;">
+
         
-        
+
+        {% if user.is_superuser %}
+        <!-- Button to show the complete list of inventory items, including the items whose 'active' variable is set to False -->
+        <div class="flex">
+            {% if page_name == 'complete' or page_name == 'inactive' %}
+            <div class=" mt-5 mb-5 mr-5">
+                <a class="iwa-btn" href="{% url 'inventory_items' %}">Show only active inventory items</a>
+            </div>
+            {% endif %}
+            {% if page_name == 'home' or page_name == 'active' or page_name == 'inactive' %}
+            <div class="mt-5 mb-5 mr-5">
+                <a class="iwa-btn" href="{% url 'complete_inventory_items_list' %}">Show all inventory items</a>
+            </div>
+            {% endif %}
+            {% if page_name == 'home' or page_name == 'complete' or page_name == 'active' %}
+            <div class="mt-5 mb-5 mr-5">
+                <a class="iwa-btn" href="{% url 'archive_inventory_items_list' %}">Show only archived inventory
+                    items</a>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% endif %}
+
+
 
         <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {% if inventory_items_list %}
@@ -85,11 +131,13 @@ Products
                             class="h-full w-full object-cover object-center group-hover:opacity-75 overflow-hidden">
                     </a>
                     {% else %}
-                    <a href="{% url 'inventory_item_detail' inventory_item.pk %}" class="h-full w-full inline-block align-middle">
-                        <span class="fa-stack fa-2x w-full h-full text-center text-4xl align-middle inline-block mt-16 text-gray-600">
+                    <a href="{% url 'inventory_item_detail' inventory_item.pk %}"
+                        class="h-full w-full inline-block align-middle">
+                        <span
+                            class="fa-stack fa-2x w-full h-full text-center text-4xl align-middle inline-block mt-16 text-gray-600">
                             <i class="fa fa-slash fa-stack-2x"></i>
                             <i class="fa fa-image fa-stack-2x"></i>
-                        </span>   
+                        </span>
                     </a>
                     {% endif %}
                 </div>
@@ -98,54 +146,63 @@ Products
 
                 <!-- Button that links to an object's detail view -->
                 <a href="{% url 'inventory_item_detail' inventory_item.pk %}" class="btn">Detail</a>
-
-
             </div>
-
             {% endfor %}
 
             {% else %}
             <p>No data found.</p>
             {% endif %}
+
         </div>
-    </section>
+        <ul class="pagination mt-10 h-16">
+            {% if is_paginated %}
 
 
+            {% if page_obj.has_previous %}
+            <b><a class="iwa-btn mr-1"
+                    href="?page={{ PaginatedItemLIstView.previous_page_number }}&paginate_by={{ paginate_by }}&search={{ search }}&category={{ category }}">first</a></b>
+            {% else %}
+            <b><a class="iwa-na-btn mr-1">first</a></b>
 
-{% if user.is_superuser %}
-<!-- Button to show the complete list of inventory items, including the items whose 'active' variable is set to False -->
-{% if request.path == "/" or request.path == "/inventory_item/" %}
-<div class="flex">
-    <div class="mt-5 mb-10 w-60 flex-initial">
-        <a class="btn" href="{% url 'complete_inventory_items_list' %}">Show all inventory items</a>
-    </div>
-    <div class="mt-5 mb-10 w-60 flex-auto">
-        <a class="btn" href="{% url 'archive_inventory_items_list' %}">Show only archived inventory items</a>
-    </div>  
-</div>
-{% endif %}
+            {% endif %}
+            {% for i in paginator.page_range %}
+            {% if page_obj.number == i %}
+            <b><a class="iwa-na-btn mr-1">{{ i }}</a></b>
+            {% else %}
+            <b><a class="iwa-btn mr-1"
+                    href="?page={{ i }}&paginate_by={{ paginate_by }}&search={{ search }}&category={{ category }}">
+                    {{ i }}
+                </a>
+            </b>
+            {% endif %}
+            {% endfor %}
 
-{% if request.path == "/inventory_item/complete" %}
-<div class="flex">
-    <div class="mt-5 mb-10 w-60 flex-initial">
-        <a class="btn" href="{% url 'inventory_items' %}">Show only active inventory items</a>
-    </div>
-    <div class="mt-5 mb-10 w-60 flex-auto">
-        <a class="btn" href="{% url 'archive_inventory_items_list' %}">Show only archived inventory items</a>
-    </div>
-</div>
-{% endif %}
+            {% if page_obj.has_next %}
+            <a class="iwa-btn mr-1"
+                href="?page={{ page_obj.paginator.num_pages }}&paginate_by={{ paginate_by }}&search={{ search }}&category={{ category }}">last</a>
+            {% else %}
+            <a class="iwa-na-btn mr-1">last</a>
+            {% endif %}
 
-{% if request.path == "/inventory_item/archive" %}
-<div class="mt-5 mb-10 w-60">
-    <a class="btn" href="{% url 'complete_inventory_items_list' %}">Show all inventory items</a>
-</div>
-{% endif %}
-
-
-
-
-{% endif %}
-
-
+            {% endif %}
+            {% if page_name != "home" %}
+            <div class="float-right flex">
+                <label for="pagination-select" class="mr-2 mb-2 text-sm font-medium text-gray-900">Items per Page
+                </label>
+                <select
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-0 w-20"
+                    id="pagination-select">
+                    <option value="4" selected>4</option>
+                    <option value="8" >8</option>
+                    <option value="12" >12</option>
+                    <option value="24" >24</option>
+                    <option value="36" >36</option>
+                    <option value="48" >48</option>
+                    <option value="60" >60</option>
+                </select>
+            </div>
+            {% endif %}
+        </ul>
+</section>
+<script src="{% static 'js/inventory_items.js' %}"></script>
 {% endblock %}

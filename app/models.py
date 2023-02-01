@@ -6,8 +6,46 @@ import random
 class ActiveManager(models.Manager):
     def active(self):
         return self.model.objects.filter(active=True)
+
     def inactive(self):
         return self.model.objects.filter(active=False)
+
+class Category(models.Model):
+    name = models.CharField(
+        max_length=200,
+        verbose_name='Category Name',
+        help_text='Name of the Category'
+    )
+    description = models.TextField(
+        verbose_name='Description',
+        help_text='Detailed description of the Category',
+        null=True
+    )
+    active = models.BooleanField(
+        default=True, 
+        editable=False,
+        verbose_name='Active',
+        help_text='Category ist active'
+    )
+
+    color = models.CharField(
+        max_length=200,
+        verbose_name='Color',
+        help_text='Color of the Category',
+        null=True
+    )
+
+    icon = models.CharField(
+        max_length=200,
+        verbose_name='Icon',
+        help_text='Icon of the Category',
+        null=True
+    )
+
+    objects = ActiveManager()
+
+    def __str__(self):
+        return self.name
 
 class InventoryItem(models.Model):
     name = models.CharField(
@@ -25,6 +63,14 @@ class InventoryItem(models.Model):
         help_text='Detailed desscription of the Item'
     )
 
+    priceperunit = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+        null=True,
+        verbose_name='Price per Unit',
+        help_text='Price per Unit'
+    )
     position = models.CharField(
         max_length=200,
         verbose_name='Position',
@@ -32,10 +78,19 @@ class InventoryItem(models.Model):
     )
 
     active = models.BooleanField(
-        default=True, 
+        default=True,
         editable=False,
         verbose_name='Active',
         help_text='Item ist active'
+    )
+
+    category = models.ForeignKey(
+        Category,
+        default=None,
+        on_delete=models.DO_NOTHING,
+        null=True,
+        verbose_name='Category',
+        help_text='Category of the Item'
     )
 
     objects = ActiveManager()
@@ -132,5 +187,28 @@ class Lend(models.Model):
         help_text='Item was returned'
     )
 
+    document = models.FileField(
+        upload_to='documents/',
+        blank=True,
+    )
+
     def __str__(self):
         return self.single_item.first().inventory_item.name + " ordered by " + self.user.username
+
+# A model for images that will be associated with the InventoryItem model
+class InventoryItemImage(models.Model):
+    inventory_item = models.ForeignKey(
+        InventoryItem,
+        default=None,
+        on_delete=models.CASCADE,
+    )
+    uploaded_at = models.DateTimeField(
+        auto_now_add=True
+    )
+    image = models.FileField(
+        upload_to='images/',
+        blank=True,
+    )
+
+    def __str__(self):
+        return self.inventory_item.name + " image"

@@ -1,0 +1,23 @@
+{% extends "app/_base.html" %}
+
+{% block title %}
+Category Update
+{% endblock %}
+
+{% block content %}
+<section class="iwa-section">
+    <h1 class="iwa-h1">{{ method }} User</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-6">
+            <label class="block mb-2 text-sm font-medium text-gray-900" for="{{ field.auto_id }}">{{ field.label }}</label>
+            {{ field }}
+            {{ field.errors }}
+        </div>
+        {% endfor %}
+        <button class="iwa-btn" type="submit">Submit</button>
+    </form>
+</section>
+
+{% endblock %}

@@ -1,5 +1,5 @@
 from django import forms
-from app.models import InventoryItem, SingleInventoryItem, InventoryItemImage, Lend
+from app.models import InventoryItem, SingleInventoryItem, InventoryItemImage, Lend, Category
 from django.forms import ClearableFileInput
 from django.contrib.auth.models import User as DjangoUser
 
@@ -9,12 +9,14 @@ class InventoryItemForm(forms.ModelForm):
 
     class Meta:
         model = InventoryItem
-        fields = ['name', 'description', 'position', 'producer']
+        fields = ['name', 'category', 'description', 'priceperunit', 'position', 'producer']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'iwa-input'}),
+            'name': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'category': forms.Select(attrs={'class': 'iwa-input w-full'}),
+            'priceperunit': forms.NumberInput(attrs={'class': 'iwa-input w-full', 'step':'1.0'}),
             'description': forms.Textarea(attrs={'class': 'block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500'}),
-            'position': forms.TextInput(attrs={'class': 'iwa-input'}),
-            'producer': forms.TextInput(attrs={'class': 'iwa-input'}),
+            'position': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'producer': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
         }
 
 class InventoryItemImageForm(forms.ModelForm):
@@ -39,7 +41,6 @@ class SingleInventoryItemForm(forms.ModelForm):
             'active': forms.CheckboxInput(attrs={'class': 'iwa-input w-1/2', 'style': 'width: 1.5rem;'}),
         }
 
-user_css_class = 'iwa-input'
 
 class AccountForm(forms.ModelForm):
     '''Form for creating and editing Accounts'''
@@ -48,14 +49,27 @@ class AccountForm(forms.ModelForm):
         model = DjangoUser
         fields = ['username', 'first_name', 'last_name', 'is_active', 'email']
         widgets = {
-            'username': forms.TextInput(attrs={'class': user_css_class}),
-            'first_name': forms.TextInput(attrs={'class': user_css_class}),
-            'last_name': forms.TextInput(attrs={'class': user_css_class}),
-            'email': forms.TextInput(attrs={'class': user_css_class}),
+            'username': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'first_name': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'last_name': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'email': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
         }
 
+class AccountRegisterForm(forms.ModelForm):
+    '''Form for creating and editing Accounts'''
+    class Meta:
+        '''Meta class for AccountForm'''
+        model = DjangoUser
+        fields = ['username', 'first_name', 'last_name', 'email', 'password']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'first_name': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'last_name': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'email': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'password': forms.TextInput(attrs={'class': 'iwa-input w-full', 'type': 'password'}),
+        }
 
-lend_css_class = 'iwa-input'
+lend_css_class = 'iwa-input w-full'
 class LendForm(forms.ModelForm):
     '''Form for creating and editing Orders'''
     # The item field shows a selection of all inventory items
@@ -65,13 +79,14 @@ class LendForm(forms.ModelForm):
     class Meta:
         '''Meta class for LendForm'''
         model = Lend
-        fields = ['item', 'user', 'returned', 'started_at', 'ended_at']
+        fields = ['item', 'user', 'returned', 'started_at', 'ended_at', 'document']
         widgets = {
             'user': forms.Select(attrs={'class': lend_css_class}),
             'item': forms.Select(attrs={'class': lend_css_class}),
             'returned': forms.CheckboxInput(attrs={'class': f'{lend_css_class} w-1/2', 'style': 'width: 1.5rem;'}),
             'started_at': forms.DateInput(attrs={'class': lend_css_class, 'type': 'date'}, format='%Y-%m-%d'),
             'ended_at': forms.DateInput(attrs={'class': lend_css_class, 'type': 'date'}, format='%Y-%m-%d'),
+            'document': forms.FileInput(attrs={'type': 'file'}),
         }
     def __init__(self, *args, **kwargs):
         '''Initialize the LendForm'''
@@ -86,4 +101,22 @@ class LendForm(forms.ModelForm):
             # with the lend in the item field and disable it.
             self.fields['item'].initial = kwargs['instance'].single_item.first().inventory_item
             self.fields['item'].widget.attrs['disabled'] = True
+
+        if kwargs['instance'] is None or kwargs['instance'].document:
+            self.fields['document'].widget = forms.HiddenInput()
+            self.fields['document'].label = ''
             
+
+class CategoryForm(forms.ModelForm):
+    '''Form for creating and editing Categories'''
+    class Meta:
+        '''Meta class for CategoryForm'''
+        model = Category
+        fields = ['name', 'description', 'color', 'icon']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+            'description': forms.Textarea(attrs={'class': 'block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500'}),
+            'color': forms.TextInput(attrs={'class': 'iwa-input', 'type': 'color'}),
+            'icon': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
+        }
+

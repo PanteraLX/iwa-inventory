@@ -22,7 +22,7 @@ Lends list
     {{ lends.title }}
 </h1>
 
-<table class="iwa-table">
+<table class="iwa-table mb-4">
     <thead class="iwa-table-head">
         <tr>
             <th class="iwa-table-head-cell">User</th>
@@ -33,17 +33,23 @@ Lends list
         </tr>
     </thead>
     <tbody>
-        {% for lend in lends %}
-
+        {% for lend in lends.data %}
+        {% if lend %}
         <tr class="iwa-table-row">
             <td class="iwa-table-cell">{{ lend.user }}</td>
             <td class="iwa-table-cell">{{ lend.single_item.first }}</td>
             <td class="iwa-table-cell">{{ lend.single_item.all.count }}</td>
             <td class="iwa-table-cell">{{ lend.started_at|date:'d.m.Y' }} - {{ lend.ended_at|date:'d.m.Y' }}</td>
             <td class="iwa-table-cell">
-
+                <a href="{% url 'lend_detail' lend.id %}" class="iwa-btn mr-1">
+                    View
+                </a>
+                <a href="{% url 'lend_update' lend.id %}" class="iwa-btn mr-1">
+                    Edit
+                </a>
             </td>
         </tr>
+        {% endif %}
         {% endfor %}
     </tbody>
 </table>

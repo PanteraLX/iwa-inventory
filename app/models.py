@@ -193,7 +193,10 @@ class Lend(models.Model):
     )
 
     def __str__(self):
-        return self.single_item.first().inventory_item.name + " ordered by " + self.user.username
+        if self.single_item.first():
+            return self.single_item.first().inventory_item.name + " ordered by " + self.user.username
+        else:
+            return "No item ordered by " + self.user.username
 
 # A model for images that will be associated with the InventoryItem model
 class InventoryItemImage(models.Model):

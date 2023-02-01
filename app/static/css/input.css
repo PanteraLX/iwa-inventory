@@ -31,7 +31,7 @@ a.iwa-btn-danger {
 
 input.iwa-input,
 select.iwa-input {
-  @apply shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
+  @apply shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5;
 }
 
 span.iwa-badge {
@@ -71,3 +71,9 @@ button.iwa-na-btn,
 a.iwa-na-btn {
   @apply text-gray-300 bg-[#A0A2A5] hover:bg-[#7D8394] px-3 py-2 rounded-md text-sm font-medium mt-4 cursor-pointer;
 }
+
+button.iwa-plus-btn,
+a.iwa-plus-btn {
+  @apply max-w-xs w-12 h-12 mb-0 mt-0 mr-2 rounded-full bg-[#696C7F] hover:bg-[#7D8394];
+}
+

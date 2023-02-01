@@ -64,7 +64,7 @@ Products
     </h1>
     {% endif %}
     {% if page_name == 'inactive' %}
-    <h1 class="iwa-h1">Inventory archive</h3>
+    <h1 class="iwa-h1">Inventory archive</h1>
 
     {% endif %}
     {% if page_name != "home" %}
@@ -72,7 +72,7 @@ Products
         <select class="iwa-input mb-4 w-60" id="inventory-filter-select">
             <option value="" selected>-----</option>
             {% for category in categories %}
-            <option value="{{category.id}}">{{ category }}</option>
+            <option value="{{category.id}}">{{ category }}</span></option>
             {% endfor %}
         </select>
         <label for="inventory-search" class="block mb-2 text-sm font-medium text-gray-900">Search</label>
@@ -113,7 +113,7 @@ Products
 
             <div class="group">
                 <div
-                    class="aspect-w-1 aspect-h-1 w-64 h-64 overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
+                    class="aspect-w-1 aspect-h-1 w-64 h-64 overflow-hidden rounded-lg bg-gray-300 xl:aspect-w-7 xl:aspect-h-8">
                     {% if inventory_item.inventoryitemimage_set.all|length > 0 %}
                     <a href="{% url 'inventory_item_detail' inventory_item.pk %}">
                         <img src="{{ inventory_item.inventoryitemimage_set.all.0.image.url }}"
@@ -124,7 +124,7 @@ Products
                     <a href="{% url 'inventory_item_detail' inventory_item.pk %}"
                         class="h-full w-full inline-block align-middle">
                         <span
-                            class="fa-stack fa-2x w-full h-full text-center text-4xl align-middle inline-block mt-16 text-gray-600">
+                            class="fa-stack fa-2x w-full h-full text-center text-4xl align-middle inline-block mt-16 text-white">
                             <i class="fa fa-slash fa-stack-2x"></i>
                             <i class="fa fa-image fa-stack-2x"></i>
                         </span>
@@ -132,7 +132,14 @@ Products
                     {% endif %}
                 </div>
 
-                <h3 class="mt-4 mb-4 text-sm text-gray-700 text-ellipsis overflow-hidden">{{ inventory_item.name }}</h3>
+                <h3 class="mt-4 mb-4 w-64 text-sm text-gray-700 text-ellipsis overflow-hidden">{{ inventory_item.name }} 
+                    {% if inventory_item.category.icon %}
+                    <span class="float-right rounded-md p-1.5 bg-gray-300 text-white fa fa-{{inventory_item.category.icon}}"></span>
+                    {% endif %}
+                    {% if not inventory_item.active %}
+                    <span class="float-right rounded-md p-1.5 bg-[#FA8072] text-white fa fa-archive ml-1"></span>
+                    {% endif %}
+                </h3>
 
                 <!-- Button that links to an object's detail view -->
                 <a href="{% url 'inventory_item_detail' inventory_item.pk %}" class="btn">Detail</a>

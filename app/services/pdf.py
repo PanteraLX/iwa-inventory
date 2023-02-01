@@ -66,7 +66,7 @@ def create_receipt(lend):
     pdf.set_font('Arial', '', pdf_config['font_size'])
     pdf.cell(pdf_config['margin_left'], pdf_config['line_height'], f'den Erhalt:')
     pdf.set_font('Arial', 'I', pdf_config['font_size'])  
-    pdf.cell(150, pdf_config['line_height'], f'{inventory_item.name}')
+    pdf.cell(150, pdf_config['line_height'], f'{inventory_item.name}{f" ({inventory_item.producer})" if inventory_item.producer else ""}')
     pdf.ln(pdf_config['line_height'])
     pdf.set_font('Arial', '', pdf_config['font_size'])  
     pdf.cell(pdf_config['margin_left'], pdf_config['line_height'], f'Interne Bezeichnung:')

@@ -56,16 +56,23 @@ Products
         {% if user.is_superuser %}
         <!-- PLussymbol to add Items-->
         <a type="button" href="{% url 'inventory_item_create' %}"
-            class="inline-block float-right max-w-xs w-12 h-12 mb-0 mt-0 mr-2 rounded-full bg-gray-900 focus:outline-none focus:ring-1 focus:ring-grey focus:ring-offset-2 focus:ring-offset-grey-800"
+            class="iwa-plus-btn float-right inline-block"
             id="create-new-item-button">
             <i class="fa fa-plus text-white text-center h-full w-full mt-3"></i>
         </a>
 
         {% endif %}
     </h1>
-        {% endif %}
-    
-    
+    <label for="inventory-filter-select" class="block mb-2 text-sm font-medium text-gray-900">Filter by category</label>
+    <select class="iwa-input mb-4" id="inventory-filter-select">
+        <option value="" selected>-----</option>
+        {% for category in categories %}
+        <option value="{{category.id}}">{{ category }}</option>
+        {% endfor %}
+    </select> 
+    <label for="inventory-search" class="block mb-2 text-sm font-medium text-gray-900">Search</label>
+    <input class="iwa-input mb-4 normal-case fa fa-search" id="inventory-search" type="text"  placeholder="&#xF002;">
+    {% endif %}
     {% if page_name == 'inactive' %}
     <h1 class="iwa-h1">Inventory archive</h3>
 

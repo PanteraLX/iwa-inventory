@@ -1,5 +1,6 @@
 from django.views.generic import DetailView, ListView
 from app.forms import OrderForm
+from app.services.pdf import create_receipt
 from app.views.form import CustomFormView
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
@@ -8,9 +9,7 @@ from django.utils import timezone
 from django.http import JsonResponse
 from django.core.serializers import serialize
 import json
-import io
 from django.http import HttpResponse, FileResponse
-from fpdf import FPDF
 
 
 class OrderDetailView(DetailView):
@@ -60,9 +59,6 @@ def orders_by_item(request, pk):
 def order_pdf(request, pk):
     order = Order.objects.get(id=pk)
     file_name = f'order_{order.id}.pdf'
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font('Arial', 'B', 16)
-    pdf.cell(40, 10, 'Hello World!')
-    content = io.BytesIO(bytes(pdf.output(dest = 'S'), encoding='latin1'))
+    content = create_receipt(order)
     return FileResponse(content, content_type='application/pdf', as_attachment=True, filename=file_name)
+

@@ -71,3 +71,9 @@ button.iwa-na-btn,
 a.iwa-na-btn {
   @apply text-gray-300 bg-[#A0A2A5] hover:bg-[#7D8394] px-3 py-2 rounded-md text-sm font-medium mt-4 cursor-pointer;
 }
+
+button.iwa-plus-btn,
+a.iwa-plus-btn {
+  @apply max-w-xs w-12 h-12 mb-0 mt-0 mr-2 rounded-full bg-[#696C7F] hover:bg-[#7D8394];
+}
+

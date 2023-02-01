@@ -730,3 +730,23 @@ a.iwa-na-btn:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(125 131 148 / var(--tw-bg-opacity));
 }
+
+button.iwa-plus-btn,
+a.iwa-plus-btn {
+  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-right: 0.5rem;
+  height: 3rem;
+  width: 3rem;
+  max-width: 20rem;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(105 108 127 / var(--tw-bg-opacity));
+}
+
+button.iwa-plus-btn:hover,
+a.iwa-plus-btn:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(125 131 148 / var(--tw-bg-opacity));
+}
+

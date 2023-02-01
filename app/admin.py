@@ -4,7 +4,7 @@ from app.models import InventoryItem, Lend, SingleInventoryItem, InventoryItemIm
 # In the Admin UI create a filter for the lend model to only show lends that have not yet been returned
 class LendAdmin(admin.ModelAdmin):
     list_filter = ('returned',)
-    list_display = ('item', 'returned')
+    list_display = ('returned',)
 
 admin.site.register(InventoryItem)
 admin.site.register(Lend, LendAdmin)

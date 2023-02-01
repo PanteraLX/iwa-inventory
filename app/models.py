@@ -107,22 +107,19 @@ class Lend(models.Model):
         verbose_name='User',
         help_text='User'
     )
-    item = models.ManyToManyField(
+
+    single_item = models.ManyToManyField(
         SingleInventoryItem,
-        on_delete=models.CASCADE,
         verbose_name='Item',
         help_text='Item'
     )
 
-    quantity = models.IntegerField(
-        verbose_name='Quantity',
-        help_text='Quantity'
-    )
     started_at = models.DateTimeField(
         null=True,
         verbose_name='Start',
         help_text='Start of the Order'
     )
+
     ended_at = models.DateTimeField(
         null=True,
         verbose_name='End',
@@ -136,4 +133,4 @@ class Lend(models.Model):
     )
 
     def __str__(self):
-        return self.item.name + " ordered by " + self.user.username
+        return self.single_item.first().inventory_item.name + " ordered by " + self.user.username

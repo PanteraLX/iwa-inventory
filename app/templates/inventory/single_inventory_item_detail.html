@@ -22,6 +22,10 @@ Single inventory item detail
             <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ single_inventory_item.active }}</dd>
         </div>
         <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Lends</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ single_inventory_item.lend_set.all.count }}</dd>
+        </div>
+        <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Actions</dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5">
                 <a href="{% url 'single_inventory_item_update' single_inventory_item.hash %}" class="iwa-btn mr-1">

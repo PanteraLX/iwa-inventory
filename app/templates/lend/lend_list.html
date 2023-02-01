@@ -35,8 +35,8 @@ Lends list
 
         <tr class="iwa-table-row">
             <td class="iwa-table-cell">{{ lend.user }}</td>
-            <td class="iwa-table-cell">{{ lend.item }}</td>
-            <td class="iwa-table-cell">{{ lend.quantity }}</td>
+            <td class="iwa-table-cell">{{ lend.single_item.first }}</td>
+            <td class="iwa-table-cell">{{ lend.single_item.all.count }}</td>
             <td class="iwa-table-cell">{{ lend.started_at|date:'d.m.Y' }} - {{ lend.ended_at|date:'d.m.Y' }}</td>
             <td class="iwa-table-cell">
                 <a href="{% url 'lend_detail' lend.id %}" class="iwa-btn mr-1">

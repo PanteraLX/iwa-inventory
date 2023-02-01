@@ -55,28 +55,35 @@ class AccountForm(forms.ModelForm):
         }
 
 
-order_css_class = 'iwa-input'
-
+lend_css_class = 'iwa-input'
 class LendForm(forms.ModelForm):
     '''Form for creating and editing Orders'''
+    # The item field shows a selection of all inventory items
+    item = forms.ModelChoiceField(queryset=InventoryItem.objects.all(), widget=forms.Select(attrs={'class': lend_css_class}))
+    quantity = forms.IntegerField(widget=forms.NumberInput(attrs={'class': lend_css_class}))
+
     class Meta:
         '''Meta class for LendForm'''
         model = Lend
-        fields = ['item', 'user', 'returned', 'quantity', 'started_at', 'ended_at']
+        fields = ['item', 'user', 'returned', 'started_at', 'ended_at']
         widgets = {
-            'user': forms.Select(attrs={'class': order_css_class}),
-            'item': forms.Select(attrs={'class': order_css_class}),
-            'returned': forms.CheckboxInput(attrs={'class': f'{order_css_class} w-1/2', 'style': 'width: 1.5rem;'}),
-            'quantity': forms.NumberInput(attrs={'class': order_css_class}),
-            'started_at': forms.DateInput(attrs={'class': order_css_class, 'type': 'date'}, format='%Y-%m-%d'),
-            'ended_at': forms.DateInput(attrs={'class': order_css_class, 'type': 'date'}, format='%Y-%m-%d'),
+            'user': forms.Select(attrs={'class': lend_css_class}),
+            'item': forms.Select(attrs={'class': lend_css_class}),
+            'returned': forms.CheckboxInput(attrs={'class': f'{lend_css_class} w-1/2', 'style': 'width: 1.5rem;'}),
+            'started_at': forms.DateInput(attrs={'class': lend_css_class, 'type': 'date'}, format='%Y-%m-%d'),
+            'ended_at': forms.DateInput(attrs={'class': lend_css_class, 'type': 'date'}, format='%Y-%m-%d'),
         }
-
-    # Disable the 'returned' field if the order has not been created yet or the user is not an admin
     def __init__(self, *args, **kwargs):
         '''Initialize the LendForm'''
         super().__init__(*args, **kwargs)
+        # Disable the 'returned' field if the order has not been created yet or the user is not an admin
         if kwargs['instance'] is None or not kwargs['instance'].user.is_superuser:
             # Hide de 'returned' field along with its label
             self.fields['returned'].label = ''
             self.fields['returned'].widget = forms.HiddenInput()
+        if kwargs['instance'] is not None:
+            # Show the name of the inventory_item associated with the first single inventory item associated 
+            # with the lend in the item field and disable it.
+            self.fields['item'].initial = kwargs['instance'].single_item.first().inventory_item
+            self.fields['item'].widget.attrs['disabled'] = True
+            

@@ -25,8 +25,8 @@ Lend Detail
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Item</dt>
-            <a href="{% url 'inventory_item_detail' lend.item.id %}">
-                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ lend.item }}</dd>
+            <a href="{% url 'inventory_item_detail' lend.single_item.first.inventory_item.id %}">
+                <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ lend.single_item.first.inventory_item.name }}</dd>
             </a>
         </div>
         <div>
@@ -47,7 +47,7 @@ Lend Detail
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Quantity</dt>
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ lend.quantity }}</dd>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ lend.single_item.all.count }}</dd>
         </div>
 
     </dl>
@@ -55,7 +55,7 @@ Lend Detail
         <a href="{% url 'lend_update' lend.id %}" class="iwa-btn">
             Edit
         </a>
-        <a href="{% url 'lend_update' lend.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">
+        <a href="{% url 'lend_delete' lend.id %}" class="iwa-btn bg-red-600 hover:bg-red-700 ">
             Delete
         </a>
     </div>

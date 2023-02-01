@@ -12,10 +12,11 @@ class InventoryItemDetailView(DetailView):
     context_object_name = 'inventory_item'
 
     def get_context_data(self, **kwargs):
+        single_items = SingleInventoryItem.objects.filter(inventory_item=self.object)
         context = super().get_context_data(**kwargs)
-        context['single_inventory_items'] = SingleInventoryItem.objects.filter(inventory_item=self.object)
+        context['single_inventory_items'] = single_items
         context['images'] = InventoryItemImage.objects.filter(inventory_item=self.object)
-        context['item_quantity'] = SingleInventoryItem.objects.filter(inventory_item=self.object).count()
+        context['item_quantity'] = single_items.count()
         return context
 
 

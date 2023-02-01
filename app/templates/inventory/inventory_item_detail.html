@@ -42,6 +42,7 @@ Inventory Item Update
                 <th class="iwa-table-head-cell">Hash</th>
                 <th class="iwa-table-head-cell">Serial Number</th>
                 <th class="iwa-table-head-cell">Active</th>
+                <th class="iwa-table-head-cell">Lends</th>
                 <th class="iwa-table-head-cell"></th>
             </tr>
         </thead>
@@ -53,6 +54,7 @@ Inventory Item Update
                 <td class="iwa-table-cell">{{ item.hash }}</td>
                 <td class="iwa-table-cell">{{ item.serial_number }}</td>
                 <td class="iwa-table-cell">{{ item.active }}</td>
+                <td class="iwa-table-cell">{{ item.lend_set.all.count }}</td>
                 <td class="iwa-table-cell">
                     <a href="{% url 'single_inventory_item_detail' item.hash %}" class="iwa-btn mr-1">
                         Detail
@@ -65,6 +67,7 @@ Inventory Item Update
                 <td class="iwa-table-cell">
                     <a href="{% url 'single_inventory_item_create' inventory_item.id %}" class="btn">Create</a>
                 </td>
+                <td class="iwa-table-cell">
                 <td class="iwa-table-cell">
                 <td class="iwa-table-cell">
                 <td class="iwa-table-cell">
@@ -136,7 +139,7 @@ Inventory Item Update
         <!-- A button to link to the update page of the inventory item.-->
         <a href="{% url 'inventory_item_update' inventory_item.id %}" class="btn">Update</a>
 
-        <a href="{% url 'order_create' %}?inventory_item={{ inventory_item.id | urlencode }}&user={{ user.id | urlencode }}&now=1"
+        <a href="{% url 'lend_create' %}?inventory_item={{ inventory_item.id | urlencode }}&user={{ user.id | urlencode }}&now=1"
             class="btn">Order</a>
     </div>
     {% endif %}

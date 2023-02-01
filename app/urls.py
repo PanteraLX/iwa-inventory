@@ -1,7 +1,7 @@
 from django.urls import path
 from app import views
 from app.view.account import AccountDetailView, AccountListView, AccountFormView
-from app.view.lend import LendDetailView, LendListView, LendFormView
+from app.view.lend import *
 from app.view.inventory_item import *
 
 
@@ -27,6 +27,7 @@ urlpatterns = [
     path('accounts', AccountListView.as_view(), name='user_list'),
 
     path('lend/<int:pk>/update', LendFormView.as_view(), name='lend_update'),
+    path('lend/<int:pk>/delete', lend_delete, name='lend_delete'),
     path('lend/<int:pk>', LendDetailView.as_view(), name='lend_detail'),
     path('lend/create', LendFormView.as_view(), name='lend_create'),
     path('lends', LendListView.as_view(), name='lend_list'),

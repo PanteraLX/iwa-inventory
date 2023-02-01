@@ -2,6 +2,7 @@ from django.views.generic import DetailView, ListView
 from app.forms import InventoryItemForm, InventoryItemImageForm
 from app.views.form import CustomFormView
 from app.views.view_mixin import ViewMixin
+from app.views.single_inventory_item import SingleInventoryItem
 from django.shortcuts import render, redirect
 from app.models import InventoryItem, InventoryItemImage, Category
 

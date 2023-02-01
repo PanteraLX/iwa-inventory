@@ -104,7 +104,9 @@ Products
         {% endif %}
         {% endif %}
 
-
+        {% if page_name != "home" %}
+        <hr style="border-color:#050C34; border-width: 2px;" class="mb-5 mt-0"></hr>
+        {% endif %}
 
         <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {% if inventory_items_list %}
@@ -144,8 +146,13 @@ Products
             {% endif %}
 
         </div>
-        <ul class="pagination mt-10 h-16">
+        {% if page_name != "home" %}
+        <hr style="border-color:#050C34; border-width: 2px;" class="mt-5"></hr>
+        {% endif %}
+
+        <ul class="pagination mt-8 h-16">
             {% if is_paginated %}
+          
 
 
             {% if page_obj.has_previous %}
@@ -176,6 +183,8 @@ Products
 
             {% endif %}
             {% if page_name != "home" %}
+
+
             <div class="float-right flex">
                 <label for="pagination-select" class="mr-2 mb-2 text-sm font-medium text-gray-900">Items per Page
                 </label>

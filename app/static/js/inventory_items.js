@@ -21,10 +21,16 @@
     const search = params.get('search')
     if (search && search !== 'None') {
         inventorySearch.value = search;
+        inventorySearch.style.fontFamily = 'Arial'
     }
     inventorySearch.addEventListener('change', () => {
         params.set('search', inventorySearch.value);
         params.set('page', 1);
         window.location = window.location.pathname + '?' + params.toString();
+        inventorySearch.style.fontFamily = 'Arial'
+    });
+
+    inventorySearch.addEventListener('focus', () => {
+        inventorySearch.style.fontFamily = 'Arial'
     });
 })();

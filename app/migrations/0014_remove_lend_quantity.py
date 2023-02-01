@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0008_remove_lend_item_lend_single_item'),
+        ('app', '0013_remove_lend_item_lend_single_item'),
     ]
 
     operations = [

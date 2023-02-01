@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0005_alter_inventoryitem_active_and_more'),
+        ('app', '0010_alter_single_inventory_item'),
     ]
 
     operations = [

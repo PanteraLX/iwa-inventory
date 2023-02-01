@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('app', '0006_remove_inventoryitem_quantity'),
+        ('app', '0011_remove_inventoryitem_quantity'),
     ]
 
     operations = [

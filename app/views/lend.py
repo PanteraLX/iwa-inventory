@@ -92,20 +92,53 @@ class LendFormView(CustomFormView):
         context['method'] = 'Create'
         return context
     
-class LendUpdateView(UpdateView):
+class LendUpdateView(UpdateView, CustomFormView):
     ''' An update view for the lend model'''
     model = Lend
-    template_name = 'lend/lend_update.html'
     form_class = LendForm
+    template_name = 'lend/lend_update.html'
     success_url = 'lend_detail'
 
-    def get(self, request, *args, **kwargs):
-        ''' GET request handler'''
-        pk = self.extract_pk(kwargs)
-        lend = self.extract_object(pk)
-        form = self.form_class(instance=lend)
-        return render(request, self.template_name, {'form': form, 'lend': lend, **self.get_context_data(request, *args, **kwargs)})
-
+    def post(self, request, *args, **kwargs):
+        ''' Handles the post request for the view'''
+        lend = self.get_object()
+        form = self.form_class(request.POST, instance=lend)
+        if form.is_valid():
+            # If the returned checkbox is checked, remove all single inventory items from the lend
+            if form.cleaned_data['returned']:
+                lend.single_item.clear()
+                lend.returned = True
+                lend.save()
+                return redirect('lend_list', pk=lend.pk)
+            # Check if the dates were changed
+            if form.initial['started_at'] == form.cleaned_data['started_at'] and form.initial['ended_at'] == form.cleaned_data['ended_at']:
+                # Throw an error message stating that nothing was changed.
+                messages.error(request, 'Nothing was changed. You can only change the period. If you would like to change other attributes of your lend, please delete it and create a new one.')
+                return redirect('lend_update', pk=lend.pk)
+            else:
+                # Iterate over the associated single inventory items and check if the new lend period overlaps with any of the lends associated with the item except for the current lend
+                # If this is the case, remove the item from the lend and throw an error. If not, keep the item in the lend
+                counter = 0
+                Range = namedtuple('Range', ['start', 'end'])
+                for item in lend.single_item.all():
+                    reserved_periods = []
+                    for item_lend in item.lend_set.all():
+                        if item_lend != lend:
+                            reserved_periods.append(Range(start=item_lend.started_at, end=item_lend.ended_at))
+                    if not any(r.start <= form.cleaned_data['ended_at'] and form.cleaned_data['started_at'] <= r.end for r in reserved_periods):
+                        counter += 1
+                # Check if the 
+                # If the lend period is valid for all items and update the lend
+                if counter == lend.single_item.all().count():
+                    lend.started_at = form.cleaned_data['started_at']
+                    lend.ended_at = form.cleaned_data['ended_at']
+                    lend.save()
+                    return redirect(self.success_url, pk=lend.pk)
+                else:
+                    # Throw an error
+                    messages.error(request, 'At least one item cannot be changed to the new period. Try another period. If it does not work out, delete the lend and create a new one.')
+                    return redirect('lend_update', pk=lend.pk)
+                
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['method'] = 'Update'
@@ -124,7 +157,6 @@ def lends_by_item(request, pk):
     serialized_data = serialize("json", orders)
     serialized_data = loads(serialized_data)
     return JsonResponse(serialized_data, safe=False, status=200)
-
 
 def lend_pdf(request, pk):
     ''' Returns a pdf file for a given lend'''

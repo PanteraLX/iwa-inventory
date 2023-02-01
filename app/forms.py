@@ -102,7 +102,16 @@ class LendForm(forms.ModelForm):
                 # Show the name of the inventory_item associated with the first single inventory item associated 
                 # with the lend in the item field and disable it.
                 self.fields['item'].initial = kwargs['instance'].single_item.first().inventory_item
+                self.fields['item'].required = False
                 self.fields['item'].widget.attrs['disabled'] = True
+                # Show the name of the user associated with the lend in the user field and disable it.
+                self.fields['user'].initial = kwargs['instance'].user
+                self.fields['user'].required = False
+                self.fields['user'].widget.attrs['disabled'] = True
+                # Show the number of single inventory items associated with the lend in the quantity field and disable it.
+                self.fields['quantity'].initial = kwargs['instance'].single_item.count()
+                self.fields['quantity'].required = False
+                self.fields['quantity'].widget.attrs['disabled'] = True
 
             if kwargs['instance'] is None or kwargs['instance'].document:
                 self.fields['document'].widget = forms.HiddenInput()

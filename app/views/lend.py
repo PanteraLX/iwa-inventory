@@ -1,11 +1,14 @@
 from django.views.generic import DetailView, ListView, UpdateView
 from app.forms import LendForm
-from app.view.form import CustomFormView
+from app.views.form import CustomFormView
 from app.models import Lend, SingleInventoryItem
 from django.utils import timezone
 from django.shortcuts import render, redirect
 from collections import namedtuple
 from django.contrib import messages
+from app.services.pdf import create_receipt
+from django.http import FileResponse, JsonResponse
+from json import loads
 
 class LendDetailView(DetailView):
     ''' A detail view for the lend model'''
@@ -118,3 +121,16 @@ def lend_delete(request, pk):
     lend = Lend.objects.get(pk=pk)
     lend.delete()
     return redirect('lend_list')
+
+def lends_by_item(request, pk):
+    orders = Lend.objects.filter(item=pk, returned=False)
+    serialized_data = serialize("json", orders)
+    serialized_data = loads(serialized_data)
+    return JsonResponse(serialized_data, safe=False, status=200)
+
+
+def order_pdf(request, pk):
+    order = Lend.objects.get(id=pk)
+    file_name = f'order_{order.id}.pdf'
+    content = create_receipt(order)
+    return FileResponse(content, content_type='application/pdf', as_attachment=True, filename=file_name)

@@ -1,10 +1,10 @@
 from django.urls import path
 from app import views
-from app.view.account import AccountDetailView, AccountListView, AccountFormView
-from app.view.lend import *
-from app.view.inventory_item import *
+from app.views.account import *
+from app.views.lend import *
+from app.views.inventory_item import ActiveInventoryItemHomeListView, ActiveInventoryItemListView, InactiveInventoryItemListView, InventoryItemFormView, InventoryItemDetailView, InventoryItemListView, inventory_item_archive, inventory_item_unarchive
 from app.views.category import CategoryDetailView, CategoryListView, CategoryFormView
-
+from app.views.single_inventory_item import  SingleInventoryItemDetailView, SingleInventoryItemFormView, single_inventory_item_create, single_inventory_item_delete
 urlpatterns = [
     path('', ActiveInventoryItemHomeListView.as_view(), name='inventory_items'),
     path('inventory_items', ActiveInventoryItemListView.as_view(), name='inventory_items'),

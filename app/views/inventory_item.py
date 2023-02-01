@@ -34,8 +34,11 @@ class InventoryItemFormView(CustomFormView):
         item = self.extract_object(pk)
         form = self.form_class(instance=item)
         new_images = InventoryItemImageForm()
-        existing_images = InventoryItemImage.objects.filter(
-            inventory_item=self.extract_object(pk))
+        if pk:
+            existing_images = InventoryItemImage.objects.filter(inventory_item=self.extract_object(pk))
+            form.fields['quantity'].widget = form.fields['quantity'].hidden_widget()
+        else:
+            existing_images = None
         return render(request, self.template_name,
                       {'form': form, 'new_images': new_images, 'existing_images': existing_images, 'item': item,
                        **self.get_context_data(request, *args, **kwargs)})
@@ -52,18 +55,24 @@ class InventoryItemFormView(CustomFormView):
             inventory_item = form.save(commit=False)
             inventory_item.save()
             for image in images:
-                InventoryItemImage.objects.create(
-                    inventory_item=inventory_item, image=image)
+                InventoryItemImage.objects.create(inventory_item=inventory_item, image=image)
+
+            # Create as many SingleInventoryItem objects as the 'quantity' field indicates when a new InventoryItem is created
+            if not pk:
+                for i in range(int(request.POST.get('quantity'))):
+                    SingleInventoryItem.objects.create(inventory_item=inventory_item)
 
             # If the checkbox with name 'delete_image' is checked, delete the image with the id in value
             if 'delete_image' in request.POST:
                 delete_image = request.POST.getlist('delete_image')
                 for image in delete_image:
                     InventoryItemImage.objects.filter(id=image).delete()
+
             return redirect(self.success_url, pk=inventory_item.id)
 
         # If the form is not valid, render the form with the errors
-        return render(request, self.template_name, {'form': form, 'image_form': image_form, **self.get_context_data(request, *args, **kwargs)})
+        return render(request, self.template_name,
+                      {'form': form, 'image_form': image_form, **self.get_context_data(request, *args, **kwargs)})
 
     def get_context_data(self, request, *args, **kwargs):
         ''' Returns the context data for the view'''

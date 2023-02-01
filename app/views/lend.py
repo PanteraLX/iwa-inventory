@@ -10,6 +10,8 @@ from app.services.pdf import create_receipt
 from django.http import FileResponse, JsonResponse
 from json import loads
 from django.core.serializers import serialize
+from django.core.exceptions import PermissionDenied
+
 
 class LendDetailView(DetailView):
     ''' A detail view for the lend model'''
@@ -24,6 +26,18 @@ class LendListView(ListView):
     template_name = 'lend/lend_list.html'
     context_object_name = 'lends'
     
+
+    def dispatch(self, request, *args, **kwargs):
+        ''' Dispatches the request to the appropriate handler'''
+        # Only authenticated users can view lends
+        if request.user .is_authenticated:
+            return super(LendListView, self).dispatch(request, *args, **kwargs)
+
+        # If the user is not authenticated, raise a permission denied error
+        raise PermissionDenied
+
+
+
     # Get all lends
     def get_context_data(self, **kwargs):
         ''' Returns the context data for the view '''
@@ -36,6 +50,8 @@ class LendListView(ListView):
         settled_lends = {'data': lends.filter(returned=True), 'title': 'Settled Lends'}
         context['all'] = [current_lends, past_due_lends, settled_lends]
         return context
+
+
     
 class LendFormView(CustomFormView):
     ''' A custom form view that can be used to create and update lend objects'''

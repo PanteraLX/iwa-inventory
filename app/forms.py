@@ -55,6 +55,7 @@ class AccountForm(forms.ModelForm):
             'email': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
         }
 
+
 class AccountRegisterForm(forms.ModelForm):
     '''Form for creating and editing Accounts'''
     class Meta:

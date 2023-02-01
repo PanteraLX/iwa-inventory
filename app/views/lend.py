@@ -9,6 +9,7 @@ from django.contrib import messages
 from app.services.pdf import create_receipt
 from django.http import FileResponse, JsonResponse
 from json import loads
+from django.core.serializers import serialize
 
 class LendDetailView(DetailView):
     ''' A detail view for the lend model'''
@@ -16,24 +17,24 @@ class LendDetailView(DetailView):
     template_name = 'lend/lend_detail.html'
     context_object_name = 'lend'
 
+
 class LendListView(ListView):
-    ''' A list view for the lend model'''
+    ''' A list view for the order model'''
     model = Lend
     template_name = 'lend/lend_list.html'
     context_object_name = 'lends'
     
     # Get all lends
     def get_context_data(self, **kwargs):
+        ''' Returns the context data for the view '''
         context = super().get_context_data(**kwargs)
         lends = Lend.objects.all()
         if self.request.user.is_authenticated and not self.request.user.is_superuser:
             lends = lends.filter(user=self.request.user)
-        current_lends = lends.filter(ended_at__gte=timezone.now(), returned=False)
-        past_due_lends = lends.filter(ended_at__lt=timezone.now(), returned=False)
-        settled_lends = lends.filter(returned=True)
-        context['all'] = current_lends
-        context['past_due'] = past_due_lends
-        context['settled'] = settled_lends
+        current_lends = {'data': lends.filter(ended_at__gte=timezone.now(), returned=False), 'title': 'Current Lends'}
+        past_due_lends = {'data': lends.filter(ended_at__lt=timezone.now(), returned=False), 'title': 'Past Due Lends'}
+        settled_lends = {'data': lends.filter(returned=True), 'title': 'Settled Lends'}
+        context['all'] = [current_lends, past_due_lends, settled_lends]
         return context
     
 class LendFormView(CustomFormView):
@@ -129,8 +130,8 @@ def lends_by_item(request, pk):
     return JsonResponse(serialized_data, safe=False, status=200)
 
 
-def order_pdf(request, pk):
-    order = Lend.objects.get(id=pk)
-    file_name = f'order_{order.id}.pdf'
-    content = create_receipt(order)
+def lend_pdf(request, pk):
+    lend = Lend.objects.get(id=pk)
+    file_name = f'lend_{lend.id}.pdf'
+    content = create_receipt(lend)
     return FileResponse(content, content_type='application/pdf', as_attachment=True, filename=file_name)

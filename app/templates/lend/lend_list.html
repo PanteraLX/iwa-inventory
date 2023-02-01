@@ -8,16 +8,18 @@ Lends list
 <section class="iwa-section">
     <h1 class="iwa-h1">Lends
         {% if user.is_superuser %}
-            <a type="button"  href="{% url 'lend_create' %}"
-                class="inline-block float-right max-w-xs w-12 h-12 mb-0 mt-0 mr-2 rounded-full bg-gray-900 focus:outline-none focus:ring-1 focus:ring-grey focus:ring-offset-2 focus:ring-offset-grey-800"
+            <a type="button" href="{% url 'lend_create' %}"class="iwa-plus-btn float-right inline-block"
                 id="create-new-item-button">
                 <i class="fa fa-plus text-white text-center h-full w-full mt-3"></i>
             </a>
         {% endif %}
     </h1>
     
+
+{% for lends in all %}
+
 <h1 class="iwa-h1">
-    Current lends
+    {{ lends.title }}
 </h1>
 
 <table class="iwa-table">
@@ -31,7 +33,7 @@ Lends list
         </tr>
     </thead>
     <tbody>
-        {% for lend in all %}
+        {% for lend in lends %}
 
         <tr class="iwa-table-row">
             <td class="iwa-table-cell">{{ lend.user }}</td>
@@ -39,87 +41,14 @@ Lends list
             <td class="iwa-table-cell">{{ lend.single_item.all.count }}</td>
             <td class="iwa-table-cell">{{ lend.started_at|date:'d.m.Y' }} - {{ lend.ended_at|date:'d.m.Y' }}</td>
             <td class="iwa-table-cell">
-                <a href="{% url 'lend_detail' lend.id %}" class="iwa-btn mr-1">
-                    View
-                </a>
-                <a href="{% url 'lend_update' lend.id %}" class="iwa-btn mr-1">
-                    Edit
-                </a>
+
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 
-<h1 class="iwa-h1 mt-4">
-    Past due lends
-</h1>
-
-<table class="iwa-table">
-    <thead class="iwa-table-head bg-[#fca5a5]">
-        <tr>
-            <th class="iwa-table-head-cell">User</th>
-            <th class="iwa-table-head-cell">Item</th>
-            <th class="iwa-table-head-cell">Quantity</th>
-            <th class="iwa-table-head-cell">Timespan</th>
-            <th class="iwa-table-head-cell">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for lend in past_due %}
-
-        <tr class="iwa-table-row">
-            <td class="iwa-table-cell">{{ lend.user }}</td>
-            <td class="iwa-table-cell">{{ lend.item }}</td>
-            <td class="iwa-table-cell">{{ lend.quantity }}</td>
-            <td class="iwa-table-cell">{{ lend.started_at|date:'d.m.Y' }} - {{ lend.ended_at|date:'d.m.Y' }}</td>
-            <td class="iwa-table-cell">
-                <a href="{% url 'lend_detail' lend.id %}" class="iwa-btn mr-1">
-                    View
-                </a>
-                <a href="{% url 'lend_update' lend.id %}" class="iwa-btn mr-1">
-                    Edit
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<h1 class="iwa-h1 mt-4">
-    Settled lends
-</h1>
-
-<table class="iwa-table">
-    <thead class="iwa-table-head">
-        <tr>
-            <th class="iwa-table-head-cell">User</th>
-            <th class="iwa-table-head-cell">Item</th>
-            <th class="iwa-table-head-cell">Quantity</th>
-            <th class="iwa-table-head-cell">Timespan</th>
-            <th class="iwa-table-head-cell">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for lend in settled %}
-
-        <tr class="iwa-table-row">
-            <td class="iwa-table-cell">{{ lend.user }}</td>
-            <td class="iwa-table-cell">{{ lend.item }}</td>
-            <td class="iwa-table-cell">{{ lend.quantity }}</td>
-            <td class="iwa-table-cell">{{ lend.started_at|date:'d.m.Y' }} - {{ lend.ended_at|date:'d.m.Y' }}</td>
-            <td class="iwa-table-cell">
-                <a href="{% url 'lend_detail' lend.id %}" class="iwa-btn mr-1">
-                    View
-                </a>
-                <a href="{% url 'lend_update' lend.id %}" class="iwa-btn mr-1">
-                    Edit
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% endfor %}
 
 </section>
 

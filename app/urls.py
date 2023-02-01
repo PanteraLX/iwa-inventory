@@ -37,7 +37,9 @@ urlpatterns = [
     path('lend/<int:pk>/delete', lend_delete, name='lend_delete'),
     path('lend/<int:pk>', LendDetailView.as_view(), name='lend_detail'),
     path('lend/create', LendFormView.as_view(), name='lend_create'),
+    path('lend/<int:pk>/pdf', lend_pdf, name='lend_pdf'),
     path('lends', LendListView.as_view(), name='lend_list'),
 
     path('api/lends-by-item/<int:pk>', lends_by_item, name='lend_by_item'),
+
 ]

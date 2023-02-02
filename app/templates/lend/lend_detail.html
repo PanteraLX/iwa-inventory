@@ -12,7 +12,7 @@ Lend Detail
     <dl>
         <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ lend.description }}</dd>
     </dl>
-    <dl class="flex items-center space-x-6">
+    <dl class="flex items-center space-x-6 mb-8">
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">ID</dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ lend.id }}</dd>
@@ -59,27 +59,37 @@ Lend Detail
             </dd>
         </div>            
 
-        <div>
-            <dt class="mb-2 font-semibold leading-none text-gray-900">Signed receipt</dt>
-            {% if lend.document %}
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-                <a href="{{ lend.document.url }}" target="_blank">
-                    <i class="fa fa-file-pdf"></i>
-                </a>
-            </dd>
-            {% else %}
-            <dd>
-                <!-- Form to upload a signed receipt -->
-                <form action="{% url 'upload_signed_receipt' lend.id %}" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <input type="file" name="signed_receipt" id="signed_receipt" class="iwa-btn">
-                    <button type="submit" class="iwa-btn">Upload</button>
-                </form>
-            </dd>
-            {% endif %}
-        </div>
-
     </dl>
+    <dl class="mb-8">
+        <dt class="mb-2 font-semibold leading-none text-gray-900">Serial numbers</dt>
+        {% for item in lend.single_item.all %}
+        <dd class="mb-4 font-light text-gray-500 sm:mb-5 mr-2">
+            <span class="fa text-xs mx-2">-</span> {{ item.serial_number }}
+        </dd>
+        {% endfor %}
+    </dl>
+
+
+    <dl class="mb-8">
+        <dt class="mb-2 font-semibold leading-none text-gray-900">Signed receipt</dt>
+        {% if lend.document %}
+        <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+            <a href="{{ lend.document.url }}" target="_blank">
+                <i class="fa fa-file-pdf"></i>
+            </a>
+        </dd>
+        {% else %}
+        <dd>
+            <!-- Form to upload a signed receipt -->
+            <form action="{% url 'upload_signed_receipt' lend.id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="signed_receipt" id="signed_receipt" class="iwa-btn">
+                <button type="submit" class="iwa-btn">Upload</button>
+            </form>
+        </dd>
+        {% endif %}
+    </dl>
+
     <div class="flex items-center space-x-4">
         <a href="{% url 'lend_update' lend.id %}" class="iwa-btn">
             Edit

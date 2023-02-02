@@ -66,7 +66,13 @@ Inventory Item Update
                 <td class="iwa-table-cell">{{ item.inventory_item }}</td>
                 <td class="iwa-table-cell">{{ item.hash }}</td>
                 <td class="iwa-table-cell">{{ item.serial_number }}</td>
-                <td class="iwa-table-cell">{{ item.active }}</td>
+                <td class="iwa-table-cell">
+                    {% if item.active %}
+                    <span class="fa fa-check"></span>
+                    {% else %}
+                    <span class="fa fa-xmark"></span>
+                    {% endif %}
+                </td>
                 <td class="iwa-table-cell">{{ item.lend_set.all.count }}</td>
                 <td class="iwa-table-cell">
                     {% if user.is_superuser %}

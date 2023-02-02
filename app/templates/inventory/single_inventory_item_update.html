@@ -1,0 +1,29 @@
+{% extends "app/_base.html" %}
+
+{% block title %}
+Inventory Item {{ method }}
+{% endblock %}
+
+{% block content %}
+<section class="iwa-section">
+    <h1 class="iwa-h1">Update the single inventory item</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <div>
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-6">
+                <label class="iwa-form-label" for="{{ field.auto_id }}">
+                    {{ field.label}}
+                </label>
+                {{ field }}
+            </div>
+            {% endfor %}
+            <div class="mb-4">
+                <button class="iwa-btn" type="submit">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </form>
+</section>
+{% endblock %}

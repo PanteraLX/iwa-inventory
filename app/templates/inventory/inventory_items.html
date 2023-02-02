@@ -18,7 +18,9 @@ Products
     <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
         <div>
             <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12">
-                <i class="fa-solid fa-gamepad text-3xl"></i>
+                <a href="{% url 'inventory_items' %}">
+                    <i class="fa-solid fa-gamepad text-3xl"></i>
+                </a>
             </div>
             <h3 class="mb-2 text-xl font-bold">Overview</h3>
             <p class="text-gray-500 dark:text-gray-400">See what you got: Never buy twice and quickly understand your
@@ -26,7 +28,9 @@ Products
         </div>
         <div>
             <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12">
-                <i class="fa-solid fa-truck-ramp-box text-3xl"></i>
+                <a href="{% url 'lend_create' %}">
+                    <i class="fa-solid fa-shopping-cart text-3xl"></i>
+                </a>
             </div>
             <h3 class="mb-2 text-xl font-bold">Rent</h3>
             <p class="text-gray-500 dark:text-gray-400">Share the resources with co-workers and fellow military people.
@@ -34,7 +38,9 @@ Products
         </div>
         <div>
             <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12">
-                <i class="fa-solid fa-rotate-left text-3xl"></i>
+                <a href="{% url 'lend_list' %}">
+                    <i class="fa-solid fa-undo text-3xl"></i>
+                </a>
             </div>
             <h3 class="mb-2 text-xl font-bold">Return</h3>
             <p class="text-gray-500 dark:text-gray-400">Rest assured that everything you've given will be returned on
@@ -60,21 +66,11 @@ Products
             id="create-new-item-button">
             <i class="fa fa-plus text-white text-center h-full w-full mt-3"></i>
         </a>
-
         {% endif %}
     </h1>
-    <label for="inventory-filter-select" class="block mb-2 text-sm font-medium text-gray-900">Filter by category</label>
-    <select class="iwa-input mb-4" id="inventory-filter-select">
-        <option value="" selected>-----</option>
-        {% for category in categories %}
-        <option value="{{category.id}}">{{ category }}</option>
-        {% endfor %}
-    </select> 
-    <label for="inventory-search" class="block mb-2 text-sm font-medium text-gray-900">Search</label>
-    <input class="iwa-input mb-4 normal-case fa fa-search" id="inventory-search" type="text"  placeholder="&#xF002;">
     {% endif %}
     {% if page_name == 'inactive' %}
-    <h1 class="iwa-h1">Inventory archive</h3>
+    <h1 class="iwa-h1">Inventory archive</h1>
 
     {% endif %}
     {% if page_name != "home" %}
@@ -82,7 +78,7 @@ Products
         <select class="iwa-input mb-4 w-60" id="inventory-filter-select">
             <option value="" selected>-----</option>
             {% for category in categories %}
-            <option value="{{category.id}}">{{ category }}</option>
+            <option value="{{category.id}}">{{ category }}</span></option>
             {% endfor %}
         </select>
         <label for="inventory-search" class="block mb-2 text-sm font-medium text-gray-900">Search</label>
@@ -114,7 +110,9 @@ Products
         {% endif %}
         {% endif %}
 
-
+        {% if page_name != "home" %}
+        <hr style="border-color:#050C34; border-width: 2px;" class="mb-5 mt-0"></hr>
+        {% endif %}
 
         <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {% if inventory_items_list %}
@@ -123,7 +121,7 @@ Products
 
             <div class="group">
                 <div
-                    class="aspect-w-1 aspect-h-1 w-64 h-64 overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
+                    class="aspect-w-1 aspect-h-1 w-64 h-64 overflow-hidden rounded-lg bg-gray-300 xl:aspect-w-7 xl:aspect-h-8">
                     {% if inventory_item.inventoryitemimage_set.all|length > 0 %}
                     <a href="{% url 'inventory_item_detail' inventory_item.pk %}">
                         <img src="{{ inventory_item.inventoryitemimage_set.all.0.image.url }}"
@@ -134,7 +132,7 @@ Products
                     <a href="{% url 'inventory_item_detail' inventory_item.pk %}"
                         class="h-full w-full inline-block align-middle">
                         <span
-                            class="fa-stack fa-2x w-full h-full text-center text-4xl align-middle inline-block mt-16 text-gray-600">
+                            class="fa-stack fa-2x w-full h-full text-center text-4xl align-middle inline-block mt-16 text-white">
                             <i class="fa fa-slash fa-stack-2x"></i>
                             <i class="fa fa-image fa-stack-2x"></i>
                         </span>
@@ -142,7 +140,14 @@ Products
                     {% endif %}
                 </div>
 
-                <h3 class="mt-4 mb-4 text-sm text-gray-700 text-ellipsis overflow-hidden">{{ inventory_item.name }}</h3>
+                <h3 class="mt-4 mb-4 w-64 text-sm text-gray-700 text-ellipsis overflow-hidden">{{ inventory_item.name }} 
+                    {% if inventory_item.category.icon %}
+                    <span class="float-right rounded-md p-1.5 bg-gray-300 text-white fa fa-{{inventory_item.category.icon}}"></span>
+                    {% endif %}
+                    {% if not inventory_item.active %}
+                    <span class="float-right rounded-md p-1.5 bg-[#FA8072] text-white fa fa-archive ml-1"></span>
+                    {% endif %}
+                </h3>
 
                 <!-- Button that links to an object's detail view -->
                 <a href="{% url 'inventory_item_detail' inventory_item.pk %}" class="btn">Detail</a>
@@ -154,8 +159,13 @@ Products
             {% endif %}
 
         </div>
-        <ul class="pagination mt-10 h-16">
+        {% if page_name != "home" %}
+        <hr style="border-color:#050C34; border-width: 2px;" class="mt-5"></hr>
+        {% endif %}
+
+        <ul class="pagination mt-8 h-16">
             {% if is_paginated %}
+          
 
 
             {% if page_obj.has_previous %}
@@ -186,6 +196,8 @@ Products
 
             {% endif %}
             {% if page_name != "home" %}
+
+
             <div class="float-right flex">
                 <label for="pagination-select" class="mr-2 mb-2 text-sm font-medium text-gray-900">Items per Page
                 </label>

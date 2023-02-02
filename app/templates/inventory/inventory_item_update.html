@@ -40,6 +40,15 @@ Inventory Item {{ method }}
             </div>
             {% endfor %}
         </div>
+        {% if creation %}
+        <div class="mb-6">
+            <label class="iwa-form-label" for="id_quantity">
+                Quantity
+            </label>
+            <input type="number" name="quantity" value="0" class="iwa-input w-full" step="1.0" required=""
+                id="id_quantity">
+        </div>
+        {% endif %}
         <div class="mb-4">
             <button class="iwa-btn" type="submit">Submit</button>
             {% if item %}

@@ -1,0 +1,61 @@
+{% extends "app/_base.html" %}
+
+{% block title %} 
+Lends list
+{% endblock %} 
+
+{% block content %} 
+<section class="iwa-section">
+    <h1 class="iwa-h1">Lends
+        {% if user.is_superuser %}
+            <a type="button" href="{% url 'lend_create' %}"class="iwa-plus-btn float-right inline-block"
+                id="create-new-item-button">
+                <i class="fa fa-plus text-white text-center h-full w-full mt-3"></i>
+            </a>
+        {% endif %}
+    </h1>
+    
+
+{% for lends in all %}
+
+<h1 class="iwa-h1">
+    {{ lends.title }}
+</h1>
+
+<table class="iwa-table mb-4">
+    <thead class="iwa-table-head">
+        <tr>
+            <th class="iwa-table-head-cell">User</th>
+            <th class="iwa-table-head-cell">Item</th>
+            <th class="iwa-table-head-cell">Quantity</th>
+            <th class="iwa-table-head-cell">Timespan</th>
+            <th class="iwa-table-head-cell">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for lend in lends.data %}
+        {% if lend %}
+        <tr class="iwa-table-row">
+            <td class="iwa-table-cell">{{ lend.user }}</td>
+            <td class="iwa-table-cell">{{ lend.single_item.first }}</td>
+            <td class="iwa-table-cell">{{ lend.single_item.all.count }}</td>
+            <td class="iwa-table-cell">{{ lend.started_at|date:'d.m.Y' }} - {{ lend.ended_at|date:'d.m.Y' }}</td>
+            <td class="iwa-table-cell">
+                <a href="{% url 'lend_detail' lend.id %}" class="iwa-btn mr-1">
+                    View
+                </a>
+                <a href="{% url 'lend_update' lend.id %}" class="iwa-btn mr-1">
+                    Edit
+                </a>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endfor %}
+
+</section>
+
+{% endblock %}

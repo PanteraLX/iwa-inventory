@@ -10,6 +10,7 @@ class CustomFormView(ViewMixin, View):
     model = None
     success_url = None
     context = {}
+    use_pk_redirect = True
 
     def get(self, request, *args, **kwargs):
         ''' GET request handler'''
@@ -24,7 +25,9 @@ class CustomFormView(ViewMixin, View):
         if form.is_valid():
             object = form.save(commit=False)
             object.save()
-            return redirect(self.success_url, pk=object.id)
+            if self.use_pk_redirect:
+                return redirect(self.success_url, pk=object.id)
+            return redirect(self.success_url)
         return render(request, self.template_name, {'form': form, **self.get_context_data(request, *args, **kwargs)})
 
     def get_context_data(self, request, *args, **kwargs):

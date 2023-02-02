@@ -14,7 +14,7 @@ Inventory Item Update
     <dl class="flex space-x-6">
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Quantity</dt>
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.quantity }}</dd>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ item_quantity }}</dd>
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Producer</dt>
@@ -36,10 +36,65 @@ Inventory Item Update
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Active</dt>
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.active }}</dd>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                {% if  inventory_item.active %}
+                <span class="fa fa-check"></span>
+                {% else %}
+                <span class="fa fa-xmark"></span>
+                {% endif %}
+            </dd>
         </div>
         {% endif %}
     </dl>
+
+    <!-- Show the SingleInventoryItem objects associated with the InventoryItem as a list -->
+    <table class="iwa-table mb-6">
+        <thead class="iwa-table-head">
+            <tr>
+                <th class="iwa-table-head-cell">Inventory Item</th>
+                <th class="iwa-table-head-cell">Hash</th>
+                <th class="iwa-table-head-cell">Serial Number</th>
+                <th class="iwa-table-head-cell">Active</th>
+                <th class="iwa-table-head-cell">Lends</th>
+                <th class="iwa-table-head-cell">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in single_inventory_items %}
+    
+            <tr class="iwa-table-row">
+                <td class="iwa-table-cell">{{ item.inventory_item }}</td>
+                <td class="iwa-table-cell">{{ item.hash }}</td>
+                <td class="iwa-table-cell">{{ item.serial_number }}</td>
+                <td class="iwa-table-cell">{{ item.active }}</td>
+                <td class="iwa-table-cell">{{ item.lend_set.all.count }}</td>
+                <td class="iwa-table-cell">
+                    {% if user.is_superuser %}
+                    <a href="{% url 'single_inventory_item_detail' item.hash %}" class="iwa-btn mr-1">
+                        View
+                    </a>
+                    <a href="{% url 'single_inventory_item_update' item.hash %}" class="iwa-btn mr-1">
+                        Edit
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            <!-- A table row that contains the 'create' button -->
+            <tr class="iwa-table-row">
+                {% if user.is_superuser %}
+                <td class="iwa-table-cell">
+                    <a href="{% url 'single_inventory_item_create' inventory_item.id %}" class="btn">Create</a>
+                </td>
+                {% endif %}
+                <td class="iwa-table-cell">
+                <td class="iwa-table-cell">
+                <td class="iwa-table-cell">
+                <td class="iwa-table-cell">
+                <td class="iwa-table-cell">
+            </tr>
+        </tbody>
+    </table>
 
     <!-- Add a carousel to contain all the images of an item -->
     <div id="default-carousel" class="relative" data-carousel="static">
@@ -97,7 +152,7 @@ Inventory Item Update
                 class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             {% else %}
             <span
-                class="fa-stack fa-2x w-full h-full text-center text-4xl align-middle inline-block mt-16 text-gray-600">
+                class="fa-stack fa-2x w-full h-full text-center text-4xl align-middle inline-block mt-16 text-gray-400">
                 <i class="fa fa-slash fa-stack-2x"></i>
                 <i class="fa fa-image fa-stack-2x"></i>
             </span>
@@ -108,8 +163,8 @@ Inventory Item Update
             <!-- A button to link to the update page of the inventory item.-->
             <a href="{% url 'inventory_item_update' inventory_item.id %}" class="btn">Update</a>
 
-            <a href="{% url 'order_create' %}?inventory_item={{ inventory_item.id | urlencode }}&user={{ user.id | urlencode }}&now=1"
-                class="btn">Order</a>
+            <a href="{% url 'lend_create' %}?inventory_item={{ inventory_item.id | urlencode }}&user={{ user.id | urlencode }}&now=1"
+                class="btn">Lend</a>
         </div>
         {% endif %}
 </section>

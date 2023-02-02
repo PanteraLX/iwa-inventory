@@ -28,9 +28,13 @@ Products
         </div>
         <div>
             <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12">
+                {% if user.is_superuser %}
                 <a href="{% url 'lend_create' %}">
                     <i class="fa-solid fa-shopping-cart text-3xl"></i>
                 </a>
+                {% else %}
+                <i class="fa-solid fa-shopping-cart text-3xl"></i>
+                {% endif %}
             </div>
             <h3 class="mb-2 text-xl font-bold">Rent</h3>
             <p class="text-gray-500 dark:text-gray-400">Share the resources with co-workers and fellow military people.
@@ -38,9 +42,13 @@ Products
         </div>
         <div>
             <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12">
+                {% if user.is_superuser %}
                 <a href="{% url 'lend_list' %}">
                     <i class="fa-solid fa-undo text-3xl"></i>
                 </a>
+                {% else %}
+                <i class="fa-solid fa-undo text-3xl"></i>
+                {% endif %}
             </div>
             <h3 class="mb-2 text-xl font-bold">Return</h3>
             <p class="text-gray-500 dark:text-gray-400">Rest assured that everything you've given will be returned on

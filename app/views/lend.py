@@ -102,6 +102,15 @@ class LendFormView(CustomFormView):
                 messages.error(request, 'All items are already reserved for this period. Try another period or another item.')
                 return redirect('lend_create')
 
+    def dispatch(self, request, *args, **kwargs):
+        ''' Dispatches the request to the appropriate handler'''
+        # Only authenticated users can create lends
+        if request.user.is_superuser:
+            return super(LendFormView, self).dispatch(request, *args, **kwargs)
+
+        # If the user is not authenticated, raise a permission denied error
+        raise PermissionDenied
+
     def get_context_data(self, request, *args, **kwargs):
         ''' Returns the context data for the view'''
         context = super().get_context_data(request, *args, **kwargs)
@@ -157,7 +166,16 @@ class LendUpdateView(UpdateView):
                     # Throw an error
                     messages.error(request, 'At least one item cannot be changed to the new period. Try another period. If it does not work out, delete the lend and create a new one.')
                     return redirect('lend_update', pk=lend.pk)
-                
+
+    def dispatch(self, request, *args, **kwargs):
+        ''' Dispatches the request to the appropriate handler'''
+        # Only superuser users can update lends
+        if request.user.is_superuser:
+            return super(LendUpdateView, self).dispatch(request, *args, **kwargs)
+
+        # If the user is not authenticated, raise a permission denied error
+        raise PermissionDenied   
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['method'] = 'Update'
@@ -169,6 +187,7 @@ def lend_delete(request, pk):
     lend = Lend.objects.get(pk=pk)
     lend.delete()
     return redirect('lend_list')
+
 
 def lends_by_item(request, pk):
     ''' Returns all lends for a given item'''

@@ -5,7 +5,7 @@ from app.views.view_mixin import ViewMixin
 from app.views.single_inventory_item import SingleInventoryItem
 from django.shortcuts import render, redirect
 from app.models import InventoryItem, InventoryItemImage, Category
-
+from django.core.exceptions import PermissionDenied
 
 class InventoryItemDetailView(DetailView):
     ''' A detail view for the inventory item model'''
@@ -14,6 +14,7 @@ class InventoryItemDetailView(DetailView):
     context_object_name = 'inventory_item'
 
     def get_context_data(self, **kwargs):
+        ''' Returns the context data for the view'''
         single_items = SingleInventoryItem.objects.filter(inventory_item=self.object)
         context = super().get_context_data(**kwargs)
         context['single_inventory_items'] = single_items
@@ -29,6 +30,15 @@ class InventoryItemFormView(CustomFormView):
     model = InventoryItem
     success_url = 'inventory_item_detail'
 
+    def dispatch(self, request, *args, **kwargs):
+        ''' Dispatches the request to the appropriate handler'''
+        # Only authenticated users can view Itemforms
+        if request.user .is_superuser:
+            return super(InventoryItemFormView, self).dispatch(request, *args, **kwargs)
+
+        # If the user is not authenticated, raise a permission denied error
+        raise PermissionDenied
+
     def get(self, request, *args, **kwargs):
         ''' GET request handler'''
         pk = self.extract_pk(kwargs)
@@ -37,7 +47,6 @@ class InventoryItemFormView(CustomFormView):
         new_images = InventoryItemImageForm()
         if pk:
             existing_images = InventoryItemImage.objects.filter(inventory_item=self.extract_object(pk))
-            form.fields['quantity'].widget = form.fields['quantity'].hidden_widget()
         else:
             existing_images = None
         return render(request, self.template_name,
@@ -80,6 +89,7 @@ class InventoryItemFormView(CustomFormView):
         return {'method': 'Create' if not self.extract_pk(kwargs) else 'Update',
                 'new_existing_image': 'New Images' if self.extract_pk(kwargs) else 'Images',
                 'existing_images_label': 'Existing Images' if self.extract_pk(kwargs) else '',
+                'creation': not self.extract_pk(kwargs),
                 }
 
 
@@ -146,6 +156,15 @@ class InactiveInventoryItemListView(InventoryItemListViewPaginated):
     ''' A list view for the inactive inventory item model (paginated)'''
     queryset = InventoryItem.objects.inactive()
 
+    def dispatch(self, request, *args, **kwargs):
+        ''' Dispatches the request to the appropriate handler'''
+        # Only authenticated users can view inactive Items
+        if request.user .is_superuser:
+            return super(InactiveInventoryItemListView, self).dispatch(request, *args, **kwargs)
+
+        # If the user is not authenticated, raise a permission denied error
+        raise PermissionDenied
+
     def get_context_data(self, **kwargs):
         ''' Returns the context data for the view '''
         context = super().get_context_data(**kwargs)
@@ -163,12 +182,23 @@ class InventoryItemListView(InventoryItemListViewPaginated):
         context['page_name'] = 'complete'
         return context
 
+
+def dispatch(self, request, *args, **kwargs):
+    ''' Dispatches the request to the appropriate handler'''
+    # Only authenticated users can view inactive Items
+    if request.user .is_superuser:
+        return super(InventoryItemListView, self).dispatch(request, *args, **kwargs)
+
+    # If the user is not authenticated, raise a permission denied error
+    raise PermissionDenied
+
 # Switching the 'active' variable of an InventoryItem instance to False
 def inventory_item_archive(request, pk):
     inventory_item = InventoryItem.objects.get(id=pk)
     inventory_item.active = False
     inventory_item.save()
     return redirect('complete_inventory_items_list')
+
 
 # Switching the 'active' variable of an InventoryItem instance to True
 def inventory_item_unarchive(request, id):

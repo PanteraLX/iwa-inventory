@@ -83,8 +83,9 @@ class AccountRegisterFormView(CustomFormView):
     template_name = 'account/user_update.html'
     form_class = AccountRegisterForm
     model = DjangoUser
-    success_url = 'user_detail'
+    success_url = 'inventory_items'
     context = {'method': 'Register'}
+    use_pk_redirect = False
 
     def get(self, request, *args, **kwargs):
         ''' GET request handler'''

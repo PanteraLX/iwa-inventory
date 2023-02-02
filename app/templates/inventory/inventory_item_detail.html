@@ -36,7 +36,13 @@ Inventory Item Update
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Active</dt>
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.active }}</dd>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                {% if  inventory_item.active %}
+                <span class="fa fa-check"></span>
+                {% else %}
+                <span class="fa fa-xmark"></span>
+                {% endif %}
+            </dd>
         </div>
         {% endif %}
     </dl>
@@ -50,7 +56,7 @@ Inventory Item Update
                 <th class="iwa-table-head-cell">Serial Number</th>
                 <th class="iwa-table-head-cell">Active</th>
                 <th class="iwa-table-head-cell">Lends</th>
-                <th class="iwa-table-head-cell"></th>
+                <th class="iwa-table-head-cell">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -63,17 +69,24 @@ Inventory Item Update
                 <td class="iwa-table-cell">{{ item.active }}</td>
                 <td class="iwa-table-cell">{{ item.lend_set.all.count }}</td>
                 <td class="iwa-table-cell">
+                    {% if user.is_superuser %}
                     <a href="{% url 'single_inventory_item_detail' item.hash %}" class="iwa-btn mr-1">
-                        Detail
+                        View
                     </a>
+                    <a href="{% url 'single_inventory_item_update' item.hash %}" class="iwa-btn mr-1">
+                        Edit
+                    </a>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}
             <!-- A table row that contains the 'create' button -->
             <tr class="iwa-table-row">
+                {% if user.is_superuser %}
                 <td class="iwa-table-cell">
                     <a href="{% url 'single_inventory_item_create' inventory_item.id %}" class="btn">Create</a>
                 </td>
+                {% endif %}
                 <td class="iwa-table-cell">
                 <td class="iwa-table-cell">
                 <td class="iwa-table-cell">
@@ -139,7 +152,7 @@ Inventory Item Update
                 class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             {% else %}
             <span
-                class="fa-stack fa-2x w-full h-full text-center text-4xl align-middle inline-block mt-16 text-gray-600">
+                class="fa-stack fa-2x w-full h-full text-center text-4xl align-middle inline-block mt-16 text-gray-400">
                 <i class="fa fa-slash fa-stack-2x"></i>
                 <i class="fa fa-image fa-stack-2x"></i>
             </span>

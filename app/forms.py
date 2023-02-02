@@ -6,6 +6,7 @@ from django.contrib.auth.models import User as DjangoUser
 class InventoryItemForm(forms.ModelForm):
     '''Form for creating and editing InventoryItems'''
     class Meta:
+        ''' Meta class for InventoryItemForm'''
         model = InventoryItem
         fields = ['name', 'category', 'description', 'priceperunit', 'position', 'producer']
         widgets = {

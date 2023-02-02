@@ -14,6 +14,7 @@ class InventoryItemDetailView(DetailView):
     context_object_name = 'inventory_item'
 
     def get_context_data(self, **kwargs):
+        ''' Returns the context data for the view'''
         single_items = SingleInventoryItem.objects.filter(inventory_item=self.object)
         context = super().get_context_data(**kwargs)
         context['single_inventory_items'] = single_items

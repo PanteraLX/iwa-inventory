@@ -36,7 +36,13 @@ Inventory Item Update
         </div>
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Active</dt>
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5">{{ inventory_item.active }}</dd>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                {% if  inventory_item.active %}
+                <span class="fa fa-check"></span>
+                {% else %}
+                <span class="fa fa-xmark"></span>
+                {% endif %}
+            </dd>
         </div>
         {% endif %}
     </dl>

@@ -14,6 +14,7 @@ class InventoryItemDetailView(DetailView):
     context_object_name = 'inventory_item'
 
     def get_context_data(self, **kwargs):
+        ''' Returns the context data for the view'''
         single_items = SingleInventoryItem.objects.filter(inventory_item=self.object)
         context = super().get_context_data(**kwargs)
         context['single_inventory_items'] = single_items
@@ -46,7 +47,6 @@ class InventoryItemFormView(CustomFormView):
         new_images = InventoryItemImageForm()
         if pk:
             existing_images = InventoryItemImage.objects.filter(inventory_item=self.extract_object(pk))
-            form.fields['quantity'].widget = form.fields['quantity'].hidden_widget()
         else:
             existing_images = None
         return render(request, self.template_name,
@@ -89,6 +89,7 @@ class InventoryItemFormView(CustomFormView):
         return {'method': 'Create' if not self.extract_pk(kwargs) else 'Update',
                 'new_existing_image': 'New Images' if self.extract_pk(kwargs) else 'Images',
                 'existing_images_label': 'Existing Images' if self.extract_pk(kwargs) else '',
+                'creation': not self.extract_pk(kwargs),
                 }
 
 

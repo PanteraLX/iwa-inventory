@@ -92,7 +92,6 @@ class LendForm(forms.ModelForm):
         '''Initialize the LendForm'''
         super().__init__(*args, **kwargs)
         try:
-            kwargs['instance']
             # Disable the 'returned' field if the order has not been created yet or the user is not an admin
             if kwargs['instance'] is None or not kwargs['instance'].user.is_superuser:
                 # Hide de 'returned' field along with its label
@@ -102,11 +101,19 @@ class LendForm(forms.ModelForm):
                 # Show the name of the inventory_item associated with the first single inventory item associated 
                 # with the lend in the item field and disable it.
                 self.fields['item'].initial = kwargs['instance'].single_item.first().inventory_item
+                self.fields['item'].required = False
                 self.fields['item'].widget.attrs['disabled'] = True
+                # Show the name of the user associated with the lend in the user field and disable it.
+                self.fields['user'].initial = kwargs['instance'].user
+                self.fields['user'].required = False
+                self.fields['user'].widget.attrs['disabled'] = True
+                # Show the number of single inventory items associated with the lend in the quantity field and disable it.
+                self.fields['quantity'].initial = kwargs['instance'].single_item.count()
+                self.fields['quantity'].required = False
+                self.fields['quantity'].widget.attrs['disabled'] = True
 
-            if kwargs['instance'] is None or kwargs['instance'].document:
-                self.fields['document'].widget = forms.HiddenInput()
-                self.fields['document'].label = ''
+            self.fields['document'].widget = forms.HiddenInput()
+            self.fields['document'].label = ''
         except:
             pass
             
@@ -124,3 +131,7 @@ class CategoryForm(forms.ModelForm):
             'icon': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
         }
 
+class UploadSignedReceiptForm(forms.Form):
+    '''Form for uploading a signed receipt'''
+    signed_receipt = forms.FileField(widget=forms.FileInput(attrs={'type': 'file'}))
+    

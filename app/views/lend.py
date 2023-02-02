@@ -105,7 +105,7 @@ class LendFormView(CustomFormView):
     def dispatch(self, request, *args, **kwargs):
         ''' Dispatches the request to the appropriate handler'''
         # Only authenticated users can create lends
-        if request.user .is_superuser:
+        if request.user.is_superuser:
             return super(LendFormView, self).dispatch(request, *args, **kwargs)
 
         # If the user is not authenticated, raise a permission denied error
@@ -170,7 +170,7 @@ class LendUpdateView(UpdateView):
     def dispatch(self, request, *args, **kwargs):
         ''' Dispatches the request to the appropriate handler'''
         # Only superuser users can update lends
-        if request.user .is_superuser:
+        if request.user.is_superuser:
             return super(LendUpdateView, self).dispatch(request, *args, **kwargs)
 
         # If the user is not authenticated, raise a permission denied error

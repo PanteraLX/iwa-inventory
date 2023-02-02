@@ -75,11 +75,11 @@ def create_receipt(lend):
 
     pdf.ln(2 * pdf_config['line_height'])
 
-    pdf.set_font('Arial', '', pdf_config['font_size'])
-    pdf.cell(pdf_config['margin_left'], pdf_config['line_height'], f'für die Nutzung im Rahmen:')
-    pdf.set_font('Arial', 'I', pdf_config['font_size'])  
-    pdf.cell(150, pdf_config['line_height'], f'{inventory_item.name}')
-    pdf.ln(pdf_config['line_height'])
+    # pdf.set_font('Arial', '', pdf_config['font_size'])
+    # pdf.cell(pdf_config['margin_left'], pdf_config['line_height'], f'für die Nutzung im Rahmen:')
+    # pdf.set_font('Arial', 'I', pdf_config['font_size'])  
+    # pdf.cell(150, pdf_config['line_height'], f'{inventory_item.name}')
+    # pdf.ln(pdf_config['line_height'])
     pdf.set_font('Arial', '', pdf_config['font_size'])
     pdf.cell(pdf_config['margin_left'], pdf_config['line_height'], f'für die Dauer:')
     pdf.set_font('Arial', 'I', pdf_config['font_size'])  

@@ -128,7 +128,7 @@ class LendUpdateView(UpdateView):
                 lend.single_item.clear()
                 lend.returned = True
                 lend.save()
-                return redirect('lend_list', pk=lend.pk)
+                return redirect('lend_list')
             # Check if the dates were changed
             if form.initial['started_at'] == form.cleaned_data['started_at'] and form.initial['ended_at'] == form.cleaned_data['ended_at']:
                 # Throw an error message stating that nothing was changed.

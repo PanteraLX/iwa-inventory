@@ -108,7 +108,7 @@ class LendFormView(CustomFormView):
         context['method'] = 'Create'
         return context
     
-class LendUpdateView(UpdateView, CustomFormView):
+class LendUpdateView(UpdateView):
     ''' An update view for the lend model'''
     model = Lend
     form_class = LendForm
@@ -118,8 +118,10 @@ class LendUpdateView(UpdateView, CustomFormView):
     def post(self, request, *args, **kwargs):
         ''' Handles the post request for the view'''
         lend = self.get_object()
+        original_lend = Lend.objects.get(pk=lend.pk)
         form = self.form_class(request.POST, instance=lend)
         if form.is_valid():
+            lend.user = original_lend.user
             # If the returned checkbox is checked, remove all single inventory items from the lend
             if form.cleaned_data['returned']:
                 lend.single_item.clear()

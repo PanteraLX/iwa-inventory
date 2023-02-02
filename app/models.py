@@ -98,24 +98,6 @@ class InventoryItem(models.Model):
     def __str__(self):
         return self.name
 
-# A model for images that will be associated with the InventoryItem model
-class InventoryItemImage(models.Model):
-    inventory_item = models.ForeignKey(
-        InventoryItem,
-        default=None,
-        on_delete=models.CASCADE,
-        )
-    uploaded_at = models.DateTimeField(
-        auto_now_add=True
-        )
-    image = models.FileField(
-        upload_to='images/',
-        blank=True,
-        )
-    
-    def __str__(self):
-        return self.inventory_item.name + " image"
-
 # A model for single inventory items that with a foreign key to the InventoryItem model, contains all the attributes
 # of the InventoryItem model, but also has a hash to uniquely identify the item and a field called 'serial_number'
 # which is the serial number of the item.

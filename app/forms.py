@@ -74,7 +74,7 @@ class LendForm(forms.ModelForm):
     '''Form for creating and editing Orders'''
     # The item field shows a selection of all inventory items
     item = forms.ModelChoiceField(queryset=InventoryItem.objects.all(), widget=forms.Select(attrs={'class': lend_css_class}))
-    quantity = forms.IntegerField(widget=forms.NumberInput(attrs={'class': lend_css_class}))
+    quantity = forms.IntegerField(widget=forms.NumberInput(attrs={'class': lend_css_class, 'min': 1, 'value': 1}))
 
     class Meta:
         '''Meta class for LendForm'''

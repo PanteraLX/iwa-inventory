@@ -92,7 +92,6 @@ class LendForm(forms.ModelForm):
         '''Initialize the LendForm'''
         super().__init__(*args, **kwargs)
         try:
-            kwargs['instance']
             # Disable the 'returned' field if the order has not been created yet or the user is not an admin
             if kwargs['instance'] is None or not kwargs['instance'].user.is_superuser:
                 # Hide de 'returned' field along with its label
@@ -113,9 +112,8 @@ class LendForm(forms.ModelForm):
                 self.fields['quantity'].required = False
                 self.fields['quantity'].widget.attrs['disabled'] = True
 
-            if kwargs['instance'] is None or kwargs['instance'].document:
-                self.fields['document'].widget = forms.HiddenInput()
-                self.fields['document'].label = ''
+            self.fields['document'].widget = forms.HiddenInput()
+            self.fields['document'].label = ''
         except:
             pass
             
@@ -133,3 +131,7 @@ class CategoryForm(forms.ModelForm):
             'icon': forms.TextInput(attrs={'class': 'iwa-input w-full'}),
         }
 
+class UploadSignedReceiptForm(forms.Form):
+    '''Form for uploading a signed receipt'''
+    signed_receipt = forms.FileField(widget=forms.FileInput(attrs={'type': 'file'}))
+    

@@ -1,5 +1,5 @@
 from django.views.generic import DetailView, ListView, UpdateView
-from app.forms import LendForm
+from app.forms import LendForm, UploadSignedReceiptForm
 from app.views.form import CustomFormView
 from app.models import Lend, SingleInventoryItem
 from django.utils import timezone
@@ -122,6 +122,7 @@ class LendUpdateView(UpdateView):
         form = self.form_class(request.POST, instance=lend)
         if form.is_valid():
             lend.user = original_lend.user
+            lend.document = original_lend.document
             # If the returned checkbox is checked, remove all single inventory items from the lend
             if form.cleaned_data['returned']:
                 lend.single_item.clear()
@@ -182,3 +183,17 @@ def lend_pdf(request, pk):
     file_name = f'lend_{lend.id}.pdf'
     content = create_receipt(lend)
     return FileResponse(content, content_type='application/pdf', as_attachment=True, filename=file_name)
+
+def upload_signed_receipt(request, pk):
+    ''' Uploads a signed receipt for a given lend'''
+    lend = Lend.objects.get(id=pk)
+    if request.method == 'POST':
+        form = UploadSignedReceiptForm(request.POST, request.FILES)
+        if form.is_valid():
+            lend.document = form.cleaned_data['signed_receipt']
+            lend.save()
+            return redirect('lend_detail', pk=lend.pk)
+    else:
+        form = UploadSignedReceiptForm()
+    # Return to the lend detail view
+    return redirect('lend_detail', pk=lend.pk)

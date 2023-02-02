@@ -33,6 +33,7 @@ urlpatterns = [
     path('category/create', CategoryFormView.as_view(), name='category_create'),
     path('categories', CategoryListView.as_view(), name='category_list'),
     
+    path('lend/<int:pk>/upload_signed_receipt', upload_signed_receipt, name='upload_signed_receipt'),
     path('lend/<int:pk>/update', LendUpdateView.as_view(), name='lend_update'),
     path('lend/<int:pk>/delete', lend_delete, name='lend_delete'),
     path('lend/<int:pk>', LendDetailView.as_view(), name='lend_detail'),

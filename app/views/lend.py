@@ -45,9 +45,9 @@ class LendListView(ListView):
         lends = Lend.objects.all()
         if self.request.user.is_authenticated and not self.request.user.is_superuser:
             lends = lends.filter(user=self.request.user)
-        current_lends = {'data': lends.filter(ended_at__gte=timezone.now(), returned=False), 'title': 'Current Lends'}
-        past_due_lends = {'data': lends.filter(ended_at__lt=timezone.now(), returned=False), 'title': 'Past Due Lends'}
-        settled_lends = {'data': lends.filter(returned=True), 'title': 'Settled Lends'}
+        current_lends = {'data': lends.filter(ended_at__gte=timezone.now(), returned=False), 'title': 'Current Lends', 'order': 0}
+        past_due_lends = {'data': lends.filter(ended_at__lt=timezone.now(), returned=False), 'title': 'Past Due Lends', 'order': 1}
+        settled_lends = {'data': lends.filter(returned=True), 'title': 'Settled Lends', 'order': 2}
         context['all'] = [current_lends, past_due_lends, settled_lends]
         return context
 

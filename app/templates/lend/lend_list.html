@@ -21,7 +21,6 @@ Lends list
 <h1 class="iwa-h1">
     {{ lends.title }}
 </h1>
-
 <table class="iwa-table mb-4">
     <thead class="iwa-table-head">
         <tr>
@@ -29,7 +28,9 @@ Lends list
             <th class="iwa-table-head-cell">Item</th>
             <th class="iwa-table-head-cell">Quantity</th>
             <th class="iwa-table-head-cell">Timespan</th>
+            {% if lends.order != 2 %}
             <th class="iwa-table-head-cell">Actions</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -40,6 +41,7 @@ Lends list
             <td class="iwa-table-cell">{{ lend.single_item.first }}</td>
             <td class="iwa-table-cell">{{ lend.single_item.all.count }}</td>
             <td class="iwa-table-cell">{{ lend.started_at|date:'d.m.Y' }} - {{ lend.ended_at|date:'d.m.Y' }}</td>
+            {% if lends.order != 2 %}
             <td class="iwa-table-cell">
                 <a href="{% url 'lend_detail' lend.id %}" class="iwa-btn mr-1">
                     View
@@ -48,6 +50,7 @@ Lends list
                     Edit
                 </a>
             </td>
+            {% endif %}
         </tr>
         {% endif %}
         {% endfor %}

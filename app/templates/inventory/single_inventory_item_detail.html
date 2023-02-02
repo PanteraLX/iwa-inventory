@@ -7,7 +7,7 @@ Single inventory item detail
 {% block content %}
 
 <section class="iwa-section">
-    <h1 class="iwa-h1">A single inventory item of {{ inventory_item.name }}</h1>
+    <h1 class="iwa-h1">A single inventory item of <a href="{% url 'inventory_item_detail' single_inventory_item.inventory_item.id %}">{{ inventory_item.name }}  <span class="fa fa-link mr-1"></span></a></h1>
     <dl class="flex space-x-6">
         <div>
             <dt class="mb-2 font-semibold leading-none text-gray-900">Hash</dt>

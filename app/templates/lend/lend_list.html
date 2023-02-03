@@ -41,14 +41,17 @@ Lends list
             <td class="iwa-table-cell">{{ lend.single_item.first }}</td>
             <td class="iwa-table-cell">{{ lend.single_item.all.count }}</td>
             <td class="iwa-table-cell">{{ lend.started_at|date:'d.m.Y' }} - {{ lend.ended_at|date:'d.m.Y' }}</td>
+            <!-- Disable Buttons in returned lends -->
             {% if lends.order != 2 %}
             <td class="iwa-table-cell">
                 <a href="{% url 'lend_detail' lend.id %}" class="iwa-btn mr-1">
                     View
                 </a>
+                {% if user.is_superuser %}
                 <a href="{% url 'lend_update' lend.id %}" class="iwa-btn mr-1">
                     Edit
                 </a>
+                {% endif %}
             </td>
             {% endif %}
         </tr>

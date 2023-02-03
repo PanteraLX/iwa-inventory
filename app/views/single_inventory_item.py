@@ -16,7 +16,7 @@ class SingleInventoryItemDetailView(DetailView):
         ''' Dispatches the request to the appropriate handler'''
         # Only authenticated users can view SignleInventoryItemDetailViews
         if request.user.is_superuser:
-            return super(SingleInventoryItem, self).dispatch(request, *args, **kwargs)
+            return super(SingleInventoryItemDetailView, self).dispatch(request, *args, **kwargs)
 
         # If the user is not authenticated, raise a permission denied error
         raise PermissionDenied

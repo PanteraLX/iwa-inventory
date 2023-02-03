@@ -24,7 +24,7 @@ Then install the dependencies:
 Note the `(env)` in front of the prompt. This indicates that this terminal
 session operates in a virtual environment set up by `virtualenv`.
 
-After installation, copy `.env.template`-file as `.env` and provide the desired values. As database engine, `mariadb` ord `sqlite3` can be used out of the box
+After installation, copy `.env.template`-file as `.env` and provide the desired values or credentials. As database engine, `mariadb` or `sqlite3` can be used out of the box
 ```sh
 (env)$ python manage.py migrate
 (env)$ python manage.py runserver
@@ -32,3 +32,19 @@ After installation, copy `.env.template`-file as `.env` and provide the desired 
 And navigate to `http://127.0.0.1:8000`.
 
 
+## Tailwind build
+
+We use tailwind as a CSS framework. The CSS output files are build with NodeJS. Please install a NodeJs runtime if yout want to change any styles and run
+
+```
+npm install
+```
+in the project directory.
+
+If you have changed any CSS styles in `app/static/css/input.css`, please compile the file with
+
+```
+npx tailwindcss -i ./app/static/css/input.css -o ./app/static/css/app.css
+```
+
+Please do not change any styles in app.css directly, since this file will be overwritten by `tailwindcss`

@@ -36,9 +36,7 @@ A new super user can be created with:
 python manage.py createsuperuser
 ```
 
-## Tailwind build
 
-If you have changed any CSS styles in `app/static/css/input.css`, please compile the file with
 ## Tailwind build
 
 We use tailwind as a CSS framework. The CSS output files are build with NodeJS. Please install a NodeJs runtime if yout want to change any styles and run

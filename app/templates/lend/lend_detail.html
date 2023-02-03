@@ -92,7 +92,7 @@ Lend Detail
         </dd>
     </dl>
     {% endif %}
-
+    {% if user.is_superuser %}
     <div class="flex items-center space-x-4">
         <a href="{% url 'lend_update' lend.id %}" class="iwa-btn">
             Edit
@@ -101,6 +101,7 @@ Lend Detail
             Delete
         </a>
     </div>
+    {% endif %}
 </section>
 
 

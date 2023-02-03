@@ -57,7 +57,17 @@ Lend Detail
                     <i class="fa fa-file-pdf"></i>
                 </a>
             </dd>
-        </div>            
+        </div>
+        {% if lend.document %}   
+        <div>
+            <dt class="mb-2 font-semibold leading-none text-gray-900">Signed receipt</dt>
+            <dd class="mb-4 font-light text-gray-500 sm:mb-5">
+                <a href="{{ lend.document.url }}" target="_blank">
+                    <i class="fa fa-file-pdf"></i>
+                </a>
+            </dd>
+        </div>
+        {% endif %}    
 
     </dl>
     <dl class="mb-8">
@@ -69,16 +79,9 @@ Lend Detail
         {% endfor %}
     </dl>
 
-
+    {% if not lend.document %}
     <dl class="mb-8">
         <dt class="mb-2 font-semibold leading-none text-gray-900">Signed receipt</dt>
-        {% if lend.document %}
-        <dd class="mb-4 font-light text-gray-500 sm:mb-5">
-            <a href="{{ lend.document.url }}" target="_blank">
-                <i class="fa fa-file-pdf"></i>
-            </a>
-        </dd>
-        {% else %}
         <dd>
             <!-- Form to upload a signed receipt -->
             <form action="{% url 'upload_signed_receipt' lend.id %}" method="POST" enctype="multipart/form-data">
@@ -87,8 +90,8 @@ Lend Detail
                 <button type="submit" class="iwa-btn">Upload</button>
             </form>
         </dd>
-        {% endif %}
     </dl>
+    {% endif %}
 
     <div class="flex items-center space-x-4">
         <a href="{% url 'lend_update' lend.id %}" class="iwa-btn">
